@@ -1,0 +1,96 @@
+import React from 'react';
+import { Head, Link } from '@inertiajs/react';
+import PublicLayout from '@/layouts/public-layout';
+import { useTranslations } from '@/hooks/use-translations';
+import { ChevronRight, HeartPulse } from 'lucide-react';
+
+export default function ServiceShow({ service }) {
+    const { t } = useTranslations();
+
+    return (
+        <>
+            <Head title={service.title} />
+
+            <article className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8 max-w-4xl mx-auto">
+                    <Link href="/" className="hover:text-primary transition-colors">{t('nav.home')}</Link>
+                    <ChevronRight size={14} />
+                    <Link href="/services" className="hover:text-primary transition-colors">{t('pages.services.title')}</Link>
+                    <ChevronRight size={14} />
+                    <span className="text-foreground font-medium truncate">{service.title}</span>
+                </div>
+
+                <div className="max-w-4xl mx-auto space-y-8">
+                    {/* Title */}
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-foreground leading-tight">
+                        {service.title}
+                    </h1>
+
+                    {/* Banner Image */}
+                    {service.image ? (
+                        <div className="rounded-3xl overflow-hidden shadow-lg">
+                            <img 
+                                src={`/storage/${service.image}`} 
+                                alt={service.title} 
+                                className="w-full h-auto object-cover"
+                            />
+                        </div>
+                    ) : (
+                        <div className="rounded-3xl overflow-hidden shadow-lg aspect-video bg-secondary/20 flex items-center justify-center">
+                            <HeartPulse size={80} className="text-primary/30" />
+                        </div>
+                    )}
+
+                    {/* Description */}
+                    {service.description && (
+                        <p className="text-xl text-muted-foreground leading-relaxed font-medium border-r-4 border-primary pr-6 border-l-0">
+                            {service.description}
+                        </p>
+                    )}
+
+                    {/* Content */}
+                    <div className="prose prose-lg max-w-none text-foreground leading-relaxed text-justify whitespace-pre-line">
+                        {service.content}
+                    </div>
+
+                    {/* Before & After Cases */}
+                    {service.comparisons && service.comparisons.length > 0 && (
+                        <div className="pt-12">
+                            <h2 className="text-2xl md:text-3xl font-black mb-8 text-foreground">
+                                {t('pages.services.before_after')}
+                            </h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                {service.comparisons.map(comp => (
+                                    <div key={comp.id} className="rounded-2xl overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all">
+                                        <div className="grid grid-cols-2 aspect-video">
+                                            <img src={`/storage/${comp.before_image}`} className="w-full h-full object-cover" alt="Before" />
+                                            <img src={`/storage/${comp.after_image}`} className="w-full h-full object-cover" alt="After" />
+                                        </div>
+                                        {comp.title && (
+                                            <div className="p-4 bg-card text-center">
+                                                <span className="font-bold text-foreground">{comp.title}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Back Link */}
+                    <div className="pt-8 border-t border-border/30">
+                        <Link 
+                            href="/services" 
+                            className="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+                        >
+                            ← {t('pages.services.back')}
+                        </Link>
+                    </div>
+                </div>
+            </article>
+        </>
+    );
+}
+
+ServiceShow.layout = (page) => <PublicLayout children={page} />;
