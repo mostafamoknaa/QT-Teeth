@@ -23,13 +23,13 @@ export default function Footer() {
         <footer className="bg-foreground text-background pt-24 pb-12 px-4 lg:px-24">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                 {/* Brand & Social */}
-                <div className="flex flex-col gap-8">
-                    <img src="/logo.svg" alt="Badr Dental" className="h-20 w-auto brightness-0 invert self-start" 
+                <div className="flex flex-col gap-8 items-center md:items-start text-center md:text-start">
+                    <img src="/logo.svg" alt="Badr Dental" className="h-20 w-auto brightness-0 invert self-center md:self-start" 
                          onError={(e) => { e.target.src = "https://placehold.co/180x80?text=LOGO&bg=1a1a1a&clr=ffffff"; }} />
                     <p className="text-background leading-relaxed font-bold text-2xl">
                          رائدون في تجميل وزراعة الأسنان بمصر منذ 2014. فخامة التجربة وأحدث التقنيات العالمية.
                     </p>
-                    <div className="flex gap-5 mt-2">
+                    <div className="flex gap-5 mt-2 justify-center md:justify-start">
                         <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                         <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                         <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" ><img src="/snapchat2.png" className="hover:text-primary transition-colors cursor-pointer"  /></a>
@@ -38,11 +38,11 @@ export default function Footer() {
                 </div>
 
                 {/* Quick Links */}
-                <div>
+                <div className="text-center md:text-start">
                     <h4 className="text-background font-black text-xl mb-10 uppercase tracking-tight">
                         {t('footer.quick_links')}
                     </h4>
-                    <ul className="flex flex-col gap-5">
+                    <ul className="flex flex-col gap-5 items-center md:items-start">
                         {quickLinks.map((link) => (
                             <li key={link.label}>
                                 <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors text-[15px] font-bold uppercase tracking-tight">
@@ -54,11 +54,11 @@ export default function Footer() {
                 </div>
 
                 {/* Services */}
-                <div>
+                <div className="text-center md:text-start">
                     <h4 className="text-background font-black text-xl mb-10 uppercase tracking-tight">
                         {t('footer.our_services')}
                     </h4>
-                    <ul className="flex flex-col gap-5">
+                    <ul className="flex flex-col gap-5 items-center md:items-start">
                         {services.map((service) => (
                             <li key={service.id}>
                                 <Link href={`/services/${service.id}`} className="text-muted-foreground hover:text-primary transition-colors text-lg cursor-pointer font-bold uppercase tracking-tight">
@@ -70,12 +70,12 @@ export default function Footer() {
                 </div>
 
                 {/* Contact Us */}
-                <div>
+                <div className="text-center md:text-start">
                     <h4 className="text-background font-black text-xl mb-10 uppercase tracking-tight">
                         {t('footer.contact_us')}
                     </h4>
                     <ul className="flex flex-col gap-8 text-lg font-bold">
-                        <li className="flex flex-col gap-2">
+                        <li className="flex flex-col gap-2 items-center md:items-start">
                             <span className="text-background uppercase tracking-wider text-lg">فرع المنصورة</span>
                             <span className="text-muted-foreground" dir="ltr">01060000805</span>
                         </li>
