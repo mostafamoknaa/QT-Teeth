@@ -1,0 +1,1 @@
+function e(e,t){return t===`ar`&&{"&laquo; Previous":`السابق &laquo;`,Previous:`السابق`,"Next &raquo;":`&raquo; التالي`,Next:`التالي`,"&laquo;":`&laquo;`,"&raquo;":`&raquo;`}[e]||e}export{e as t};

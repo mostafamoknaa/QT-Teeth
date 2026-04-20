@@ -1,0 +1,1 @@
+import{a as e,p as t}from"./utils-DLXQs17k.js";var n=e();function r(){let e=(0,n.c)(2),{translations:r}=t().props,i;return e[0]===r?i=e[1]:(i={t:(e,t)=>{let n=e.split(`.`),i=r;for(let r of n)if(i&&i[r])i=i[r];else return t||e;return i}},e[0]=r,e[1]=i),i}export{r as t};
