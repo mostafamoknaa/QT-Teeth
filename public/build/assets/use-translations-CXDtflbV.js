@@ -1,1 +1,0 @@
-import{d as e,o as t}from"./createLucideIcon-t-n21tZw.js";var n=t();function r(){let t=(0,n.c)(2),{translations:r}=e().props,i;return t[0]===r?i=t[1]:(i={t:(e,t)=>{let n=e.split(`.`),i=r;for(let r of n)if(i&&i[r])i=i[r];else return t||e;return i}},t[0]=r,t[1]=i),i}export{r as t};
