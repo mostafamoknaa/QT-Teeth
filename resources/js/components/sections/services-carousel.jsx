@@ -82,7 +82,7 @@ export default function ServicesCarouselSection({ services = [] }) {
                             >
                                 <Link
                                     href={`/services/${service.id}`}
-                                    className="group relative rounded-3xl overflow-hidden bg-background shadow-lg hover:shadow-xl transition-shadow duration-300 block"
+                                    className="group relative rounded-3xl overflow-hidden bg-secondary/30 shadow-lg hover:shadow-xl transition-shadow duration-300 block"
                                 >
                                     {/* Image */}
                                     <div className="relative h-80 overflow-hidden">
@@ -96,7 +96,7 @@ export default function ServicesCarouselSection({ services = [] }) {
 
                                     {/* Title */}
                                     <div className="p-6 text-center">
-                                        <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+                                        <h3 className="font-bold text-lg text-background group-hover:text-primary transition-colors duration-300">
                                             {service.title}
                                         </h3>
                                     </div>

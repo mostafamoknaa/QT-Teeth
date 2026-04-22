@@ -23,7 +23,7 @@ export default function Welcome({ articles, testimonials, services }) {
                 </div>
             </section>
 
-            <TestimonialsSection testimonials={testimonials} />
+            {/* <TestimonialsSection testimonials={testimonials} /> */}
             <LatestArticlesSection articles={articles} />
             <BookingFormSection services={services} />
         </>

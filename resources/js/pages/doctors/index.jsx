@@ -10,13 +10,13 @@ export default function DoctorsIndex({ doctors = [] }) {
         <>
             <Head title={t('pages.doctors.title')} />
 
-            <section className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl  tracking-tighter text-foreground">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl tracking-tighter text-background">
                         {t('pages.doctors.title')}
                     </h1>
-                    <p className="text-muted-foreground  text-lg md:text-xl mt-8 max-w-2xl mx-auto">
+                    <p className="text-background/70 text-lg md:text-xl mt-8 max-w-2xl mx-auto">
                         {t('pages.doctors.subtitle')}
                     </p>
                 </div>
@@ -26,7 +26,7 @@ export default function DoctorsIndex({ doctors = [] }) {
                     {doctors.map((doctor) => (
                         <div 
                             key={doctor.id} 
-                            className="bg-card rounded-[2rem] overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1 flex flex-col items-center"
+                            className="bg-secondary/30 rounded-[2rem] overflow-hidden border border-border/50 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1 flex flex-col items-center"
                         >
                             <div className="pt-10 pb-6 flex justify-center">
                                 <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden bg-secondary/20 shadow-inner">
@@ -38,18 +38,18 @@ export default function DoctorsIndex({ doctors = [] }) {
                                 </div>
                             </div>
                             <div className="px-6 pb-10 space-y-4 text-center">
-                                <h3 className="text-xl md:text-2xl font-bold text-foreground">
+                                <h3 className="text-xl md:text-2xl font-bold text-background">
                                     {doctor.name}
                                 </h3>
                                 <div className="border-b border-muted-foreground/50"></div>
                                 <div className="space-y-2">
                                     {doctor.specialty && (
-                                        <p className="text-base text-muted-foreground font-bold">
+                                        <p className="text-base text-background font-bold">
                                             {doctor.specialty}
                                         </p>
                                     )}
                                     {doctor.university && (
-                                        <p className="text-sm text-muted-foreground/70">
+                                        <p className="text-sm text-background/70">
                                             {doctor.university}
                                         </p>
                                     )}

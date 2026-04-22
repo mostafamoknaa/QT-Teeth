@@ -33,7 +33,7 @@ export default function Footer() {
                         <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                         <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                         <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" ><img src="/snapchat2.png" className="hover:text-primary transition-colors cursor-pointer"  /></a>
-                        <a href="https://www.tiktok.com/@dr.ahmedbadr0?_t=8shhUk6k9qc&_r=1" target="_blank"><img src='/tik-tok.png' className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank"><img src='/tik-tok.png' className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                     </div>
                 </div>
 
@@ -84,6 +84,37 @@ export default function Footer() {
                             <span className="text-muted-foreground" dir="ltr">01030000728</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+
+            {/* Payment Providers Section */}
+            <div className="border-t border-background/10 pt-16 pb-8">
+                <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 grayscale hover:grayscale-0 transition-all duration-700 opacity-60 hover:opacity-100">
+                    {[
+                        { src: '/aman.jpg', alt: 'Aman' },
+                        { src: '/emkan.png', alt: 'Emkan' },
+                        { src: '/forsa2.png', alt: 'Forsa' },
+                        { src: '/klivvr2.jpg', alt: 'Klivvr' },
+                        { src: '/mid.png', alt: 'Mid' },
+                        { src: '/mis.jpg', alt: 'Mis' },
+                        { src: '/tamara.png', alt: 'Tamara' },
+                        { src: '/tru.jpg', alt: 'Tru' },
+                        { src: '/contact.jpg', alt: 'Contact' },
+                        { src: '/seven.jpg', alt: 'Seven' },
+                        { src: '/paylink2.jpg', alt: 'Paylink' },
+                        { src: '/souhoola.jpg', alt: 'Souhoola' },
+                        { src: '/tabby.jpg', alt: 'Tabby' },
+                        { src: '/visa.jpg', alt: 'Visa' },
+                        { src: '/valu.jpg', alt: 'ValU' },
+                    ].map((provider, i) => (
+                        <div key={i} className="bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all h-10 md:h-12 flex items-center justify-center">
+                            <img 
+                                src={provider.src} 
+                                alt={provider.alt} 
+                                className="max-h-full w-auto object-contain"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
 

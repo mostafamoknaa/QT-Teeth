@@ -51,15 +51,15 @@ export default function BookingFormSection({ services = [] }) {
     ];
 
     return (
-        <section id="booking" className="py-24 px-4 lg:px-24 bg-background">
+        <section id="booking" className="py-24 px-4 lg:px-24">
             <div className="ps-12">
                 <img src='/line.png' alt='Line' className="w-40 h-40" />
             </div>
             <div className="text-center mb-20 space-y-4">
-                <h2 className="text-3xl lg:text-6xl text-foreground font-black tracking-tighter">
+                <h2 className="text-3xl text-background lg:text-6xl  font-black tracking-tighter">
                     {t('booking.title')}
                 </h2>
-                <p className="text-foreground font-medium text-lg">
+                <p className="text-background font-medium text-lg">
                     {t('booking.subtitle')}
                 </p>
             </div>
@@ -67,13 +67,13 @@ export default function BookingFormSection({ services = [] }) {
             {/* Contact Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                 {contactCards.map((card, i) => (
-                    <span key={i} className="group flex flex-col items-center gap-6 p-10 bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl transition-all duration-500 text-center">
+                    <span key={i} className="group flex flex-col items-center gap-6 p-10 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
                         <div className="p-6 bg-background rounded-2xl shadow-lg transition-colors">
                             <img src={card.icon} alt={card.title} className="w-15 h-15" />
                         </div>
                         <div className="space-y-2">
                             <h4 className="text-xl font-bold">{card.title}</h4>
-                            <p className="text-muted-foreground font-medium whitespace-pre-line text-lg">{card.detail}</p>
+                            <p className="font-medium whitespace-pre-line text-lg">{card.detail}</p>
                         </div>
                     </span>
                 ))}
@@ -84,11 +84,11 @@ export default function BookingFormSection({ services = [] }) {
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                     {/* Name */}
                     <div className="space-y-3">
-                        <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.name')}</label>
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.name')}</label>
                         <input 
                             type="text" 
                             placeholder={t('booking.form.full_name_placeholder')} 
-                            className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-muted-foreground/50 transition-all" 
+                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
                             value={data.name}
                             onChange={e => setData('name', e.target.value)}
                         />
@@ -97,11 +97,11 @@ export default function BookingFormSection({ services = [] }) {
 
                     {/* Phone */}
                     <div className="space-y-3">
-                        <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.phone')}</label>
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.phone')}</label>
                         <input 
                             type="tel" 
                             placeholder="+20 123456789 or 01234567890" 
-                            className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-muted-foreground/50 transition-all" 
+                            className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
                             dir="ltr" 
                             value={data.phone}
                             onChange={e => setData('phone', e.target.value)}
@@ -116,11 +116,11 @@ export default function BookingFormSection({ services = [] }) {
 
                     {/* Service */}
                     <div className="space-y-3">
-                        <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.service')}</label>
-                        <select className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer" value={data.service_id} onChange={e => setData('service_id', e.target.value)}>
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.service')}</label>
+                        <select className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.service_id} onChange={e => setData('service_id', e.target.value)}>
                             <option value="">{t('booking.form.service')}</option>
                             {formServices.map(service => (
-                                <option key={service.id} value={service.id}>{service.title}</option>
+                                <option key={service.id} value={service.id} className="text-foreground">{service.title}</option>
                             ))}
                         </select>
                         {errors.service_id && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.service_id)}</p>}
@@ -128,11 +128,11 @@ export default function BookingFormSection({ services = [] }) {
 
                     {/* Email */}
                     <div className="space-y-3">
-                        <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.email')}</label>
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.email')}</label>
                         <input 
                             type="text" 
                             placeholder="you@example.com" 
-                            className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-muted-foreground/50 transition-all" 
+                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
                             value={data.email}
                             onChange={e => setData('email', e.target.value)} 
                         />
@@ -141,11 +141,11 @@ export default function BookingFormSection({ services = [] }) {
 
                     {/* Branch */}
                     <div className="space-y-3">
-                        <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.branch')}</label>
-                        <select className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer" value={data.branch} onChange={e => setData('branch', e.target.value)}>
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.branch')}</label>
+                        <select className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.branch} onChange={e => setData('branch', e.target.value)}>
                             <option value="">{t('booking.form.branch')}</option>
-                            <option value="المنصورة">{t('branches_page.mansoura.title')}</option>
-                            <option value="الشيخ زايد">{t('branches_page.sheikh_zayed.title')}</option>
+                            <option value="المنصورة" className="text-foreground">{t('branches_page.mansoura.title')}</option>
+                            <option value="الشيخ زايد" className="text-foreground">{t('branches_page.sheikh_zayed.title')}</option>
                         </select>
                         {errors.branch && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.branch)}</p>}
                     </div>
@@ -153,12 +153,12 @@ export default function BookingFormSection({ services = [] }) {
                     {/* Message */}
                     <div className="md:col-span-2 space-y-3">
                         <div className="flex justify-between items-center">
-                            <label className="text-sm font-black text-foreground uppercase tracking-widest">{t('booking.form.message')}</label>
-                            <span className="text-xs text-muted-foreground">{data.message?.length || 0} / 1000</span>
+                            <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.message')}</label>
+                            <span className="text-xs text-background">{data.message?.length || 0} / 1000</span>
                         </div>
                         <textarea 
                             placeholder={t('booking.form.message_placeholder')} 
-                            className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium h-40 resize-none placeholder:text-muted-foreground/50 transition-all"
+                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium h-40 resize-none placeholder:text-background/50 transition-all"
                             value={data.message}
                             onChange={e => setData('message', e.target.value)}
                         ></textarea>

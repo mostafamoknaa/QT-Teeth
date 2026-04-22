@@ -11,24 +11,24 @@ export default function ArticleShow({ article }) {
         <>
             <Head title={article.title} />
 
-            <article className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <article className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8 max-w-4xl mx-auto">
+                <div className="flex items-center gap-2 text-sm text-background/60 mb-8 max-w-4xl mx-auto">
                     <Link href="/" className="hover:text-primary transition-colors">{t('nav.home')}</Link>
                     <ChevronRight size={14} />
                     <Link href="/articles" className="hover:text-primary transition-colors">{t('pages.articles.title')}</Link>
                     <ChevronRight size={14} />
-                    <span className="text-foreground font-medium truncate">{article.title}</span>
+                    <span className="text-background font-medium truncate">{article.title}</span>
                 </div>
 
                 <div className="max-w-4xl mx-auto space-y-8">
                     {/* Title */}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-foreground leading-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-background leading-tight">
                         {article.title}
                     </h1>
 
                     {/* Meta */}
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground border-b border-border/30 pb-6">
+                    <div className="flex items-center gap-6 text-sm text-background/60 border-b border-border/30 pb-6">
                         {article.author_name && (
                             <span className="flex items-center gap-2">
                                 <User size={16} />
@@ -58,13 +58,13 @@ export default function ArticleShow({ article }) {
 
                     {/* Description */}
                     {article.description && (
-                        <p className="text-xl text-muted-foreground leading-relaxed font-medium border-r-4 border-primary pr-6">
+                        <p className="text-xl text-background/80 leading-relaxed font-medium border-r-4 border-primary pr-6">
                             {article.description}
                         </p>
                     )}
 
                     {/* Content */}
-                    <div className="prose prose-lg max-w-none text-foreground leading-relaxed text-justify whitespace-pre-line">
+                    <div className="prose prose-lg prose-invert max-w-none text-background leading-relaxed text-justify whitespace-pre-line">
                         {article.content}
                     </div>
 

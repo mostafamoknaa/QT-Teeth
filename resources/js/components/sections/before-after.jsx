@@ -17,9 +17,9 @@ export default function BeforeAfterSection() {
     ];
 
     return (
-        <section id="cases" className="py-24 px-4 lg:px-24 bg-secondary/10">
+        <section id="cases" className="py-24 px-4 lg:px-24">
             <div className="text-center mb-16 space-y-4">
-                <h2 className="text-5xl lg:text-6xl font-black tracking-tighter">
+                <h2 className="text-5xl lg:text-6xl font-black tracking-tighter text-background">
                     {t('before_after.title')}
                 </h2>
                 <div className="w-16 h-1.5 bg-primary mx-auto"></div>
@@ -27,7 +27,7 @@ export default function BeforeAfterSection() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {cases.map((item) => (
-                    <div key={item.id} className="group relative rounded-[40px] overflow-hidden bg-background shadow-xl border border-border/50 transition-all duration-500 hover:-translate-y-2">
+                    <div key={item.id} className="group relative rounded-[40px] overflow-hidden bg-secondary/30 shadow-xl border border-border/50 transition-all duration-500 hover:-translate-y-2">
                         <div className="relative h-80 flex overflow-hidden">
                             {/* Before */}
                             <div className="relative w-1/2 h-full border-l border-background/20 overflow-hidden">
@@ -44,11 +44,11 @@ export default function BeforeAfterSection() {
                                 </span>
                             </div>
                         </div>
-                        <div className="p-8 text-center bg-background group-hover:bg-primary transition-colors duration-500">
-                            <h4 className="text-xl font-bold group-hover:text-foreground transition-colors">
+                        <div className="p-8 text-center bg-transparent group-hover:bg-primary transition-colors duration-500">
+                            <h4 className="text-xl font-bold text-background group-hover:text-foreground transition-colors">
                                 {item.title}
                             </h4>
-                            <p className="text-[10px] text-muted-foreground group-hover:text-foreground/60 transition-colors mt-2 uppercase font-black tracking-[0.2em]">
+                            <p className="text-[10px] text-background/60 group-hover:text-foreground/60 transition-colors mt-2 uppercase font-black tracking-[0.2em]">
                                 {item.category}
                             </p>
                         </div>

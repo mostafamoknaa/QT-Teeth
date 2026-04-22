@@ -62,6 +62,7 @@
 
 :root {
     --background: #FBFBFB;
+    --identity-gradient: linear-gradient(90deg, #000000 0%, #989191 50%, #000000 100%);
     --foreground: #1A1A1A;
     --card: #FFFFFF;
     --card-foreground: #1A1A1A;
@@ -111,7 +112,12 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        background: var(--identity-gradient) fixed;
+        @apply text-foreground;
+    }
+
+    section, article {
+        background-color: transparent;
     }
 }
 @theme {

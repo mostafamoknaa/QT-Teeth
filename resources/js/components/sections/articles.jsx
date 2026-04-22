@@ -10,21 +10,21 @@ export default function LatestArticlesSection({ articles = [] }) {
     if (!articles || articles.length === 0) return null;
 
     return (
-        <section id="articles" className="py-24 px-4 lg:px-24 bg-background">
+        <section id="articles" className="py-24 px-4 lg:px-24">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
                 <div className="space-y-4">
-                    <h2 className="text-2xl lg:text-4xl text-foreground font-bold tracking-tighter">
+                    <h2 className="text-2xl lg:text-4xl text-background font-bold tracking-tighter">
                         {t('articles.title')}
                     </h2>
                 </div>
-                <Link href='/articles' className="text-foreground text-lg cursor-pointer hover:text-primary transition-all pb-1">
+                <Link href='/articles' className="text-background text-lg cursor-pointer hover:text-primary transition-all pb-1">
                     {t('articles.view_all')}
                 </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {articles.map((article, index) => (
-                    <div key={index} className="group flex bg-background rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl">
+                    <div key={index} className="group text-background bg-secondary/30 flex rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl">
                         <div className="w-1/3 overflow-hidden">
                             <img 
                                 src={article.image ? `/storage/${article.image}` : 'https://placehold.co/600x400'} 
@@ -37,7 +37,7 @@ export default function LatestArticlesSection({ articles = [] }) {
                                 <h3 className="text-lg lg:text-xl font-bold leading-snug group-hover:text-primary transition-colors">
                                     {article.title}
                                 </h3>
-                                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                                <p className="text-sm  leading-relaxed line-clamp-2">
                                     {article.description}
                                 </p>
                             </div>

@@ -15,33 +15,33 @@ export default function About() {
     return (
         <>
             {/* About Us Section */}
-            <section id="about" className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <section id="about" className="py-12 md:py-20 px-6 lg:px-24">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     {/* Content */}
                     <div className="space-y-8">
                         <div className="space-y-6">
-                            <div className='border border-t-4 border-foreground w-30'></div>
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter">
+                            <div className='border border-t-4 border-background w-30'></div>
+                            <h2 className="text-4xl text-background md:text-5xl lg:text-6xl tracking-tighter">
                                {t('about.title')}
                             </h2>
-                            <h3 className="text-xl md:text-2xl lg:text-3xl text-foreground/70 font-bold">
+                            <h3 className="text-xl text-background md:text-2xl lg:text-3xl font-bold">
                                 Badr Dental Center
                             </h3>
                         </div>
 
-                        <p className="text-muted-foreground text-lg md:text-xl lg:text-2xl leading-relaxed text-justify">
+                        <p className="text-background text-lg md:text-xl lg:text-2xl leading-relaxed text-justify">
                             {t('about.description1')}
                         </p>
 
-                        <p className="text-muted-foreground text-lg md:text-xl lg:text-2xl leading-relaxed text-justify font-medium">
+                        <p className="text-background text-lg md:text-xl lg:text-2xl leading-relaxed text-justify font-medium">
                            {t('about.description2')}
                         </p>
 
                         {/* Stats */}
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
                             {stats.map((stat, index) => (
-                                <div key={index} className="text-center p-6 bg-secondary/30 rounded-3xl hover:bg-primary/10 transition-colors group">
-                                    <p className="text-3xl md:text-4xl font-black text-foreground group-hover:text-primary transition-colors">
+                                <div key={index} className="text-center p-6 bg-secondary rounded-3xl">
+                                    <p className="text-3xl md:text-4xl font-black text-foreground">
                                         {stat.value}
                                     </p>
                                     <p className=" text-muted-foreground mt-3 font-bold uppercase tracking-widest leading-tight">

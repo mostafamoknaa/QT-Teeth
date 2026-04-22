@@ -11,13 +11,13 @@ export default function ArticlesIndex({ articles = [] }) {
         <>
             <Head title={t('pages.articles.title')} />
 
-            <section className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-foreground">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-background">
                         {t('pages.articles.title')}
                     </h1>
-                    <p className="text-muted-foreground text-lg md:text-xl mt-4 max-w-2xl mx-auto">
+                    <p className="text-background/70 text-lg md:text-xl mt-4 max-w-2xl mx-auto">
                         {t('pages.articles.subtitle')}
                     </p>
                 </div>
@@ -28,7 +28,7 @@ export default function ArticlesIndex({ articles = [] }) {
                         <Link 
                             key={article.id} 
                             href={`/articles/${article.id}`}
-                            className="group bg-card rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
+                            className="group bg-secondary/30 rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
                         >
                             <div className="aspect-[16/10] overflow-hidden">
                                 <img 
@@ -38,13 +38,13 @@ export default function ArticlesIndex({ articles = [] }) {
                                 />
                             </div>
                             <div className="p-6 space-y-4">
-                                <h3 className="text-lg md:text-xl font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                <h3 className="text-lg md:text-xl font-bold leading-snug text-background group-hover:text-primary transition-colors line-clamp-2">
                                     {article.title}
                                 </h3>
-                                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                                <p className="text-sm text-background/60 leading-relaxed line-clamp-3">
                                     {article.description}
                                 </p>
-                                <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t border-border/30">
+                                <div className="flex items-center gap-4 text-xs text-background/60 pt-2 border-t border-border/30">
                                     {article.author_name && (
                                         <span className="flex items-center gap-1">
                                             <User size={14} />

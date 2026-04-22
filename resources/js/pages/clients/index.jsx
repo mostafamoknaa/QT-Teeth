@@ -11,10 +11,10 @@ export default function ClientsIndex({ testimonials = [] }) {
         <>
             <Head title={t('pages.clients.title')} />
 
-            <section className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-foreground">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-background">
                         {t('pages.clients.title')}
                     </h1>
                     {/* <p className="text-muted-foreground text-lg md:text-xl mt-4 max-w-2xl mx-auto">
@@ -27,7 +27,7 @@ export default function ClientsIndex({ testimonials = [] }) {
                     {testimonials.map((testimonial) => (
                         <div 
                             key={testimonial.id} 
-                            className="bg-card rounded-3xl overflow-hidden shadow-lg border border-border/50"
+                            className="bg-secondary/30 rounded-3xl overflow-hidden shadow-lg border border-border/50"
                         >
                             {/* Video Banner Placeholder */}
                             <div className="relative aspect-video bg-black group overflow-hidden">
@@ -47,18 +47,17 @@ export default function ClientsIndex({ testimonials = [] }) {
                                 </div>
                             </div>
                             
-                            {/* Content */}
                             <div className="p-8 space-y-4">
                                 <div className="w-20 h-1 bg-muted-foreground rounded-full mb-4"></div>
-                                <h3 className="text-lg md:text-xl leading-snug">
+                                <h3 className="text-lg text-background md:text-xl leading-snug">
                                     {testimonial.content}
                                 </h3>
                                 <div className="space-y-1">
-                                    <p className="text-lg font-bold text-muted-foreground">
+                                    <p className="text-lg font-bold text-background/70">
                                         {testimonial.client_name}
                                     </p>
                                     {testimonial.service_name && (
-                                        <p className="text-md text-foreground">
+                                        <p className="text-md text-background">
                                             {testimonial.service_name}
                                         </p>
                                     )}

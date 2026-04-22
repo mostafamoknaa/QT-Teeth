@@ -13,7 +13,7 @@ export default function AppLayout({ children, heroOptions }) {
     }, [locale, isRtl]);
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-tajawal selection:bg-primary/30">
+        <div className="min-h-screen bg-transparent text-foreground font-tajawal selection:bg-primary/30">
             <Head>
                 <title>Badr Dental Center</title>
                 <meta name="description" content="Pioneers in dental cosmetics and implants in Egypt since 2014." />

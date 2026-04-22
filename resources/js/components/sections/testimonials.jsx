@@ -8,9 +8,9 @@ export default function TestimonialsSection({ testimonials }) {
     if (!testimonials || testimonials.length === 0) return null;
 
     return (
-        <section id="testimonials" className="py-24 px-4 lg:px-24 bg-secondary/10">
+        <section id="testimonials" className="py-24 px-4 lg:px-24">
             <div className="max-w-7xl mx-auto text-center mb-16">
-                <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-foreground mb-4">
+                <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-background mb-4">
                     {t('clients.title')}
                 </h2>
                 <div className="w-20 h-1.5 bg-primary mx-auto mb-8"></div>
@@ -21,7 +21,7 @@ export default function TestimonialsSection({ testimonials }) {
                 {testimonials.map((testimonial) => (
                     <div 
                         key={testimonial.id} 
-                        className="bg-card rounded-3xl overflow-hidden shadow-lg border border-border/50"
+                        className="bg-secondary/30 rounded-3xl overflow-hidden shadow-lg border border-border/50"
                     >
                         {/* Video Banner Placeholder */}
                         <div className="relative aspect-video bg-black group overflow-hidden">
@@ -41,18 +41,17 @@ export default function TestimonialsSection({ testimonials }) {
                             </div>
                         </div>
                         
-                        {/* Content */}
                         <div className="p-8 space-y-4">
                             <div className="w-20 h-1 bg-muted-foreground rounded-full mb-4"></div>
-                            <h3 className="text-lg md:text-xl leading-snug">
+                            <h3 className="text-lg text-background md:text-xl leading-snug">
                                 {testimonial.content}
                             </h3>
                             <div className="space-y-1">
-                                <p className="text-lg font-bold text-muted-foreground">
+                                <p className="text-lg font-bold text-background/70">
                                     {testimonial.client_name}
                                 </p>
                                 {testimonial.service_name && (
-                                    <p className="text-md text-foreground">
+                                    <p className="text-md text-background">
                                         {testimonial.service_name}
                                     </p>
                                 )}

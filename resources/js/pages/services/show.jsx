@@ -11,19 +11,19 @@ export default function ServiceShow({ service }) {
         <>
             <Head title={service.title} />
 
-            <article className="py-12 md:py-20 px-6 lg:px-24 bg-background">
+            <article className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8 max-w-4xl mx-auto">
-                    <Link href="/" className="hover:text-primary transition-colors">{t('nav.home')}</Link>
+                <div className="flex items-center gap-2 text-sm text-background/60 mb-8 max-w-4xl mx-auto">
+                    <Link href="/" className="hover:text-primary transition-colors text-background/60">{t('nav.home')}</Link>
                     <ChevronRight size={14} />
-                    <Link href="/services" className="hover:text-primary transition-colors">{t('pages.services.title')}</Link>
+                    <Link href="/services" className="hover:text-primary transition-colors text-background/60">{t('pages.services.title')}</Link>
                     <ChevronRight size={14} />
-                    <span className="text-foreground font-medium truncate">{service.title}</span>
+                    <span className="text-background font-medium truncate">{service.title}</span>
                 </div>
 
                 <div className="max-w-4xl mx-auto space-y-8">
                     {/* Title */}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-foreground leading-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter text-background leading-tight">
                         {service.title}
                     </h1>
 
@@ -44,35 +44,35 @@ export default function ServiceShow({ service }) {
 
                     {/* Description */}
                     {service.description && (
-                        <p className="text-xl text-muted-foreground leading-relaxed font-medium border-r-4 border-primary pr-6 border-l-0">
+                        <p className="text-xl text-background leading-relaxed font-medium border-r-4 border-primary pr-6 border-l-0">
                             {service.description}
                         </p>
                     )}
 
                     {/* Content */}
-                    <div className="prose prose-lg max-w-none text-foreground leading-relaxed text-justify whitespace-pre-line">
+                    <div className="prose prose-lg prose-invert max-w-none text-background leading-relaxed text-justify whitespace-pre-line">
                         {service.content}
                     </div>
 
                     {/* Before & After Cases */}
                     {service.comparisons && service.comparisons.length > 0 && (
                         <div className="pt-12">
-                            <h2 className="text-2xl md:text-3xl font-black mb-8 text-foreground">
+                            <h2 className="text-2xl md:text-3xl font-black mb-8 text-background">
                                 {t('pages.services.before_after')}
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 {service.comparisons.map(comp => (
-                                    <div key={comp.id} className="rounded-2xl overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all">
-                                        <div className="grid grid-cols-2 aspect-video">
-                                            <img src={`/storage/${comp.before_image}`} className="w-full h-full object-cover" alt="Before" />
-                                            <img src={`/storage/${comp.after_image}`} className="w-full h-full object-cover" alt="After" />
-                                        </div>
-                                        {comp.title && (
-                                            <div className="p-4 bg-card text-center">
-                                                <span className="font-bold text-foreground">{comp.title}</span>
+                                        <div key={comp.id} className="rounded-2xl overflow-hidden border border-border/50 bg-secondary/30 shadow-sm hover:shadow-lg transition-all">
+                                            <div className="grid grid-cols-2 aspect-video">
+                                                <img src={`/storage/${comp.before_image}`} className="w-full h-full object-cover" alt="Before" />
+                                                <img src={`/storage/${comp.after_image}`} className="w-full h-full object-cover" alt="After" />
                                             </div>
-                                        )}
-                                    </div>
+                                            {comp.title && (
+                                                <div className="p-4 text-center">
+                                                    <span className="font-bold text-background">{comp.title}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                 ))}
                             </div>
                         </div>
