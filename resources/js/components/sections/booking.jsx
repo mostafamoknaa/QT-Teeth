@@ -12,6 +12,7 @@ export default function BookingFormSection({ services = [] }) {
         phone: '',
         email: '',
         service_id: '',
+        offer: '',
         branch: '',
         message: ''
     });
@@ -124,6 +125,18 @@ export default function BookingFormSection({ services = [] }) {
                             ))}
                         </select>
                         {errors.service_id && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.service_id)}</p>}
+                    </div>
+
+                    {/* Offer */}
+                    <div className="space-y-3">
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('nav.offers')}</label>
+                        <select className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.offer} onChange={e => setData('offer', e.target.value)}>
+                            <option value="">{t('nav.offers')}</option>
+                            {(usePage().props.active_offers || []).map(offer => (
+                                <option key={offer.id} value={offer.title} className="text-foreground">{offer.title}</option>
+                            ))}
+                        </select>
+                        {errors.offer && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.offer)}</p>}
                     </div>
 
                     {/* Email */}

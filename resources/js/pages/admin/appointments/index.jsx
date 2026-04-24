@@ -81,6 +81,7 @@ export default function AppointmentsIndex({ appointments, search: initialSearch 
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.patient_name')}</th>
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.phone')}</th>
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.service')}</th>
+                                <th className="px-4 py-3 text-start font-medium">{t('nav.offers')}</th>
                                 <th className="px-4 py-3 text-start font-medium">{t('booking.form.branch')}</th>
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.date')}</th>
                                 <th className="px-4 py-3 text-right font-medium">{t('admin.actions')}</th>
@@ -96,10 +97,13 @@ export default function AppointmentsIndex({ appointments, search: initialSearch 
                                             {appointment.service ? (
                                                 <Badge variant="outline">{appointment.service.title}</Badge>
                                             ) : (
-                                                <span className="text-muted-foreground">غير محدد </span>
+                                                <span className="text-muted-foreground">{t('admin.not_specified') || 'غير محدد'}</span>
                                             )}
                                         </td>
-                                        <td className="px-4 py-3">{appointment.branch || 'غير محدد'}</td>
+                                        <td className="px-4 py-3 font-medium text-primary">
+                                            {appointment.offer || '-'}
+                                        </td>
+                                        <td className="px-4 py-3">{appointment.branch || t('admin.not_specified') || 'غير محدد'}</td>
                                         <td className="px-4 py-3 text-muted-foreground">
                                             {new Date(appointment.created_at).toLocaleDateString('ar-EG')}
                                         </td>

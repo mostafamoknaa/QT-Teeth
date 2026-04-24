@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ServiceComparisonController;
+use App\Http\Controllers\Admin\OfferController;
 use App\Http\Middleware\CheckIsAdmin;
 
 Route::get('/', [SiteController::class, 'index'])->name('home');
@@ -28,6 +29,7 @@ Route::get('/services', [SiteController::class, 'services'])->name('services');
 Route::get('/services/{service}', [SiteController::class, 'serviceShow'])->name('services.show');
 Route::get('/doctors', [SiteController::class, 'doctors'])->name('doctors');
 Route::get('/clients', [SiteController::class, 'clients'])->name('clients');
+Route::get('/offers', [SiteController::class, 'offers'])->name('offers');
 
 Route::middleware(['auth'])->group(function () {
     
@@ -39,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('doctors', DoctorController::class);
         Route::resource('testimonials', TestimonialController::class);
         Route::resource('services', ServiceController::class);
+        Route::resource('offers', OfferController::class);
         Route::resource('appointments', \App\Http\Controllers\Admin\AppointmentController::class)->only(['index', 'show', 'destroy']);
         
         Route::post('services/{service}/comparisons', [ServiceComparisonController::class, 'store'])->name('services.comparisons.store');

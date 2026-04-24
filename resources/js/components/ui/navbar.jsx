@@ -42,7 +42,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
 
     return (
         <header className="w-full relative">
-            <div className="fixed top-0 z-50 w-full">
+            <div className="w-full z-50">
                 {/* Layer 1: Top Service Bar */}
                 <div 
                     className="relative z-50 w-full overflow-hidden border-b border-white/10 bg-foreground py-3 text-background"
@@ -86,7 +86,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     </div>
                 </div>
 
-                {/* Layer 2: Info Bar (Transparent) */}
+                {/* Layer 2: Info Bar */}
                 <div className="bg-foreground text-background py-2 px-4 lg:px-24 hidden md:flex justify-between items-center text-[15px] font-medium border-b border-white relative z-40">
                     <div className="flex items-center gap-5">
                         <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
@@ -115,8 +115,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     </div>
                 </div>
 
-                {/* Layer 3: Main Navigation (Transparent) */}
-                <nav className="bg-white/40 backdrop-blur-md border-b border-white/5 py-4 px-4 lg:px-24 flex justify-between items-center z-40 shadow-sm shadow-black/5">
+                {/* Layer 3: Main Navigation */}
+                <nav className="bg-white py-4 px-4 lg:px-24 flex justify-between items-center z-40 shadow-sm border-b border-border">
                     {/* Right Side: Logo and Menu (Markup order for RTL Start) */}
                     <div className="flex items-center gap-16">
                         <Link href="/" className="flex items-center gap-2 group">
@@ -159,6 +159,14 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     {/* Left Side: CTA and Search */}
                     <div className="flex items-center gap-5">
                         <Link 
+                            href="/offers"
+                            className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-black text-sm flex items-center gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group"
+                        >
+                            <Calendar size={18} className="group-hover:rotate-12 transition-transform" />
+                            {t('nav.offers')}
+                        </Link>
+
+                        <Link 
                             href="/contact"
                             className="bg-foreground text-background px-8 py-3.5 rounded-full font-black text-sm flex items-center gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group"
                         >
@@ -176,46 +184,34 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 </nav>
             </div>
 
-            {/* This container will sit on top of the Hero */}
-            <div className="min-h-[300px] lg:min-h-[300px]">
-                {/* Hero Section (Integrated into Header) - Backround Only */}
+            {/* This container will sit after the Nav */}
+            <div className="relative">
+                {/* Hero Section */}
                 {showHero && (
-                    <div className="w-full h-full overflow-hidden flex items-end justify-center">
-                        <iframe 
-                            className="w-full h-auto aspect-video min-h-full min-w-full"
-                            src="https://www.youtube.com/embed/fie1v3-ieGY?autoplay=1&mute=1&loop=1&playlist=fie1v3-ieGY&controls=1&rel=0" 
-                            title="⭕BADR DENTAL CENTER⭕⭕مركز بدر لجميع خدمات طب الفم والأسنان ⭕" 
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" 
-                            referrerPolicy="strict-origin-when-cross-origin" 
-                            allowFullScreen
-                        ></iframe>
-                        
-                        {/* <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent"></div> */}
+                    <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-foreground">
+                        <img src="/doctors.png" alt="Hero" className="w-full h-auto object-cover max-h-[85vh]" />
                         
                         {/* Wave Divider at absolute bottom of the hero area */}
-                        {/* <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20">
+                        <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20">
                             <img 
                                 src="/hero.svg" 
                                 alt="Wave Divider" 
-                                className="w-full h-auto min-h-[60px] lg:min-h-[100px] object-fill"
+                                className="w-full h-auto min-h-[40px] lg:min-h-[80px] object-fill brightness-0 invert opacity-10"
                             />
-                        </div> */}
+                        </div>
                     </div>
                 )}
 
-                
-
-                {showHero && (
-                    <div className="flex items-center justify-start px-4 lg:px-24 mt-8 pointer-events-none">
+                {showHero && (heroOptions.subtitle || heroOptions.description) && (
+                    <div className="flex items-center justify-start px-4 lg:px-24 py-12 bg-background border-b border-border/50">
                         <div className="max-w-2xl">
                             {heroOptions.subtitle && (
-                                <h2 className="text-2xl lg:text-3xl text-foreground font-bold mb-4 drop-shadow-lg text-start leading-snug">
+                                <h2 className="text-3xl lg:text-5xl text-foreground font-black mb-4 tracking-tighter leading-tight">
                                     {heroOptions.subtitle}
                                 </h2>
                             )}
                             {heroOptions.description && (
-                                <p className="text-lg lg:text-xl text-foreground/90 font-medium mb-8 drop-shadow text-start leading-relaxed max-w-xl">
+                                <p className="text-lg lg:text-xl text-muted-foreground font-medium max-w-xl">
                                     {heroOptions.description}
                                 </p>
                             )}

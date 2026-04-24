@@ -58,7 +58,7 @@ export default function ServicesCarouselSection({ services = [] }) {
                         variant="ghost"
                         className="pointer-events-auto rounded-full bg-black/30 hover:bg-black/50 text-white disabled:opacity-30 disabled:hover:bg-black/30 transition-all"
                     >
-                        <ChevronLeft className="size-6" />
+                        <ChevronRight className="size-6" />
                     </Button>
                     <Button
                         onClick={() => emblaApi?.scrollNext()}
@@ -67,7 +67,7 @@ export default function ServicesCarouselSection({ services = [] }) {
                         variant="ghost"
                         className="pointer-events-auto rounded-full bg-black/30 hover:bg-black/50 text-white disabled:opacity-30 disabled:hover:bg-black/30 transition-all"
                     >
-                        <ChevronRight className="size-6" />
+                        <ChevronLeft className="size-6" />
                     </Button>
                 </div>
 

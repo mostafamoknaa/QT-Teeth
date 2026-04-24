@@ -23,7 +23,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
@@ -66,6 +65,11 @@ export function AppSidebar() {
             href: '/admin/appointments',
             icon: CalendarCheck,
         },
+        {
+            title: t('nav.offers'),
+            href: '/admin/offers',
+            icon: FileText,
+        },
     ];
 
     const footerNavItems: NavItem[] = [];
@@ -75,7 +79,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href="/admin/dashboard" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

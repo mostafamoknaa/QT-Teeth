@@ -1,3 +1,4 @@
+import React from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from "@/hooks/use-translations";
 import { useForm, usePage } from '@inertiajs/react';
@@ -6,16 +7,30 @@ import { getErrorMessage } from '@/lib/error-messages';
 
 export default function Contact({ services = [] }) {
     const { t } = useTranslations();
-    const { global_services } = usePage().props;
+    const { global_services, active_offers } = usePage().props;
     const formServices = services && services.length > 0 ? services : global_services || [];
+    const offers = active_offers || [];
+    
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         phone: '',
         service_id: '',
+        offer: '',
         email: '',
         branch: '',
         message: '',
     });
+
+    React.useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const offerId = urlParams.get('offer');
+        if (offerId && offers.length > 0) {
+            const selectedOffer = offers.find(o => o.id.toString() === offerId);
+            if (selectedOffer) {
+                setData('offer', selectedOffer.title);
+            }
+        }
+    }, [offers]);
 
     const contactCards = [
         {
@@ -118,6 +133,22 @@ export default function Contact({ services = [] }) {
                             ))}
                         </select>
                         {errors.service_id && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.service_id)}</p>}
+                    </div>
+
+                    {/* Offer */}
+                    <div className="space-y-3">
+                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('nav.offers')}</label>
+                        <select 
+                            value={data.offer}
+                            onChange={e => setData('offer', e.target.value)}
+                            className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background"
+                        >
+                            <option value="" className="text-foreground">{t('nav.offers')}</option>
+                            {offers.map(offer => (
+                                <option key={offer.id} value={offer.title} className="text-foreground">{offer.title}</option>
+                            ))}
+                        </select>
+                        {errors.offer && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.offer)}</p>}
                     </div>
 
                     {/* Email */}

@@ -8,6 +8,7 @@
         "doctors": "الأطباء",
         "articles": "المقالات",
         "branches": "الفروع",
+        "offers": "العروض",
         "country": "البلد",
         "egypt": "مصر",
         "saudi": "السعودية",
@@ -129,7 +130,10 @@
             "address": "الحي 11، ساحة 209، بلوك 2",
             "phone": "01030000728"
         },
-        "book_now_btn": "احجز موعدك الآن"
+        "book_now_btn": "احجز موعدك الآن",
+        "open_map": "عرض الموقع على الخريطة",
+        "mansoura_map": "https://maps.app.goo.gl/HzMFLXHveNFaMsi37",
+        "sheikh_zayed_map": "https://maps.app.goo.gl/hnnERt4HpXiUg87z5"
     },
     "pages": {
         "articles": {
@@ -147,13 +151,19 @@
         },
         "doctors": {
             "title": "أطباؤنا في مركز بدر لطب الأسنان",
-            "subtitle": "نخبة من استشاريي وأخصائيي المركز لخدمتكم",
+            "subtitle": "نخبة من الاستشاريين والأخصائيين ذوي خبرة تزيد عن 12 عاما",
             "empty": "لا يوجد أطباء متاحين بعد."
         },
         "clients": {
             "title": "آراء عملائنا",
             "subtitle": "قصص نجاح وتجارب حقيقية من عملائنا",
             "empty": "لا توجد آراء متاحة بعد."
+        },
+        "offers": {
+            "title": "أحدث العروض الحصرية",
+            "subtitle": "اكتشف باقاتنا المميزة للعناية بجمال وصحة أسنانك بأفضل الأسعار",
+            "book_now": "إحجز هذا العرض",
+            "empty": "لا توجد عروض حالياً، تابعونا لتصلكم أحدث عروضنا"
         }
     },
     "egypt_page": {
@@ -500,7 +510,18 @@
         "media": "الوسائط",
         "pagination_previous": "&laquo; السابق",
         "pagination_next": "التالي &raquo;",
-        "role": "الدور"
+        "role": "الدور",
+        "appointment_details": "تفاصيل الموعد",
+        "view_appointment_details": "عرض تفاصيل طلب الموعد من ",
+        "delete_appointment": "حذف الموعد",
+        "customer_information": "معلومات العميل",
+        "submitted_on": "تم الإرسال في",
+        "not_provided": "غير متوفر",
+        "chosen_offer": "العرض المختار",
+        "any_service": "أي خدمة",
+        "message": "الرسالة",
+        "no_message_provided": "لا توجد رسالة مقدمة",
+        "not_specified": "غير محدد"
     },
     "pagination": {
         "previous": "&laquo; السابق",

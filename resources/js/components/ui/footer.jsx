@@ -76,12 +76,38 @@ export default function Footer() {
                     </h4>
                     <ul className="flex flex-col gap-8 text-lg font-bold">
                         <li className="flex flex-col gap-2 items-center md:items-start">
-                            <span className="text-background uppercase tracking-wider text-lg">فرع المنصورة</span>
-                            <span className="text-muted-foreground" dir="ltr">01060000805</span>
+                            <span className="text-background uppercase tracking-wider text-xl flex items-center gap-2">
+                                <MapPin size={20} className="text-primary" />
+                                {t('branches_page.mansoura.title')}
+                            </span>
+                            <div className="flex flex-col gap-1 items-center md:items-start">
+                                <span className="text-muted-foreground" dir="ltr">01060000805</span>
+                                <a 
+                                    href={t('branches_page.mansoura_map')} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-primary text-sm hover:underline flex items-center gap-1 mt-1"
+                                >
+                                    {t('branches_page.open_map')}
+                                </a>
+                            </div>
                         </li>
-                        <li className="flex flex-col gap-2">
-                            <span className="text-background uppercase tracking-wider text-lg">فرع الشيخ زايد</span>
-                            <span className="text-muted-foreground" dir="ltr">01030000728</span>
+                        <li className="flex flex-col gap-2 items-center md:items-start">
+                            <span className="text-background uppercase tracking-wider text-xl flex items-center gap-2">
+                                <MapPin size={20} className="text-primary" />
+                                {t('branches_page.sheikh_zayed.title')}
+                            </span>
+                            <div className="flex flex-col gap-1 items-center md:items-start">
+                                <span className="text-muted-foreground" dir="ltr">01030000728</span>
+                                <a 
+                                    href={t('branches_page.sheikh_zayed_map')} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-primary text-sm hover:underline flex items-center gap-1 mt-1"
+                                >
+                                    {t('branches_page.open_map')}
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </div>

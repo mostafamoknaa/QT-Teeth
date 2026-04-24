@@ -8,6 +8,7 @@
         "doctors": "Doctors",
         "articles": "Articles",
         "branches": "Branches",
+        "offers": "Offers",
         "country": "Country",
         "egypt": "Egypt",
         "saudi": "Saudi Arabia",
@@ -129,7 +130,10 @@
             "address": "District 11, Square 209, Block 2",
             "phone": "01030000728"
         },
-        "book_now_btn": "Book Your Appointment Now"
+        "book_now_btn": "Book Your Appointment Now",
+        "open_map": "View Location on Map",
+        "mansoura_map": "https://maps.app.goo.gl/HzMFLXHveNFaMsi37",
+        "sheikh_zayed_map": "https://maps.app.goo.gl/hnnERt4HpXiUg87z5"
     },
     "pages": {
         "articles": {
@@ -147,13 +151,19 @@
         },
         "doctors": {
             "title": "Our Doctors in Badr Dental Center",
-            "subtitle": "A team of elite consultants and specialists to serve you",
+            "subtitle": "A team of elite consultants and specialists with more than 12 years of experience",
             "empty": "No doctors available yet."
         },
         "clients": {
             "title": "Client Reviews",
             "subtitle": "Success stories and real experiences from our clients",
             "empty": "No reviews available yet."
+        },
+        "offers": {
+            "title": "Latest Exclusive Offers",
+            "subtitle": "Discover our premium bundles for your dental beauty and health at the best prices",
+            "book_now": "Book This Offer",
+            "empty": "No offers available currently, stay tuned for our latest deals"
         }
     },
     "egypt_page": {
@@ -498,7 +508,18 @@
         "fill_testimonial_details": "Share a new success story from one of your patients",
         "date": "Date",
         "media": "Media",
-        "role": "Role"
+        "role": "Role",
+        "appointment_details": "Appointment Details",
+        "view_appointment_details": "View request details from ",
+        "delete_appointment": "Delete Appointment",
+        "customer_information": "Customer Information",
+        "submitted_on": "Submitted on",
+        "not_provided": "Not provided",
+        "chosen_offer": "Chosen Offer",
+        "any_service": "Any Service",
+        "message": "Message",
+        "no_message_provided": "No message provided",
+        "not_specified": "Not specified"
     },
     "pagination": {
         "previous": "&laquo; Previous",

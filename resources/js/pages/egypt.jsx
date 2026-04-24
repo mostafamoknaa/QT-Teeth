@@ -28,7 +28,7 @@ export default function EgyptPage() {
                 t('egypt_page.branches.b1_d4'),
             ],
             phone: "01060000805",
-            mapLink: "/location.png",
+            mapLink: t('branches_page.mansoura_map'),
         },
         {
             name: t('egypt_page.branches.b2_name'),
@@ -41,7 +41,7 @@ export default function EgyptPage() {
                 t('egypt_page.branches.b2_d4'),
             ],
             phone: "01030000728",
-            mapLink: "/location.png",
+            mapLink: t('branches_page.sheikh_zayed_map'),
         },
     ];
 
@@ -209,6 +209,17 @@ export default function EgyptPage() {
                                     <div className="flex items-center gap-2 text-xs text-background/70">
                                         <img src="/phone2.png" alt="" className="w-5 h-5" />
                                         <span className='text-lg'>{branch.phone}</span>
+                                    </div>
+                                    <div className="pt-2">
+                                        <a 
+                                            href={branch.mapLink} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-bold text-lg"
+                                        >
+                                            <img src="/location.png" alt="" className="w-5 h-5" />
+                                            <span>{t('branches_page.open_map')}</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

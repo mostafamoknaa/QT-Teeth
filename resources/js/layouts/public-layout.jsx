@@ -2,6 +2,7 @@ import { Head, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 import NavBar from '@/components/ui/navbar';
 import Footer from '@/components/ui/footer';
+import OfferFloatingCarousel from '@/components/ui/offer-floating-carousel';
 
 export default function AppLayout({ children, heroOptions }) {
     const { locale } = usePage().props;
@@ -11,6 +12,11 @@ export default function AppLayout({ children, heroOptions }) {
         document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
         document.documentElement.lang = locale;
     }, [locale, isRtl]);
+
+    useEffect(() => {
+        document.body.classList.add('public-bg');
+        return () => document.body.classList.remove('public-bg');
+    }, []);
 
     return (
         <div className="min-h-screen bg-transparent text-foreground font-tajawal selection:bg-primary/30">
@@ -24,6 +30,8 @@ export default function AppLayout({ children, heroOptions }) {
             <main className="relative">
                 {children}
             </main>
+
+            <OfferFloatingCarousel />
 
             <Footer />
         </div>

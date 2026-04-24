@@ -11,6 +11,7 @@ class Appointment extends Model
         'phone',
         'email',
         'service_id',
+        'offer',
         'branch',
         'message',
     ];

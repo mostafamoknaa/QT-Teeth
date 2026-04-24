@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Doctor;
 use App\Models\Testimonial;
 use App\Models\Service;
+use App\Models\Offer;
 use Inertia\Inertia;
 
 class SiteController extends Controller
@@ -16,6 +17,7 @@ class SiteController extends Controller
             'articles' => Article::where('is_published', true)->orderBy('published_at', 'desc')->take(6)->get(),
             'testimonials' => Testimonial::orderBy('order')->get(),
             'services' => Service::orderBy('order')->get(),
+            'active_offers' => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -23,6 +25,7 @@ class SiteController extends Controller
     {
         return Inertia::render('contact', [
             'services' => Service::orderBy('order')->get(),
+            'active_offers' => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -73,6 +76,13 @@ class SiteController extends Controller
         ]);
     }
 
+    public function offers()
+    {
+        return Inertia::render('offers/index', [
+            'offers' => Offer::where('is_active', true)->orderBy('created_at', 'desc')->paginate(12),
+        ]);
+    }
+
     public function storeAppointment(\Illuminate\Http\Request $request)
     {
         $validated = $request->validate([
@@ -80,6 +90,7 @@ class SiteController extends Controller
             'phone' => 'required|regex:/^(\+?[0-9]{1,3}[-.\s]?)?[0-9]{7,15}$/',
             'email' => 'nullable|email|max:255',
             'service_id' => 'nullable|integer|exists:services,id',
+            'offer' => 'nullable|string|max:255',
             'branch' => 'nullable|string|max:255',
             'message' => 'nullable|string|max:1000',
         ], [

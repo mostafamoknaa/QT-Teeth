@@ -1,7 +1,7 @@
 import PublicLayout from '@/layouts/public-layout';
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { MapPin, Phone, Calendar } from 'lucide-react';
+import { MapPin, Phone, Calendar, ArrowLeft } from 'lucide-react';
 import { useTranslations } from '@/hooks/use-translations';
 
 export default function Branches() {
@@ -12,11 +12,13 @@ export default function Branches() {
             name: t('branches_page.mansoura.title'),
             address: t('branches_page.mansoura.address'),
             phone: t('branches_page.mansoura.phone'),
+            map: t('branches_page.mansoura_map'),
         },
         {
             name: t('branches_page.sheikh_zayed.title'),
             address: t('branches_page.sheikh_zayed.address'),
             phone: t('branches_page.sheikh_zayed.phone'),
+            map: t('branches_page.sheikh_zayed_map'),
         }
     ];
 
@@ -46,18 +48,29 @@ export default function Branches() {
                             </p>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="grid gap-6">
                             {branches.map((branch, index) => (
-                                <div key={index} className="bg-secondary/30 p-8 rounded-[2.5rem] border border-border/50 flex items-start gap-6 hover:bg-secondary/60 transition-colors">
-                                    <div className="bg-background/10 p-4 rounded-2xl text-background">
+                                <div key={index} className="bg-secondary/30 p-8 rounded-[2.5rem] border border-border/50 flex flex-col sm:flex-row items-start gap-6 hover:bg-secondary/60 transition-all duration-300 group/item">
+                                    <div className="bg-background/10 p-4 rounded-2xl text-background group-hover/item:bg-primary group-hover/item:text-primary-foreground transition-colors">
                                         <MapPin size={24} />
                                     </div>
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-3 flex-1">
                                         <h4 className="text-xl md:text-2xl font-bold text-background">{branch.name}</h4>
-                                        <p className="text-background/60 text-lg leading-relaxed">{branch.address}</p>
-                                        <div className="flex items-center justify-start gap-2 text-background font-bold text-lg mt-1">
-                                            <Phone size={18} className="text-background rotate-[90]" />
-                                            <span>{branch.phone}</span>
+                                        <p className="text-background/60 text-lg leading-relaxed max-w-md">{branch.address}</p>
+                                        <div className="flex flex-wrap items-center justify-start gap-6 mt-2">
+                                            <div className="flex items-center gap-2 text-background font-bold text-lg">
+                                                <Phone size={18} className="text-background" />
+                                                <span dir="ltr">{branch.phone}</span>
+                                            </div>
+                                            <a 
+                                                href={branch.map} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-bold text-lg group/link"
+                                            >
+                                                <span>{t('branches_page.open_map')}</span>
+                                                
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

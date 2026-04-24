@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
             'locale' => $locale,
             'translations' => $translations,
             'global_services' => \App\Models\Service::orderBy('order')->get(),
+            'active_offers' => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
