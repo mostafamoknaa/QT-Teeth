@@ -1,5 +1,5 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
-import { Plus, Edit, Trash2, Video, Star } from 'lucide-react';
+import { Plus, Edit, Trash2, Video, Star, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -120,6 +120,11 @@ export default function TestimonialsIndex({ testimonials, search: initialSearch 
                                             ) : 'صورة'}
                                         </td>
                                         <td className="px-4 py-3 text-right space-x-2 font-black">
+                                            <Button variant="ghost" size="icon" asChild title={t('admin.view')}>
+                                                <Link href={`/admin/testimonials/${testimonial.id}`}>
+                                                    <Eye className="h-4 w-4" />
+                                                </Link>
+                                            </Button>
                                             <Button variant="ghost" size="icon" asChild>
                                                 <Link href={`/admin/testimonials/${testimonial.id}/edit`}>
                                                     <Edit className="h-4 w-4" />

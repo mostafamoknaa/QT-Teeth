@@ -54,6 +54,13 @@ class TestimonialController extends Controller
         return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial created successfully.');
     }
 
+    public function show(Testimonial $testimonial)
+    {
+        return Inertia::render('admin/testimonials/show', [
+            'testimonial' => $testimonial
+        ]);
+    }
+
     public function edit(Testimonial $testimonial)
     {
         return Inertia::render('admin/testimonials/form', [

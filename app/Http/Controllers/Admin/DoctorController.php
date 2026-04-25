@@ -52,6 +52,13 @@ class DoctorController extends Controller
         return redirect()->route('admin.doctors.index')->with('success', 'Doctor created successfully.');
     }
 
+    public function show(Doctor $doctor)
+    {
+        return Inertia::render('admin/doctors/show', [
+            'doctor' => $doctor
+        ]);
+    }
+
     public function edit(Doctor $doctor)
     {
         return Inertia::render('admin/doctors/form', [

@@ -521,7 +521,20 @@
         "any_service": "أي خدمة",
         "message": "الرسالة",
         "no_message_provided": "لا توجد رسالة مقدمة",
-        "not_specified": "غير محدد"
+        "not_specified": "غير محدد",
+        "view": "عرض",
+        "article_details": "تفاصيل المقالة",
+        "doctor_details": "تفاصيل الطبيب",
+        "offer_details": "تفاصيل العرض",
+        "service_details": "تفاصيل الخدمة",
+        "testimonial_details": "تفاصيل التقييم",
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "before": "قبل",
+        "after": "بعد",
+        "metadata": "البيانات الوصفية",
+        "slug": "الرابط المختصر",
+        "delete_warning": "هذا الإجراء لا يمكن التراجع عنه. سيتم حذف العنصر بشكل دائم."
     },
     "pagination": {
         "previous": "&laquo; السابق",

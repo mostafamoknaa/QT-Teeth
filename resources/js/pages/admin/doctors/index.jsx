@@ -1,5 +1,5 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -107,6 +107,11 @@ export default function DoctorsIndex({ doctors, search: initialSearch }) {
                                         <td className="px-4 py-3 text-muted-foreground">{doctor.university || 'N/A'}</td>
                                         <td className="px-4 py-3">{doctor.order}</td>
                                         <td className="px-4 py-3 text-right space-x-2 text-foreground font-black">
+                                            <Button variant="ghost" size="icon" asChild title={t('admin.view')}>
+                                                <Link href={`/admin/doctors/${doctor.id}`}>
+                                                    <Eye className="h-4 w-4" />
+                                                </Link>
+                                            </Button>
                                             <Button variant="ghost" size="icon" asChild>
                                                 <Link href={`/admin/doctors/${doctor.id}/edit`}>
                                                     <Edit className="h-4 w-4" />

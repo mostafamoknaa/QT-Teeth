@@ -1,5 +1,5 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -114,6 +114,11 @@ export default function OffersIndex({ offers, search: initialSearch }) {
                                         {new Date(offer.created_at).toLocaleDateString()}
                                     </td>
                                     <td className="px-4 py-3 text-right space-x-2">
+                                        <Button variant="ghost" size="icon" asChild title={t('admin.view')}>
+                                            <Link href={`/admin/offers/${offer.id}`}>
+                                                <Eye className="h-4 w-4" />
+                                            </Link>
+                                        </Button>
                                         <Button variant="ghost" size="icon" asChild>
                                             <Link href={`/admin/offers/${offer.id}/edit`}>
                                                 <Edit className="h-4 w-4" />

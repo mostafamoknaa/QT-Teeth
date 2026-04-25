@@ -42,7 +42,9 @@ export default function ClientsIndex({ testimonials = [] }) {
                                 )}
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="w-16 h-16 bg-background/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-primary transition-colors cursor-pointer">
-                                        <Play className="w-6 h-6 text-white ml-1" />
+                                        <a href={testimonial.video_url} target="_blank" rel="noopener noreferrer">
+                                            <Play className="w-6 h-6 text-white ml-1" />
+                                        </a>
                                     </div>
                                 </div>
                             </div>

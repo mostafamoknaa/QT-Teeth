@@ -1,5 +1,5 @@
 import { Head, Link, useForm, router } from '@inertiajs/react';
-import { Plus, Edit, Trash2, HeartPulse } from 'lucide-react';
+import { Plus, Edit, Trash2, HeartPulse, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
@@ -109,6 +109,11 @@ export default function ServicesIndex({ services, search: initialSearch }) {
                                         </td>
                                         <td className="px-4 py-3">{service.order}</td>
                                         <td className="px-4 py-3 text-right space-x-2 font-black">
+                                            <Button variant="ghost" size="icon" asChild title={t('admin.view')}>
+                                                <Link href={`/admin/services/${service.id}`}>
+                                                    <Eye className="h-4 w-4" />
+                                                </Link>
+                                            </Button>
                                             <Button variant="ghost" size="icon" asChild title="تعديل الخدمة والمقارنات">
                                                 <Link href={`/admin/services/${service.id}/edit`}>
                                                     <Edit className="h-4 w-4" />

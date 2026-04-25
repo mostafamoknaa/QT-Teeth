@@ -59,6 +59,13 @@ class ArticleController extends Controller
         return redirect()->route('admin.articles.index')->with('success', 'Article created successfully.');
     }
 
+    public function show(Article $article)
+    {
+        return Inertia::render('admin/articles/show', [
+            'article' => $article
+        ]);
+    }
+
     public function edit(Article $article)
     {
         return Inertia::render('admin/articles/form', [

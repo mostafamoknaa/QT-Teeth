@@ -49,6 +49,13 @@ class OfferController extends Controller
         return redirect()->route('admin.offers.index')->with('success', 'Offer created successfully.');
     }
 
+    public function show(Offer $offer)
+    {
+        return Inertia::render('admin/offers/show', [
+            'offer' => $offer
+        ]);
+    }
+
     public function edit(Offer $offer)
     {
         return Inertia::render('admin/offers/form', [

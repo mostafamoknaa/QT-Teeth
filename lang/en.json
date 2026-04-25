@@ -519,7 +519,20 @@
         "any_service": "Any Service",
         "message": "Message",
         "no_message_provided": "No message provided",
-        "not_specified": "Not specified"
+        "not_specified": "Not specified",
+        "view": "View",
+        "article_details": "Article Details",
+        "doctor_details": "Doctor Details",
+        "offer_details": "Offer Details",
+        "service_details": "Service Details",
+        "testimonial_details": "Testimonial Details",
+        "active": "Active",
+        "inactive": "Inactive",
+        "before": "Before",
+        "after": "After",
+        "metadata": "Metadata",
+        "slug": "Slug",
+        "delete_warning": "This action cannot be undone. The item will be permanently deleted."
     },
     "pagination": {
         "previous": "&laquo; Previous",

@@ -55,6 +55,13 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('success', 'Service created successfully.');
     }
 
+    public function show(Service $service)
+    {
+        return Inertia::render('admin/services/show', [
+            'service' => $service->load('comparisons')
+        ]);
+    }
+
     public function edit(Service $service)
     {
         return Inertia::render('admin/services/form', [
