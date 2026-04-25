@@ -116,11 +116,11 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 </div>
 
                 {/* Layer 3: Main Navigation */}
-                <nav className="bg-white py-4 px-4 lg:px-24 flex justify-between items-center z-40 shadow-sm border-b border-border">
-                    {/* Right Side: Logo and Menu (Markup order for RTL Start) */}
+                <nav className="bg-white py-3 md:py-4 px-4 lg:px-24 flex justify-between items-center z-40 shadow-sm border-b border-border">
+                    {/* Right Side: Logo and Nav Links */}
                     <div className="flex items-center gap-16">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <img src="/logo.png" alt="Badr Dental" className="h-20 lg:h-24 w-auto drop-shadow-md" />
+                            <img src="/logo.png" alt="Badr Dental" className="h-14 md:h-20 lg:h-24 w-auto drop-shadow-md" />
                         </Link>
 
                         <ul className="hidden xl:flex items-center gap-8">
@@ -156,29 +156,32 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         </ul>
                     </div>
 
-                    {/* Left Side: CTA and Search */}
-                    <div className="flex items-center gap-5">
+                    {/* Left Side: CTA Buttons + Hamburger */}
+                    <div className="flex items-center gap-2 md:gap-3 xl:gap-5">
+                        {/* Offers button — hidden on very small screens, visible from sm up */}
                         <Link 
                             href="/offers"
-                            className="bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-black text-sm flex items-center gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group"
+                            className="flex bg-primary text-primary-foreground px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
                         >
-                            <Calendar size={18} className="group-hover:rotate-12 transition-transform" />
+                            <Calendar size={15} className="group-hover:rotate-12 transition-transform hidden md:block" />
                             {t('nav.offers')}
                         </Link>
 
+                        {/* Book Now button */}
                         <Link 
                             href="/contact"
-                            className="bg-foreground text-background px-8 py-3.5 rounded-full font-black text-sm flex items-center gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group"
+                            className="bg-foreground text-background px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm flex items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
                         >
-                            <Calendar size={18} className="group-hover:rotate-12 transition-transform" />
+                            <Calendar size={15} className="group-hover:rotate-12 transition-transform hidden md:block" />
                             {t('nav.book_now')}
                         </Link>
 
+                        {/* Hamburger — only visible below xl */}
                         <button 
-                            className="xl:hidden p-3 hover:bg-white/10 rounded-xl transition-colors border border-white/20"
+                            className="xl:hidden p-2.5 hover:bg-secondary rounded-xl transition-colors border border-border"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
-                            <Menu size={26} className="text-foreground" />
+                            <Menu size={22} className="text-foreground" />
                         </button>
                     </div>
                 </nav>
@@ -264,7 +267,27 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         ))}
                     </ul>
 
-                    <div className="mt-auto pt-16 flex flex-col gap-10 items-center border-t border-border/50">
+                    <div className="mt-auto pt-16 flex flex-col gap-6 items-center border-t border-border/50">
+                        {/* CTA buttons inside mobile menu for very small screens */}
+                        <div className="flex flex-col sm:hidden gap-4 w-full max-w-xs">
+                            <Link
+                                href="/offers"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-black text-base flex items-center justify-center gap-3 shadow-lg"
+                            >
+                                <Calendar size={18} />
+                                {t('nav.offers')}
+                            </Link>
+                            <Link
+                                href="/contact"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="bg-foreground text-background px-6 py-3 rounded-full font-black text-base flex items-center justify-center gap-3 shadow-lg"
+                            >
+                                <Calendar size={18} />
+                                {t('nav.book_now')}
+                            </Link>
+                        </div>
+
                         <button 
                             onClick={() => { switchLanguage(locale === 'ar' ? 'en' : 'ar'); setIsMobileMenuOpen(false); }}
                             className="flex items-center gap-4 text-xl font-black uppercase text-primary"
