@@ -1,15 +1,31 @@
 import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from '@/hooks/use-translations';
 import { ChevronRight, HeartPulse } from 'lucide-react';
+import ServiceSchema from '@/components/seo/ServiceSchema';
+import BreadcrumbSchema from '@/components/seo/BreadcrumbSchema';
 
-export default function ServiceShow({ service }) {
+export default function ServiceShow({ service, canonical_url }) {
     const { t } = useTranslations();
+    const ogImage = service.image
+        ? `https://badrdentalcenter.com/storage/${service.image}`
+        : 'https://badrdentalcenter.com/og-image.png';
+    const serviceUrl = canonical_url || `https://badrdentalcenter.com/services/${service.url_key || service.id}`;
 
     return (
         <>
-            <Head title={service.title} />
+            <Head title={`${service.title} | مركز بدر لطب الأسنان`}>
+                <meta name="description" content={service.description || `${service.title} — مركز بدر لطب الأسنان. متخصصون في زراعة وتجميل وتقويم الأسنان. فروع في المنصورة والشيخ زايد.`} />
+                <meta property="og:title" content={`${service.title} | مركز بدر لطب الأسنان`} />
+                <meta property="og:description" content={service.description || service.title} />
+                <meta property="og:image" content={ogImage} />
+                <meta property="og:url" content={serviceUrl} />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content={`${service.title} | مركز بدر`} />
+                <meta name="twitter:description" content={service.description || service.title} />
+                <meta name="twitter:image" content={ogImage} />
+            </Head>
 
             <article className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Breadcrumb */}
@@ -88,6 +104,14 @@ export default function ServiceShow({ service }) {
                         </Link>
                     </div>
                 </div>
+
+                {/* JSON-LD structured data — moved here to avoid any potential sibling conflict with <Head> */}
+                <ServiceSchema service={service} canonicalUrl={serviceUrl} />
+                <BreadcrumbSchema items={[
+                    { name: 'الرئيسية', url: '/' },
+                    { name: 'الخدمات', url: '/services' },
+                    { name: service.title },
+                ]} />
             </article>
         </>
     );

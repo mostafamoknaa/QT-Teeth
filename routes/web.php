@@ -55,4 +55,61 @@ Route::post('/language', function (\Illuminate\Http\Request $request) {
     return back();
 })->name('language.switch');
 
+// Dynamic sitemap.xml
+Route::get('/sitemap.xml', function () {
+    $domain = rtrim(config('app.url'), '/');
+
+    $staticUrls = [
+        ['loc' => $domain . '/',         'priority' => '1.0', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/about',     'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/services',  'priority' => '0.9', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/articles',  'priority' => '0.8', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/branches',  'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/contact',   'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/doctors',   'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/egypt',     'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/saudi',     'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/offers',    'priority' => '0.7', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/clients',   'priority' => '0.6', 'changefreq' => 'monthly'],
+    ];
+
+    $services  = \App\Models\Service::select('id', 'slug', 'updated_at')->get();
+    $articles  = \App\Models\Article::where('is_published', true)->select('id', 'slug', 'updated_at')->get();
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+
+    foreach ($staticUrls as $url) {
+        $xml .= "  <url>\n";
+        $xml .= "    <loc>{$url['loc']}</loc>\n";
+        $xml .= "    <changefreq>{$url['changefreq']}</changefreq>\n";
+        $xml .= "    <priority>{$url['priority']}</priority>\n";
+        $xml .= "  </url>\n";
+    }
+
+    foreach ($services as $service) {
+        $key = $service->slug ?: $service->id;
+        $xml .= "  <url>\n";
+        $xml .= "    <loc>{$domain}/services/{$key}</loc>\n";
+        $xml .= "    <lastmod>{$service->updated_at->toAtomString()}</lastmod>\n";
+        $xml .= "    <changefreq>monthly</changefreq>\n";
+        $xml .= "    <priority>0.8</priority>\n";
+        $xml .= "  </url>\n";
+    }
+
+    foreach ($articles as $article) {
+        $key = $article->slug ?: $article->id;
+        $xml .= "  <url>\n";
+        $xml .= "    <loc>{$domain}/articles/{$key}</loc>\n";
+        $xml .= "    <lastmod>{$article->updated_at->toAtomString()}</lastmod>\n";
+        $xml .= "    <changefreq>monthly</changefreq>\n";
+        $xml .= "    <priority>0.7</priority>\n";
+        $xml .= "  </url>\n";
+    }
+
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
+
 require __DIR__.'/settings.php';

@@ -9,7 +9,18 @@ export default function ArticlesIndex({ articles = [] }) {
 
     return (
         <>
-            <Head title={t('pages.articles.title')} />
+            <Head>
+                <title>مقالات ونصائح طب الأسنان | مركز بدر</title>
+                <meta name="description" content="مقالات ونصائح طبية من مركز بدر لطب الأسنان: زراعة الأسنان، تجميل الأسنان، تقويم، صحة الفم، وما يخص عناية الأسنان واللثة. اقرأ وتعلم من خبرائنا." />
+                <meta name="keywords" content="مقالات طب الأسنان، نصائح صحة الأسنان، عناية الأسنان، زراعة الأسنان معلومات، مركز بدر مدونة" />
+                <meta property="og:title" content="مقالات ونصائح طب الأسنان | مركز بدر" />
+                <meta property="og:description" content="نصائح طبية متخصصة من فريق مركز بدر لطب الأسنان." />
+                <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/articles" />
+                <meta name="twitter:title" content="مقالات ونصائح طب الأسنان" />
+                <meta name="twitter:description" content="نصائح طبية متخصصة من مركز بدر لطب الأسنان." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+            </Head>
 
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
@@ -27,7 +38,7 @@ export default function ArticlesIndex({ articles = [] }) {
                     {articles.map((article) => (
                         <Link 
                             key={article.id} 
-                            href={`/articles/${article.id}`}
+                            href={`/articles/${article.url_key || article.id}`}
                             className="group bg-secondary/30 rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
                         >
                             <div className="aspect-[16/10] overflow-hidden">

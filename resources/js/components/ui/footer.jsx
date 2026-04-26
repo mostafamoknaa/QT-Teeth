@@ -30,10 +30,10 @@ export default function Footer() {
                          رائدون في تجميل وزراعة الأسنان بمصر منذ 2014. فخامة التجربة وأحدث التقنيات العالمية.
                     </p>
                     <div className="flex gap-5 mt-2 justify-center md:justify-start">
-                        <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                        <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" ><img src="/snapchat2.png" className="hover:text-primary transition-colors cursor-pointer"  /></a>
-                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank"><img src='/tik-tok.png' className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                        <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                        <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank" rel="noopener noreferrer"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer"><img src="/snapchat2.png" alt="Snapchat" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
+                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer"><img src='/tik-tok.png' alt="TikTok" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@ export default function Footer() {
                     <ul className="flex flex-col gap-5 items-center md:items-start">
                         {services.map((service) => (
                             <li key={service.id}>
-                                <Link href={`/services/${service.id}`} className="text-muted-foreground hover:text-primary transition-colors text-lg cursor-pointer font-bold uppercase tracking-tight">
+                                <Link href={`/services/${service.url_key || service.id}`} className="text-muted-foreground hover:text-primary transition-colors text-lg cursor-pointer font-bold uppercase tracking-tight">
                                     {service.title}
                                 </Link>
                             </li>

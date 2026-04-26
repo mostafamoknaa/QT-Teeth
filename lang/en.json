@@ -15,6 +15,22 @@
         "contact": "Contact Us",
         "book_now": "Book Now"
     },
+    "validation": {
+        "phone": {
+            "regex": "Please enter a valid phone number (e.g. +20... or +966...)",
+            "required": "Phone number is required"
+        },
+        "name": {
+            "required": "Full name is required"
+        },
+        "email": "Please enter a valid email address",
+        "service": {
+            "exists": "Selected service is invalid"
+        },
+        "message": {
+            "max": "Message cannot exceed 1000 characters"
+        }
+    },
     "hero": {
         "title": "Badr Dental Center",
         "subtitle": "Pioneers in dental cosmetics and implants in Egypt since 2014. Luxury experience and the latest global technologies.",

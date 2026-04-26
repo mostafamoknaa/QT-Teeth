@@ -38,17 +38,23 @@ class HandleInertiaRequests extends Middleware
         $locale = app()->getLocale();
         $translations = json_decode(file_get_contents(lang_path("$locale.json")), true);
 
+        // Build a canonical URL from the production domain + current path.
+        // Individual controller actions can override this by passing their own canonical_url prop.
+        $productionUrl = rtrim(config('app.url'), '/');
+        $canonicalUrl  = $productionUrl . '/' . ltrim($request->getPathInfo(), '/');
+
         return [
             ...parent::share($request),
-            'name' => config('app.name'),
-            'auth' => [
+            'name'           => config('app.name'),
+            'auth'           => [
                 'user' => $request->user(),
             ],
-            'locale' => $locale,
-            'translations' => $translations,
-            'global_services' => \App\Models\Service::orderBy('order')->get(),
-            'active_offers' => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'locale'         => $locale,
+            'translations'   => $translations,
+            'canonical_url'  => $canonicalUrl,
+            'global_services' => \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
+            'active_offers'  => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
+            'sidebarOpen'    => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
 }

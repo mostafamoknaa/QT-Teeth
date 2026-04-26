@@ -1,4 +1,5 @@
 import PublicLayout from '@/layouts/public-layout';
+import { Head } from '@inertiajs/react';
 import { useTranslations } from "@/hooks/use-translations";
 
 export default function About() {
@@ -14,6 +15,18 @@ export default function About() {
 
     return (
         <>
+            <Head>
+                <title>عن مركز بدر لطب الأسنان | فريق طبي متخصص منذ 2014</title>
+                <meta name="description" content="تعرف على مركز بدر لطب الأسنان — فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. متخصصون في زراعة وتجميل وتقويم الأسنان. فروع في المنصورة والشيخ زايد منذ 2014." />
+                <meta name="keywords" content="عن مركز بدر، طبيب أسنان مصر، دكتور بدر، عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد، Badr Dental Center Egypt" />
+                <meta property="og:title" content="عن مركز بدر لطب الأسنان" />
+                <meta property="og:description" content="فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. متخصصون في زراعة وتجميل وتقويم الأسنان منذ 2014." />
+                <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/about" />
+                <meta name="twitter:title" content="عن مركز بدر لطب الأسنان" />
+                <meta name="twitter:description" content="فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. فروع في المنصورة والشيخ زايد." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+            </Head>
             {/* About Us Section */}
             <section id="about" className="py-12 md:py-20 px-6 lg:px-24">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
@@ -21,12 +34,12 @@ export default function About() {
                     <div className="space-y-8">
                         <div className="space-y-6">
                             <div className='border border-t-4 border-background w-30'></div>
-                            <h2 className="text-4xl text-background md:text-5xl lg:text-6xl tracking-tighter">
+                            <h1 className="text-4xl text-background md:text-5xl lg:text-6xl tracking-tighter">
                                {t('about.title')}
-                            </h2>
-                            <h3 className="text-xl text-background md:text-2xl lg:text-3xl font-bold">
+                            </h1>
+                            <h2 className="text-xl text-background md:text-2xl lg:text-3xl font-bold">
                                 Badr Dental Center
-                            </h3>
+                            </h2>
                         </div>
 
                         <p className="text-background text-lg md:text-xl lg:text-2xl leading-relaxed text-justify">

@@ -1,4 +1,5 @@
 import PublicLayout from '@/layouts/public-layout';
+import { Head } from '@inertiajs/react';
 import { useTranslations } from "@/hooks/use-translations";
 import {Link} from '@inertiajs/react';
 
@@ -102,13 +103,24 @@ export default function EgyptPage() {
 
     return (
         <>
+            <Head title="مركز بدر لطب الأسنان في مصر | زراعة وتجميل الأسنان — المنصورة والشيخ زايد">
+                <meta name="description" content="مركز بدر لطب الأسنان في مصر — متخصصون في زراعة الأسنان، تجميل أسنان، تقويم وعلاج جذور. فروع في المنصورة والشيخ زايد. أكثر من 10 سنوات خبرة. متاح التقسيط." />
+                <meta name="keywords" content="طبيب أسنان مصر، زراعة أسنان مصر، تجميل أسنان مصر، تقويم أسنان Egypt، عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد، Badr Dental Egypt، dental implants Egypt" />
+                <meta property="og:title" content="مركز بدر لطب الأسنان في مصر" />
+                <meta property="og:description" content="متخصصون في زراعة وتجميل وتقويم الأسنان في مصر. فروع في المنصورة والشيخ زايد. متاح التقسيط." />
+                <meta property="og:image" content="https://badrdentalcenter.com/egypt.jpg" />
+                <meta property="og:url" content="https://badrdentalcenter.com/egypt" />
+                <meta name="twitter:title" content="مركز بدر لطب الأسنان في مصر" />
+                <meta name="twitter:description" content="فروع في المنصورة والشيخ زايد. زراعة وتجميل وتقويم الأسنان." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/eg.jpg" />
+            </Head>
 
             {/* Main Title & Description */}
             <section className="py-12 px-4 lg:px-24">
                 <div className="max-w-6xl mx-auto text-center space-y-6">
-                    <h2 className="text-xl lg:text-2xl font-bold text-background leading-relaxed">
+                    <h1 className="text-xl lg:text-2xl font-bold text-background leading-relaxed">
                         {t('egypt_page.hero_title')} - {t('egypt_page.hero_subtitle').replace('15', '35')}
-                    </h2>
+                    </h1>
                     <div className="space-y-4 text-background/70 leading-relaxed max-w-4xl mx-auto text-sm lg:text-base">
                         <p>{t('egypt_page.desc1')}</p>
                         <p>{t('egypt_page.desc2')}</p>

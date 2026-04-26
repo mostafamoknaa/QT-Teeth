@@ -24,13 +24,24 @@ export default function Branches() {
 
     return (
         <section className="bg-transparent">
-            <Head title={t('branches_page.title')} />
+            <Head>
+                <title>فروع مركز بدر لطب الأسنان | المنصورة والشيخ زايد</title>
+                <meta name="description" content="فروع مركز بدر لطب الأسنان — فرع المنصورة: اتصل على 01060000805. فرع الشيخ زايد: اتصل على 01030000728. زورنا واحجز موعدك أونلاين." />
+                <meta name="keywords" content="عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد، فروع مركز بدر، مركز بدر المنصورة، مركز بدر الشيخ زايد، Badr Dental Mansoura، Badr Dental Sheikh Zayed" />
+                <meta property="og:title" content="فروع مركز بدر لطب الأسنان" />
+                <meta property="og:description" content="فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن." />
+                <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/branches" />
+                <meta name="twitter:title" content="فروع مركز بدر لطب الأسنان" />
+                <meta name="twitter:description" content="فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+            </Head>
 
             {/* Page Header Area */}
             <div className="py-16 md:py-24 px-6 lg:px-24 text-center">
-                 <h3 className="text-background text-4xl md:text-5xl lg:text-6xl tracking-tighter">
+                 <h1 className="text-background text-4xl md:text-5xl lg:text-6xl tracking-tighter">
                     {t('branches_page.title')}
-                </h3>
+                </h1>
             </div>
 
             {/* Main Content */}

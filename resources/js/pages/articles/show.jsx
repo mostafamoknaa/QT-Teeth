@@ -3,13 +3,35 @@ import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from '@/hooks/use-translations';
 import { ChevronRight, Calendar, User } from 'lucide-react';
+import ArticleSchema from '@/components/seo/ArticleSchema';
+import BreadcrumbSchema from '@/components/seo/BreadcrumbSchema';
 
-export default function ArticleShow({ article }) {
+export default function ArticleShow({ article, canonical_url }) {
     const { t } = useTranslations();
+    const ogImage = article.image
+        ? `https://badrdentalcenter.com/storage/${article.image}`
+        : 'https://badrdentalcenter.com/og-image.png';
+    const articleUrl = canonical_url || `https://badrdentalcenter.com/articles/${article.url_key || article.id}`;
 
     return (
         <>
-            <Head title={article.title} />
+            <Head title={`${article.title} | مركز بدر لطب الأسنان`}>
+                <meta name="description" content={article.description || `${article.title} — مقال من مركز بدر لطب الأسنان.`} />
+                <meta property="og:title" content={`${article.title} | مركز بدر`} />
+                <meta property="og:description" content={article.description || article.title} />
+                <meta property="og:image" content={ogImage} />
+                <meta property="og:url" content={articleUrl} />
+                <meta property="og:type" content="article" />
+                {article.published_at && (
+                    <meta property="article:published_time" content={article.published_at} />
+                )}
+                {article.author_name && (
+                    <meta property="article:author" content={article.author_name} />
+                )}
+                <meta name="twitter:title" content={`${article.title} | مركز بدر`} />
+                <meta name="twitter:description" content={article.description || article.title} />
+                <meta name="twitter:image" content={ogImage} />
+            </Head>
 
             <article className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Breadcrumb */}
@@ -78,6 +100,14 @@ export default function ArticleShow({ article }) {
                         </Link>
                     </div>
                 </div>
+
+                {/* JSON-LD structured data — moved here to avoid any potential sibling conflict with <Head> */}
+                <ArticleSchema article={article} canonicalUrl={articleUrl} />
+                <BreadcrumbSchema items={[
+                    { name: 'الرئيسية', url: '/' },
+                    { name: 'المقالات', url: '/articles' },
+                    { name: article.title },
+                ]} />
             </article>
         </>
     );

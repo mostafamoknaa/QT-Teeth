@@ -1,7 +1,7 @@
 import React from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from "@/hooks/use-translations";
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage, Head } from '@inertiajs/react';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/error-messages';
 
@@ -65,10 +65,22 @@ export default function Contact({ services = [] }) {
 
     return (
         <section className="py-16 px-4 lg:px-24">
+            <Head>
+                <title>احجز موعدك | مركز بدر لطب الأسنان</title>
+                <meta name="description" content="احجز موعدك في مركز بدر لطب الأسنان الآن. زراعة أسنان، تجميل، تقويم وأكثر. فروع في المنصورة والشيخ زايد. متاح التقسيط." />
+                <meta name="keywords" content="حجز موعد أسنان، اتصال مركز بدر، حجز زراعة أسنان، حجز تجميل أسنان، عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد" />
+                <meta property="og:title" content="احجز موعدك | مركز بدر لطب الأسنان" />
+                <meta property="og:description" content="احجز موعدك الآن. فروع في المنصورة والشيخ زايد. متاح التقسيط." />
+                <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/contact" />
+                <meta name="twitter:title" content="احجز موعدك | مركز بدر لطب الأسنان" />
+                <meta name="twitter:description" content="احجز موعدك الآن. فروع في المنصورة والشيخ زايد." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+            </Head>
             <div className="text-center mb-20 space-y-4">
-                <h2 className="text-3xl lg:text-6xl text-background font-black tracking-tighter">
+                <h1 className="text-3xl lg:text-6xl text-background font-black tracking-tighter">
                    {t('nav.contact')}
-                </h2>
+                </h1>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
@@ -98,7 +110,7 @@ export default function Contact({ services = [] }) {
                             onChange={e => setData('name', e.target.value)}
                             className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all text-background" 
                         />
-                        {errors.name && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.name)}</p>}
+                        {errors.name && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.name))}</p>}
                     </div>
 
                     {/* Phone */}
@@ -106,16 +118,16 @@ export default function Contact({ services = [] }) {
                         <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.phone')}</label>
                         <input 
                             type="tel" 
-                            placeholder="+20 123456789 or 01234567890" 
+                            placeholder="+20 123... / +966 5..." 
                             value={data.phone}
                             onChange={e => setData('phone', e.target.value)}
                             className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all text-background" 
                             dir="ltr" 
                         />
                         {errors.phone ? (
-                            <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.phone)}</p>
+                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.phone))}</p>
                         ) : (
-                            <p className="text-xs text-background/60">Format: +20 123456789 or 01234567890</p>
+                            <p className="text-xs text-background/60">{t('validation.phone.regex')}</p>
                         )}
                     </div>
 
@@ -132,7 +144,7 @@ export default function Contact({ services = [] }) {
                                 <option key={service.id} value={service.id} className="text-foreground">{service.title}</option>
                             ))}
                         </select>
-                        {errors.service_id && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.service_id)}</p>}
+                        {errors.service_id && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.service_id))}</p>}
                     </div>
 
                     {/* Offer */}
@@ -148,7 +160,7 @@ export default function Contact({ services = [] }) {
                                 <option key={offer.id} value={offer.title} className="text-foreground">{offer.title}</option>
                             ))}
                         </select>
-                        {errors.offer && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.offer)}</p>}
+                        {errors.offer && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.offer))}</p>}
                     </div>
 
                     {/* Email */}
@@ -161,7 +173,7 @@ export default function Contact({ services = [] }) {
                             onChange={e => setData('email', e.target.value)}
                             className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all text-background" 
                         />
-                        {errors.email && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.email)}</p>}
+                        {errors.email && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.email))}</p>}
                     </div>
 
                     {/* Branch */}
@@ -176,7 +188,7 @@ export default function Contact({ services = [] }) {
                             <option value="mansoura" className="text-foreground">{t('branches_page.mansoura.title')}</option>
                             <option value="sheikh_zayed" className="text-foreground">{t('branches_page.sheikh_zayed.title')}</option>
                         </select>
-                        {errors.branch && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.branch)}</p>}
+                        {errors.branch && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.branch))}</p>}
                     </div>
 
                     {/* Message */}
@@ -192,9 +204,9 @@ export default function Contact({ services = [] }) {
                             className="w-full bg-secondary/20 border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium h-40 resize-none placeholder:text-background/50 transition-all text-background"
                         ></textarea>
                         {errors.message ? (
-                            <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.message)}</p>
+                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.message))}</p>
                         ) : (
-                            <p className="text-xs text-background/60">Max 1000 characters</p>
+                            <p className="text-xs text-background/60">{t('validation.message.max')}</p>
                         )}
                     </div>
                     

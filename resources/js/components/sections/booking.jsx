@@ -93,7 +93,7 @@ export default function BookingFormSection({ services = [] }) {
                             value={data.name}
                             onChange={e => setData('name', e.target.value)}
                         />
-                        {errors.name && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.name)}</p>}
+                        {errors.name && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.name))}</p>}
                     </div>
 
                     {/* Phone */}
@@ -101,7 +101,7 @@ export default function BookingFormSection({ services = [] }) {
                         <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.phone')}</label>
                         <input 
                             type="tel" 
-                            placeholder="+20 123456789 or 01234567890" 
+                            placeholder="+20 123... / +966 5..." 
                             className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
                             dir="ltr" 
                             value={data.phone}
@@ -109,9 +109,9 @@ export default function BookingFormSection({ services = [] }) {
 
                         />
                         {errors.phone ? (
-                            <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.phone)}</p>
+                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.phone))}</p>
                         ) : (
-                            <p className="text-xs text-muted-foreground">Format: +20 123456789 or 01234567890</p>
+                            <p className="text-xs text-muted-foreground">{t('validation.phone.regex')}</p>
                         )}
                     </div>
 
@@ -124,7 +124,7 @@ export default function BookingFormSection({ services = [] }) {
                                 <option key={service.id} value={service.id} className="text-foreground">{service.title}</option>
                             ))}
                         </select>
-                        {errors.service_id && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.service_id)}</p>}
+                        {errors.service_id && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.service_id))}</p>}
                     </div>
 
                     {/* Offer */}
@@ -136,7 +136,7 @@ export default function BookingFormSection({ services = [] }) {
                                 <option key={offer.id} value={offer.title} className="text-foreground">{offer.title}</option>
                             ))}
                         </select>
-                        {errors.offer && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.offer)}</p>}
+                        {errors.offer && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.offer))}</p>}
                     </div>
 
                     {/* Email */}
@@ -149,7 +149,7 @@ export default function BookingFormSection({ services = [] }) {
                             value={data.email}
                             onChange={e => setData('email', e.target.value)} 
                         />
-                        {errors.email && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.email)}</p>}
+                        {errors.email && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.email))}</p>}
                     </div>
 
                     {/* Branch */}
@@ -160,7 +160,7 @@ export default function BookingFormSection({ services = [] }) {
                             <option value="المنصورة" className="text-foreground">{t('branches_page.mansoura.title')}</option>
                             <option value="الشيخ زايد" className="text-foreground">{t('branches_page.sheikh_zayed.title')}</option>
                         </select>
-                        {errors.branch && <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.branch)}</p>}
+                        {errors.branch && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.branch))}</p>}
                     </div>
 
                     {/* Message */}
@@ -176,9 +176,9 @@ export default function BookingFormSection({ services = [] }) {
                             onChange={e => setData('message', e.target.value)}
                         ></textarea>
                         {errors.message ? (
-                            <p className="text-sm text-destructive font-medium">{getErrorMessage(errors.message)}</p>
+                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.message))}</p>
                         ) : (
-                            <p className="text-xs text-muted-foreground">Max 1000 characters</p>
+                            <p className="text-xs text-muted-foreground">{t('validation.message.max')}</p>
                         )}
                     </div>
                                     {/* Submit Button */}

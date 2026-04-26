@@ -91,26 +91,25 @@ const errorMessageMap: Record<string, string> = {
  * Format a single error message
  */
 export function formatErrorMessage(error: string): string {
-    // Check if the error message is in our map
+    // If the error is a translation key (starts with validation.), 
+    // return it as-is so the component can use t() on it.
+    if (error.startsWith('validation.')) {
+        return error;
+    }
+
+    // Check if the error message is in our static English map
     if (errorMessageMap[error]) {
         return errorMessageMap[error];
     }
 
-    // Check for partial matches (contains validation keys)
+    // Check for partial matches
     for (const [key, message] of Object.entries(errorMessageMap)) {
         if (error.includes(key) || key.includes(error)) {
             return message;
         }
     }
 
-    // If no match found, clean up the error message
-    // Remove "validation." prefix and convert snake_case to readable text
-    if (error.startsWith('validation.')) {
-        const cleaned = error.replace('validation.', '').replace(/_/g, ' ');
-        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-    }
-
-    // Return as-is if it's already a user-friendly message
+    // Return as-is
     return error;
 }
 
@@ -118,7 +117,9 @@ export function formatErrorMessage(error: string): string {
  * Format error message for display (handles arrays or strings)
  */
 export function getErrorMessage(error?: string | string[]): string {
-    if (!error) return '';
+    if (!error) {
+        return '';
+    }
 
     // If it's an array, get the first message
     if (Array.isArray(error)) {

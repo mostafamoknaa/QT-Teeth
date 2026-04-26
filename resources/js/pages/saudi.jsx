@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Head } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from "@/hooks/use-translations";
 import { Check, Plane, Car, Home, ChevronDown } from "lucide-react";
@@ -103,14 +104,25 @@ export default function SaudiPage() {
 
     return (
         <>
+            <Head title="مركز بدر لطب الأسنان للسعوديين | زراعة وتجميل الأسنان في مصر">
+                <meta name="description" content="مركز بدر لطب الأسنان للسعوديين — حلول متكاملة للزراعة وتجميل وتقويم الأسنان في مصر. خدمة استقبال وتنقل متاحة. أسعار تنافسية. يخدم السعوديين منذ 2014." />
+                <meta name="keywords" content="عيادة أسنان للسعوديين في مصر، زراعة أسنان للسعوديين، تجميل أسنان للسعوديين في مصر، Badr Dental Saudi، دينتال توريزم مصر، dental tourism Egypt Saudi" />
+                <meta property="og:title" content="مركز بدر لطب الأسنان للسعوديين" />
+                <meta property="og:description" content="حلول متكاملة للزراعة وتجميل وتقويم الأسنان في مصر. خدمة استقبال وتنقل متاحة." />
+                <meta property="og:image" content="https://badrdentalcenter.com/saudi.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/saudi" />
+                <meta name="twitter:title" content="مركز بدر للسعوديين | زراعة وتجميل الأسنان في مصر" />
+                <meta name="twitter:description" content="حلول متكاملة للزراعة وتجميل وتقويم الأسنان. خدمة استقبال وتنقل متاحة." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/saudi.png" />
+            </Head>
 
             {/* Main Title & Description */}
             <section className="py-12 px-4 lg:px-24 ">
                 <div className="max-w-6xl mx-auto text-center space-y-6">
                     <section>
-                        <h2 className="text-xl lg:text-2xl text-background leading-loose">
+                        <h1 className="text-xl lg:text-2xl text-background leading-loose">
                             {t('saudi_page.hero_title2')}
-                        </h2>
+                        </h1>
                         <h2 className="text-xl lg:text-2xl text-background leading-loose">
                             {t('saudi_page.hero_subtitle2')}
                         </h2>

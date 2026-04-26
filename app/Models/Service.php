@@ -19,4 +19,23 @@ class Service extends Model
     {
         return $this->hasMany(ServiceComparison::class);
     }
+
+    /**
+     * Resolve route binding by slug first, then fall back to id.
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('slug', $value)->first()
+            ?? $this->where('id', $value)->firstOrFail();
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function getUrlKeyAttribute(): string
+    {
+        return $this->slug ?: (string) $this->id;
+    }
 }

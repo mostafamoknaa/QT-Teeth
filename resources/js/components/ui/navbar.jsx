@@ -1,6 +1,6 @@
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Linkedin, Mail, Phone, Search, Twitter, Youtube, Calendar, Globe, Menu, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
 import { home, about, branches, contact } from '@/routes';
 import language from '@/routes/language';
@@ -30,8 +30,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         { href: '/articles', label: t('nav.articles'), isRoute: false },
         { href: '/doctors', label: t('nav.doctors'), isRoute: false },
         { href: branches.url(), label: t('nav.branches'), isRoute: true },
-        { 
-            label: t('nav.country'), 
+        {
+            label: t('nav.country'),
             children: [
                 { href: '/egypt', label: t('nav.egypt') },
                 { href: '/saudi', label: t('nav.saudi') },
@@ -44,7 +44,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         <header className="w-full relative">
             <div className="w-full z-50">
                 {/* Layer 1: Top Service Bar */}
-                <div 
+                <div
                     className="relative z-50 w-full overflow-hidden border-b border-white/10 bg-foreground py-3 text-background"
                     dir="ltr"
                 >
@@ -58,7 +58,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                             {[...topServices, ...topServices].map((service, i) => (
                                 <Link
                                     key={i}
-                                    href={`/services/${service.id}`}
+                                    href={`/services/${service.url_key || service.id}`}
                                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                                     className="group flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider transition-colors hover:text-primary"
                                 >
@@ -68,13 +68,13 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                 </Link>
                             ))}
                         </div>
-                        
+
                         {/* Duplicate the set once for the seamless loop to catch the tail */}
                         <div className="flex animate-marquee gap-12 whitespace-nowrap px-6 hover:[animation-play-state:paused] motion-reduce:animate-none" aria-hidden="true">
                             {[...topServices, ...topServices].map((service, i) => (
                                 <Link
                                     key={`dup-${i}`}
-                                    href={`/services/${service.id}`}
+                                    href={`/services/${service.url_key || service.id}`}
                                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                                     className="group flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider transition-colors hover:text-primary"
                                 >
@@ -91,22 +91,22 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     <div className="flex items-center gap-5">
                         <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                         <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" ><img src="/snapchat2.png" className="hover:text-primary transition-colors cursor-pointer"  /></a>
-                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank"><img src='/tik-tok.png' className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer"><img src="/snapchat2.png" alt="Snapchat" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
+                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer"><img src='/tik-tok.png' alt="TikTok" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
                     </div>
 
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-6 border-l border-white/10 pl-6 h-4">
                             <div className="flex items-center gap-2">
-                                <Phone size={14} fill='black' className="text-foreground rotate-[270deg]" />
+                                <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" />
                                 <span dir="ltr">01060000805</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Phone size={14} fill='black' className="text-foreground rotate-[270deg]" />
+                                <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" />
                                 <span dir="ltr">01030000728</span>
                             </div>
                         </div>
-                        <button 
+                        <button
                             onClick={() => switchLanguage(locale === 'ar' ? 'en' : 'ar')}
                             className="flex items-center gap-2 hover:text-primary transition-colors"
                         >
@@ -143,8 +143,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                             </ul>
                                         </>
                                     ) : (
-                                        <Link 
-                                            href={link.href} 
+                                        <Link
+                                            href={link.href}
                                             className={`text-foreground hover:text-primary font-bold transition-all text-[15px] relative overflow-hidden py-1 block group ${isCurrentUrl(link.href) ? 'text-primary' : ''}`}
                                         >
                                             {link.label}
@@ -159,7 +159,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     {/* Left Side: CTA Buttons + Hamburger */}
                     <div className="flex items-center gap-2 md:gap-3 xl:gap-5">
                         {/* Offers button — hidden on very small screens, visible from sm up */}
-                        <Link 
+                        <Link
                             href="/offers"
                             className="flex bg-primary text-primary-foreground px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
                         >
@@ -168,7 +168,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         </Link>
 
                         {/* Book Now button */}
-                        <Link 
+                        <Link
                             href="/contact"
                             className="bg-foreground text-background px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm flex items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
                         >
@@ -177,7 +177,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         </Link>
 
                         {/* Hamburger — only visible below xl */}
-                        <button 
+                        <button
                             className="xl:hidden p-2.5 hover:bg-secondary rounded-xl transition-colors border border-border"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         >
@@ -194,11 +194,21 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-foreground">
                         <img src="/doctors.png" alt="Hero" className="w-full h-auto object-cover max-h-[85vh]" />
                         
+                        {/* Scroll Down Hint for UX */}
+                        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden lg:block">
+                            <div 
+                                onClick={() => document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' })}
+                                className="w-10 h-10 rounded-full border-2 border-white/20 flex items-center justify-center cursor-pointer hover:border-primary transition-colors text-white/50 hover:text-primary"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+
                         {/* Wave Divider at absolute bottom of the hero area */}
                         <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20">
-                            <img 
-                                src="/hero.svg" 
-                                alt="Wave Divider" 
+                            <img
+                                src="/hero.svg"
+                                alt="Wave Divider"
                                 className="w-full h-auto min-h-[40px] lg:min-h-[80px] object-fill brightness-0 invert opacity-10"
                             />
                         </div>
@@ -206,7 +216,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 )}
 
                 {showHero && (heroOptions.subtitle || heroOptions.description) && (
-                    <div className="flex items-center justify-start px-4 lg:px-24 py-12 bg-background border-b border-border/50">
+                    <div id="hero-content-anchor" className="flex items-center justify-start px-4 lg:px-24 py-12 bg-background border-b border-border/50 scroll-mt-20">
                         <div className="max-w-2xl">
                             {heroOptions.subtitle && (
                                 <h2 className="text-3xl lg:text-5xl text-foreground font-black mb-4 tracking-tighter leading-tight">
@@ -227,8 +237,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
             {isMobileMenuOpen && (
                 <div className="fixed inset-0 bg-card z-[60] xl:hidden flex flex-col p-8 overflow-y-auto animate-in fade-in slide-in-from-top-4 duration-300">
                     <div className="flex justify-between items-center mb-16">
-                        <img src="/logo.svg" alt="Badr Dental" className="h-14 w-auto" 
-                             onError={(e) => { e.target.src = "https://placehold.co/120x50?text=LOGO"; }} />
+                        <img src="/logo.svg" alt="Badr Dental" className="h-14 w-auto"
+                            onError={(e) => { e.target.src = "https://placehold.co/120x50?text=LOGO"; }} />
                         <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-secondary rounded-full border border-border">
                             <X size={32} />
                         </button>
@@ -243,8 +253,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                         <ul className="flex flex-col items-center gap-4 mt-2">
                                             {link.children.map(child => (
                                                 <li key={child.label}>
-                                                    <Link 
-                                                        href={child.href} 
+                                                    <Link
+                                                        href={child.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
                                                         className={`hover:text-primary transition-colors py-2 block text-2xl uppercase tracking-tight ${isCurrentUrl(child.href) ? 'text-primary' : 'text-foreground'}`}
                                                     >
@@ -255,8 +265,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                         </ul>
                                     </div>
                                 ) : (
-                                    <Link 
-                                        href={link.href} 
+                                    <Link
+                                        href={link.href}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className={`hover:text-primary transition-colors py-2 block uppercase tracking-tight ${isCurrentUrl(link.href) ? 'text-primary' : ''}`}
                                     >
@@ -288,7 +298,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                             </Link>
                         </div>
 
-                        <button 
+                        <button
                             onClick={() => { switchLanguage(locale === 'ar' ? 'en' : 'ar'); setIsMobileMenuOpen(false); }}
                             className="flex items-center gap-4 text-xl font-black uppercase text-primary"
                         >
@@ -299,8 +309,8 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         <div className="flex gap-8">
                             <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
                             <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                            <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" ><img src="/snapchat-black.png" className="hover:text-primary transition-colors cursor-pointer"  /></a>
-                            <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank"><img src='/tik-tok-black.png' className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
+                            <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer"><img src="/snapchat-black.png" alt="Snapchat" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
+                            <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer"><img src='/tik-tok-black.png' alt="TikTok" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
                         </div>
                     </div>
                 </div>

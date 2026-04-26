@@ -9,7 +9,18 @@ export default function ServicesIndex({ services = [] }) {
 
     return (
         <>
-            <Head title={t('pages.services.title')} />
+            <Head>
+                <title>خدمات مركز بدر لطب الأسنان | زراعة، تجميل، تقويم، حشوات، علاج جذور</title>
+                <meta name="description" content="تعرف على جميع خدمات مركز بدر لطب الأسنان: زراعة الأسنان، الزراعة الفورية، تجميل الأسنان، تقويم الأسنان، تركيبات ثابتة، حشوات حديثة، علاج جذور، علاج أسنان الأطفال، جراحة الأسنان. فروع في المنصورة والشيخ زايد." />
+                <meta name="keywords" content="خدمات طب الأسنان، زراعة الأسنان، تجميل الأسنان، تقويم الأسنان، حشوات حديثة، علاج جذور، تركيبات ثابتة، علاج أسنان اطفال، زراعة فك كامل، Badr Dental services" />
+                <meta property="og:title" content="خدمات مركز بدر لطب الأسنان" />
+                <meta property="og:description" content="زراعة الأسنان، تجميل، تقويم، حشوات حديثة، علاج جذور، تركيبات ثابتة وأكثر." />
+                <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
+                <meta property="og:url" content="https://badrdentalcenter.com/services" />
+                <meta name="twitter:title" content="خدمات مركز بدر لطب الأسنان" />
+                <meta name="twitter:description" content="زراعة الأسنان، تجميل، تقويم، حشوات حديثة وأكثر." />
+                <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+            </Head>
 
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
@@ -27,7 +38,7 @@ export default function ServicesIndex({ services = [] }) {
                     {services.map((service) => (
                         <Link 
                             key={service.id} 
-                            href={`/services/${service.id}`}
+                            href={`/services/${service.url_key || service.id}`}
                             className="group bg-secondary/30 rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
                         >
                             <div className="aspect-[16/10] overflow-hidden bg-secondary/20 flex items-center justify-center">

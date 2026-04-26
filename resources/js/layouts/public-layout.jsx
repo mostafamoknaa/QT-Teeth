@@ -1,11 +1,11 @@
-import { Head, usePage } from '@inertiajs/react';
+import { router, Head, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 import NavBar from '@/components/ui/navbar';
 import Footer from '@/components/ui/footer';
 import OfferFloatingCarousel from '@/components/ui/offer-floating-carousel';
 
 export default function AppLayout({ children, heroOptions }) {
-    const { locale } = usePage().props;
+    const { locale, canonical_url } = usePage().props;
     const isRtl = locale === 'ar';
 
     useEffect(() => {
@@ -18,16 +18,35 @@ export default function AppLayout({ children, heroOptions }) {
         return () => document.body.classList.remove('public-bg');
     }, []);
 
+    useEffect(() => {
+        const unbind = router.on('finish', () => {
+            // Auto-scroll logic for large screens to avoid navigation confusion
+            if (window.innerWidth >= 1024) {
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    setTimeout(() => {
+                        mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 500); // 500ms delay to ensure Inertia finished its own scroll handling
+                }
+            }
+        });
+        return () => unbind();
+    }, []);
+
     return (
         <div className="min-h-screen bg-transparent text-foreground font-tajawal selection:bg-primary/30">
+            {/* Shared base meta — each page overrides title/description via its own <Head> */}
             <Head>
-                <title>Badr Dental Center</title>
-                <meta name="description" content="Pioneers in dental cosmetics and implants in Egypt since 2014." />
+                <meta property="og:site_name" content="مركز بدر لطب الأسنان" />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="theme-color" content="#0a1628" />
+                <meta name="robots" content="index, follow" />
             </Head>
 
             <NavBar heroOptions={heroOptions} />
             
-            <main className="relative">
+            <main id="main-content" className="relative scroll-mt-24">
                 {children}
             </main>
 
