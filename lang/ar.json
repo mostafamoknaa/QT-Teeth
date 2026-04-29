@@ -117,6 +117,8 @@
         "contact_us": "تواصل معنا",
         "quick_links": "روابط سريعة",
         "our_services": "خدماتنا",
+        "whatsapp": "واتساب",
+        "chat_whatsapp": "تواصل عبر واتساب",
         "copyright": "© 2025 مركز بدر للأسنان"
     },
     "doctor": {
@@ -550,6 +552,15 @@
         "after": "بعد",
         "metadata": "البيانات الوصفية",
         "slug": "الرابط المختصر",
+        "site_settings": "إعدادات الموقع",
+        "site_settings_desc": "إدارة ثوابت الموقع مثل أرقام الواتساب وحقوق النشر.",
+        "whatsapp_number": "رقم الواتساب",
+        "copyrights_text": "نص حقوق النشر",
+        "copyrights_text_hint": "يظهر في أسفل تذييل الموقع.",
+        "whatsapp_number_hint": "يرجى تضمين رمز الدولة (مثال: +201...)",
+        "settings_saved": "تم حفظ الإعدادات بنجاح!",
+        "settings_save": "حفظ الإعدادات",
+        "settings_saving": "جاري الحفظ...",
         "delete_warning": "هذا الإجراء لا يمكن التراجع عنه. سيتم حذف العنصر بشكل دائم."
     },
     "pagination": {

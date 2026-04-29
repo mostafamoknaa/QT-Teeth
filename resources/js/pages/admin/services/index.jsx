@@ -78,8 +78,8 @@ export default function ServicesIndex({ services, search: initialSearch }) {
                     )}
                 </div>
 
-                <div className="border rounded-lg overflow-hidden bg-card">
-                    <table className="w-full text-sm [table-layout:fixed]">
+                <div className="border rounded-lg overflow-x-auto bg-card">
+                    <table className="w-full text-sm min-w-[800px] table-auto">
                         <thead className="bg-muted/50 border-b">
                             <tr>
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.service_title')}</th>

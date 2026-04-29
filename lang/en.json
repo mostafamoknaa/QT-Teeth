@@ -117,6 +117,8 @@
         "contact_us": "Contact Us",
         "quick_links": "Quick Links",
         "our_services": "Our Services",
+        "whatsapp": "WhatsApp",
+        "chat_whatsapp": "Chat on WhatsApp",
         "copyright": "© 2025 Badr Dental Center"
     },
     "doctor": {
@@ -548,6 +550,15 @@
         "after": "After",
         "metadata": "Metadata",
         "slug": "Slug",
+        "site_settings": "Site Settings",
+        "site_settings_desc": "Manage website globals like WhatsApp configurations and copyrights.",
+        "whatsapp_number": "WhatsApp Number",
+        "copyrights_text": "Copyright Text",
+        "copyrights_text_hint": "Appears at the very bottom of the website footer.",
+        "whatsapp_number_hint": "Include country code (e.g. +201..)",
+        "settings_saved": "Settings saved successfully!",
+        "settings_save": "Save Settings",
+        "settings_saving": "Saving...",
         "delete_warning": "This action cannot be undone. The item will be permanently deleted."
     },
     "pagination": {

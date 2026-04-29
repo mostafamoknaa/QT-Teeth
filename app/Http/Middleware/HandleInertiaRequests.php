@@ -55,6 +55,7 @@ class HandleInertiaRequests extends Middleware
             'global_services' => \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
             'active_offers'  => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
             'sidebarOpen'    => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'settings'       => \App\Models\Setting::getAllSettings(),
         ];
     }
 }

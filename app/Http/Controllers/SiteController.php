@@ -7,8 +7,9 @@ use App\Models\Doctor;
 use App\Models\Testimonial;
 use App\Models\Service;
 use App\Models\Offer;
+use App\Notifications\WhatsappNotification;
+use Illuminate\Notifications\Notification;
 use Inertia\Inertia;
-
 class SiteController extends Controller
 {
     public function index()
@@ -116,7 +117,9 @@ class SiteController extends Controller
             'message.max' => 'validation.message.max',
         ]);
 
-        \App\Models\Appointment::create($validated);
+        $appointment = \App\Models\Appointment::create($validated);
+
+        // $appointment->notify(new WhatsappNotification($appointment));
 
         return back()->with('success', 'Your appointment request has been submitted successfully.');
     }

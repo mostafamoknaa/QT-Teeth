@@ -1,19 +1,18 @@
 import { Link, usePage } from '@inertiajs/react';
 import {
-    BookOpen,
     FileText,
-    FolderGit2,
     HeartPulse,
     LayoutGrid,
     MessageSquare,
     Users,
     CalendarCheck,
+    Settings,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { useTranslations } from '@/hooks/use-translations';
+
 import {
     Sidebar,
     SidebarContent,
@@ -23,6 +22,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useTranslations } from '@/hooks/use-translations';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
@@ -70,9 +70,15 @@ export function AppSidebar() {
             href: '/admin/offers',
             icon: FileText,
         },
+        {
+            title: t('admin.site_settings'),
+            href: '/admin/site-settings',
+            icon: Settings,
+        },
     ];
 
     const footerNavItems: NavItem[] = [];
+    
     return (
         <Sidebar collapsible="icon" variant="inset" side={locale === 'ar' ? 'right' : 'left'}>
             <SidebarHeader>

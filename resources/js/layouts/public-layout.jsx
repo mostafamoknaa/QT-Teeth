@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import NavBar from '@/components/ui/navbar';
 import Footer from '@/components/ui/footer';
 import OfferFloatingCarousel from '@/components/ui/offer-floating-carousel';
+import FloatingWhatsApp from '@/components/ui/floating-whatsapp';
 
 export default function AppLayout({ children, heroOptions }) {
     const { locale, canonical_url } = usePage().props;
@@ -51,6 +52,7 @@ export default function AppLayout({ children, heroOptions }) {
             </main>
 
             <OfferFloatingCarousel />
+            <FloatingWhatsApp />
 
             <Footer />
         </div>

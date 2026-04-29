@@ -6,7 +6,7 @@ import { home, about, branches } from '@/routes';
 
 export default function Footer() {
     const { t } = useTranslations();
-    const { locale, global_services } = usePage().props;
+    const { locale, global_services, settings } = usePage().props;
     const services = global_services || [];
 
     const quickLinks = [
@@ -75,6 +75,25 @@ export default function Footer() {
                         {t('footer.contact_us')}
                     </h4>
                     <ul className="flex flex-col gap-8 text-lg font-bold">
+                        {settings?.whatsapp_number && (
+                            <li className="flex flex-col gap-2 items-center md:items-start">
+                                <span className="text-background uppercase tracking-wider text-xl flex items-center gap-2">
+                                    <MessageCircle size={20} className="text-[#25D366]" />
+                                    {t('footer.whatsapp')}
+                                </span>
+                                <div className="flex flex-col gap-1 items-center md:items-start">
+                                    <span className="text-muted-foreground" dir="ltr">{settings.whatsapp_number}</span>
+                                    <a 
+                                        href={`https://wa.me/${settings.whatsapp_number.replace(/[^0-9]/g, '')}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-primary text-sm hover:underline flex items-center gap-1 mt-1"
+                                    >
+                                        {t('footer.chat_whatsapp')}
+                                    </a>
+                                </div>
+                            </li>
+                        )}
                         <li className="flex flex-col gap-2 items-center md:items-start">
                             <span className="text-background uppercase tracking-wider text-xl flex items-center gap-2">
                                 <MapPin size={20} className="text-primary" />
@@ -145,10 +164,15 @@ export default function Footer() {
             </div>
 
             {/* Bottom Section */}
-            <div className="border-t border-background/10 pt-12 text-center">
-                <p className="text-background text-sm font-medium">
+            <div className="border-t border-background/10 pt-12 text-center flex flex-col gap-2 justify-center items-center">
+                {settings?.copyrights && (
+                    <p className="text-background text-sm font-medium">
+                        {settings.copyrights}
+                    </p>
+                )}
+                {/* <p className="text-background/50 text-xs font-medium">
                     Developed and Maintained by <a href="https://falak-innovation.com/" target="_blank" className="text-primary hover:underline">Falak Innovation</a> © All Rights Reserved - Badr Dental Center.
-                </p>
+                </p> */}
             </div>
         </footer>
     );

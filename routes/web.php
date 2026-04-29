@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('testimonials', TestimonialController::class);
         Route::resource('services', ServiceController::class);
         Route::resource('offers', OfferController::class);
+        Route::get('site-settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('site-settings.index');
+        Route::post('site-settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('site-settings.store');
         Route::resource('appointments', \App\Http\Controllers\Admin\AppointmentController::class)->only(['index', 'show', 'destroy']);
         
         Route::post('services/{service}/comparisons', [ServiceComparisonController::class, 'store'])->name('services.comparisons.store');

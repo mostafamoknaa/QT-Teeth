@@ -74,8 +74,8 @@ export default function AppointmentsIndex({ appointments, search: initialSearch 
                     )}
                 </div>
 
-                <div className="border rounded-lg overflow-hidden bg-card">
-                    <table className="w-full text-sm table-fixed">
+                <div className="border rounded-lg overflow-x-auto bg-card">
+                    <table className="w-full text-sm min-w-[900px] table-auto">
                         <thead className="bg-muted/50 border-b">
                             <tr>
                                 <th className="px-4 py-3 text-start font-medium">{t('admin.patient_name')}</th>
@@ -92,7 +92,17 @@ export default function AppointmentsIndex({ appointments, search: initialSearch 
                                 appointments.data.map((appointment) => (
                                     <tr key={appointment.id} className="hover:bg-muted/30 transition-colors">
                                         <td className="px-4 py-3 font-medium">{appointment.name}</td>
-                                        <td className="px-4 py-3" >{appointment.phone}</td>
+                                        <td className="px-4 py-3">
+                                            <a 
+                                                href={`https://wa.me/${appointment.phone.replace(/[^0-9]/g, '')}`} 
+                                                target="_blank" 
+                                                rel="noreferrer" 
+                                                className="text-[#25D366] hover:underline font-bold" 
+                                                dir="ltr"
+                                            >
+                                                {appointment.phone}
+                                            </a>
+                                        </td>
                                         <td className="px-4 py-3">
                                             {appointment.service ? (
                                                 <Badge variant="outline">{appointment.service.title}</Badge>
