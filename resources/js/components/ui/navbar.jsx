@@ -200,12 +200,27 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 {showHero && (
                     <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-foreground">
                         {settings.home_cover_type === 'youtube' && settings.home_cover_youtube_url ? (
-                            <div className="w-full relative aspect-video max-h-[85vh] overflow-hidden pointer-events-none">
+                            /* 
+                             * YouTube Responsive Embed
+                             * Uses padding-bottom trick (56.25% = 16:9 ratio) to maintain aspect ratio
+                             * on ALL screen sizes including mobile without overflow.
+                             */
+                            <div
+                                className="w-full overflow-hidden pointer-events-none"
+                                style={{ position: 'relative', paddingBottom: '56.25%', maxHeight: '85vh' }}
+                            >
                                 <iframe
-                                    className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover scale-[1.35] pointer-events-none"
-                                    style={{ border: 'none', width: '100vw', height: '56.25vw', minHeight: '100%', minWidth: '177.77vh' }}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        border: 'none',
+                                    }}
                                     src={`https://www.youtube.com/embed/${getYouTubeId(settings.home_cover_youtube_url)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(settings.home_cover_youtube_url)}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    title="Hero Video"
                                 ></iframe>
                             </div>
                         ) : settings.home_cover_type === 'video' && settings.home_cover_video_path ? (
@@ -216,12 +231,14 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                 muted
                                 playsInline
                                 className="w-full h-auto object-cover max-h-[85vh] aspect-video"
+                                style={{ display: 'block' }}
                             />
                         ) : (
-                            <img 
-                                src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/doctors.png"} 
-                                alt="Hero" 
-                                className="w-full h-auto object-cover max-h-[85vh]" 
+                            <img
+                                src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/doctors.png"}
+                                alt="Hero"
+                                className="w-full h-auto object-cover max-h-[85vh]"
+                                style={{ display: 'block' }}
                             />
                         )}
                         
