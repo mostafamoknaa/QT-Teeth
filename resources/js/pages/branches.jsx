@@ -1,11 +1,12 @@
 import PublicLayout from '@/layouts/public-layout';
 import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { MapPin, Phone, Calendar, ArrowLeft } from 'lucide-react';
 import { useTranslations } from '@/hooks/use-translations';
 
 export default function Branches() {
     const { t } = useTranslations();
+    const { canonical_url } = usePage().props;
 
     const branches = [
         {
@@ -25,15 +26,16 @@ export default function Branches() {
     return (
         <section className="bg-transparent">
             <Head>
-                <title>فروع مركز بدر لطب الأسنان | المنصورة والشيخ زايد</title>
-                <meta name="description" content="فروع مركز بدر لطب الأسنان — فرع المنصورة: اتصل على 01060000805. فرع الشيخ زايد: اتصل على 01030000728. زورنا واحجز موعدك أونلاين." />
-                <meta name="keywords" content="عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد، فروع مركز بدر، مركز بدر المنصورة، مركز بدر الشيخ زايد، Badr Dental Mansoura، Badr Dental Sheikh Zayed" />
-                <meta property="og:title" content="فروع مركز بدر لطب الأسنان" />
-                <meta property="og:description" content="فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن." />
+                <title>فروع مركز بدر لطب الأسنان | عيادة اسنان بالشيخ زايد والمنصورة</title>
+                <meta name="description" content="تواصل مع فروع مركز بدر لطب وزراعة الأسنان. فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن مع اشطر دكتور اسنان لخدمات الزراعة الفورية والتجميل." />
+                <meta name="keywords" content="عيادة اسنان بالشيخ زايد والمنصورة، اشطر دكتور اسنان، فروع مركز بدر للأسنان، مركز بدر المنصورة، مركز بدر الشيخ زايد، زراعة اسنان المنصورة، زراعة اسنان الشيخ زايد" />
+                <link rel="canonical" href={canonical_url || "https://badrdentalcenter.com/branches"} />
+                <meta property="og:title" content="فروع مركز بدر لطب الأسنان | عيادة اسنان بالشيخ زايد والمنصورة" />
+                <meta property="og:description" content="تواصل مع فروع مركز بدر لطب وزراعة الأسنان. فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن مع اشطر دكتور اسنان لخدمات الزراعة الفورية والتجميل." />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
                 <meta property="og:url" content="https://badrdentalcenter.com/branches" />
-                <meta name="twitter:title" content="فروع مركز بدر لطب الأسنان" />
-                <meta name="twitter:description" content="فرع المنصورة وفرع الشيخ زايد. احجز موعدك الآن." />
+                <meta name="twitter:title" content="فروع مركز بدر لطب الأسنان | عيادة اسنان بالشيخ زايد والمنصورة" />
+                <meta name="twitter:description" content="تواصل مع فروع مركز بدر لطب وزراعة الأسنان. فرع المنصورة وفرع الشيخ زايد." />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
             </Head>
 

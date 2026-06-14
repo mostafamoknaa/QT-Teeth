@@ -8,7 +8,14 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 
 export default function NavBar({ showHero = true, heroOptions = {} }) {
     const { t } = useTranslations();
-    const { locale, global_services } = usePage().props;
+    const { locale, global_services, settings = {} } = usePage().props;
+
+    const getYouTubeId = (url) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
     const topServices = global_services || [];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { post } = useForm();
@@ -192,7 +199,48 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 {/* Hero Section */}
                 {showHero && (
                     <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-foreground">
-                        <img src="/doctors.png" alt="Hero" className="w-full h-auto object-cover max-h-[85vh]" />
+                        {settings.home_cover_type === 'youtube' && settings.home_cover_youtube_url ? (
+                            /* 
+                             * YouTube Responsive Embed
+                             * Uses padding-bottom trick (56.25% = 16:9 ratio) to maintain aspect ratio
+                             * on ALL screen sizes including mobile without overflow.
+                             */
+                            <div
+                                className="w-full overflow-hidden pointer-events-none"
+                                style={{ position: 'relative', paddingBottom: '56.25%', maxHeight: '85vh' }}
+                            >
+                                <iframe
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        border: 'none',
+                                    }}
+                                    src={`https://www.youtube.com/embed/${getYouTubeId(settings.home_cover_youtube_url)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(settings.home_cover_youtube_url)}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    title="Hero Video"
+                                ></iframe>
+                            </div>
+                        ) : settings.home_cover_type === 'video' && settings.home_cover_video_path ? (
+                            <video
+                                src={`/storage/${settings.home_cover_video_path}`}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-auto object-cover max-h-[85vh] aspect-video"
+                                style={{ display: 'block' }}
+                            />
+                        ) : (
+                            <img
+                                src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/doctors.png"}
+                                alt="Hero"
+                                className="w-full h-auto object-cover max-h-[85vh]"
+                                style={{ display: 'block' }}
+                            />
+                        )}
                         
                         {/* Scroll Down Hint for UX */}
                         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden lg:block">
