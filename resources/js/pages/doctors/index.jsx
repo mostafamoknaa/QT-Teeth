@@ -1,14 +1,19 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from '@/hooks/use-translations';
 
 export default function DoctorsIndex({ doctors = [] }) {
     const { t } = useTranslations();
+    const { canonical_url } = usePage().props;
 
     return (
         <>
-            <Head title={t('pages.doctors.title')} />
+            <Head title="أطباؤنا | اشطر دكتور اسنان في المنصورة والشيخ زايد">
+                <meta name="description" content="تعرف على الفريق الطبي لمركز بدر لطب الأسنان. أكثر من ٣٠ استشاري وأخصائي متخصص في زراعة الأسنان، تقويم الأسنان، وتجميل الأسنان بأعلى معايير الجودة." />
+                <meta name="keywords" content="أطباء الأسنان، اشطر دكتور اسنان، زراعة اسنان المنصورة، زراعة اسنان الشيخ زايد، تجميل اسنان المنصورة، تقويم الاسنان، مركز بدر للأسنان" />
+                <link rel="canonical" href={canonical_url || "https://badrdentalcenter.com/doctors"} />
+            </Head>
 
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}

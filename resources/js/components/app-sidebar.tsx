@@ -71,6 +71,11 @@ export function AppSidebar() {
             icon: FileText,
         },
         {
+            title: t('admin.home_videos') || 'فيديوهات الصفحة الرئيسية',
+            href: '/admin/home-videos',
+            icon: FileText,
+        },
+        {
             title: t('admin.site_settings'),
             href: '/admin/site-settings',
             icon: Settings,

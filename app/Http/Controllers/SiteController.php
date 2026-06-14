@@ -20,6 +20,7 @@ class SiteController extends Controller
             'testimonials'    => Testimonial::orderBy('order')->get(),
             'services'        => Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
             'active_offers'   => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
+            'home_videos'     => \App\Models\HomeVideo::orderBy('order')->get(),
         ]);
     }
 

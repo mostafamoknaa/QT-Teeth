@@ -1,10 +1,10 @@
 import PublicLayout from '@/layouts/public-layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useTranslations } from "@/hooks/use-translations";
 
 export default function About() {
-
     const { t } = useTranslations();
+    const { canonical_url } = usePage().props;
 
     const stats = [
         { value: '15,000+', label: t('about.stats.happy_clients') },
@@ -16,15 +16,16 @@ export default function About() {
     return (
         <>
             <Head>
-                <title>عن مركز بدر لطب الأسنان | فريق طبي متخصص منذ 2014</title>
-                <meta name="description" content="تعرف على مركز بدر لطب الأسنان — فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. متخصصون في زراعة وتجميل وتقويم الأسنان. فروع في المنصورة والشيخ زايد منذ 2014." />
-                <meta name="keywords" content="عن مركز بدر، طبيب أسنان مصر، دكتور بدر، عيادة أسنان المنصورة، عيادة أسنان الشيخ زايد، Badr Dental Center Egypt" />
-                <meta property="og:title" content="عن مركز بدر لطب الأسنان" />
-                <meta property="og:description" content="فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. متخصصون في زراعة وتجميل وتقويم الأسنان منذ 2014." />
+                <title>عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر</title>
+                <meta name="description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد. خبرة طبية متميزة ورعاية متكاملة لابتسامتك منذ ٢٠١٤." />
+                <meta name="keywords" content="عن مركز بدر، افضل دكتور زراعة اسنان، اشطر دكتور اسنان، مركز بدر لطب الأسنان، عيادة اسنان بالمنصورة، عيادة اسنان بالشيخ زايد، المنصورة، الشيخ زايد، Badr Dental Center Egypt" />
+                <link rel="canonical" href={canonical_url || "https://badrdentalcenter.com/about"} />
+                <meta property="og:title" content="عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر" />
+                <meta property="og:description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد. خبرة طبية متميزة ورعاية متكاملة لابتسامتك منذ ٢٠١٤." />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
                 <meta property="og:url" content="https://badrdentalcenter.com/about" />
-                <meta name="twitter:title" content="عن مركز بدر لطب الأسنان" />
-                <meta name="twitter:description" content="فريق طبي متكامل بأكثر من ٣٠ استشاري وأخصائي. فروع في المنصورة والشيخ زايد." />
+                <meta name="twitter:title" content="عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر" />
+                <meta name="twitter:description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد." />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
             </Head>
             {/* About Us Section */}

@@ -1,24 +1,26 @@
 import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from '@/hooks/use-translations';
 import { HeartPulse } from 'lucide-react';
 
 export default function ServicesIndex({ services = [] }) {
     const { t } = useTranslations();
+    const { canonical_url } = usePage().props;
 
     return (
         <>
             <Head>
-                <title>خدمات مركز بدر لطب الأسنان | زراعة، تجميل، تقويم، حشوات، علاج جذور</title>
-                <meta name="description" content="تعرف على جميع خدمات مركز بدر لطب الأسنان: زراعة الأسنان، الزراعة الفورية، تجميل الأسنان، تقويم الأسنان، تركيبات ثابتة، حشوات حديثة، علاج جذور، علاج أسنان الأطفال، جراحة الأسنان. فروع في المنصورة والشيخ زايد." />
-                <meta name="keywords" content="خدمات طب الأسنان، زراعة الأسنان، تجميل الأسنان، تقويم الأسنان، حشوات حديثة، علاج جذور، تركيبات ثابتة، علاج أسنان اطفال، زراعة فك كامل، Badr Dental services" />
-                <meta property="og:title" content="خدمات مركز بدر لطب الأسنان" />
-                <meta property="og:description" content="زراعة الأسنان، تجميل، تقويم، حشوات حديثة، علاج جذور، تركيبات ثابتة وأكثر." />
+                <title>خدماتنا | افضل دكتور زراعة اسنان وتجميل في الشيخ زايد والمنصورة</title>
+                <meta name="description" content="اكتشف خدمات مركز بدر للأسنان: زراعة الأسنان الفورية، تجميل الأسنان، تقويم الأسنان، علاج الجذور، علاج أسنان الأطفال وتأهيل كامل للفك بأفضل الأسعار." />
+                <meta name="keywords" content="افضل دكتور زراعة اسنان، تجميل الاسنان، تقويم الاسنان، علاج جذور، علاج اسنان الاطفال، زراعة فك كامل، عيادة اسنان بالمنصورة، عيادة اسنان بالشيخ زايد" />
+                <link rel="canonical" href={canonical_url || "https://badrdentalcenter.com/services"} />
+                <meta property="og:title" content="خدماتنا | افضل دكتور زراعة اسنان وتجميل في الشيخ زايد والمنصورة" />
+                <meta property="og:description" content="اكتشف خدمات مركز بدر للأسنان: زراعة الأسنان الفورية، تجميل الأسنان، تقويم الأسنان، علاج الجذور، علاج أسنان الأطفال وتأهيل كامل للفك بأفضل الأسعار." />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
                 <meta property="og:url" content="https://badrdentalcenter.com/services" />
-                <meta name="twitter:title" content="خدمات مركز بدر لطب الأسنان" />
-                <meta name="twitter:description" content="زراعة الأسنان، تجميل، تقويم، حشوات حديثة وأكثر." />
+                <meta name="twitter:title" content="خدماتنا | افضل دكتور زراعة اسنان وتجميل في الشيخ زايد والمنصورة" />
+                <meta name="twitter:description" content="اكتشف خدمات مركز بدر للأسنان: زراعة الأسنان الفورية، تجميل الأسنان، تقويم الأسنان، علاج الجذور، علاج أسنان الأطفال وتأهيل كامل للفك." />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
             </Head>
 
