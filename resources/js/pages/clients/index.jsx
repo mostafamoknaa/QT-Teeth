@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import { useTranslations } from '@/hooks/use-translations';
-import { Play, Eye } from 'lucide-react';
+import { Play, Eye, Star } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export default function ClientsIndex({ testimonials = [] }) {
@@ -29,7 +29,7 @@ export default function ClientsIndex({ testimonials = [] }) {
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-background">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-background">
                         {t('pages.clients.title')}
                     </h1>
                 </div>
@@ -108,17 +108,35 @@ export default function ClientsIndex({ testimonials = [] }) {
                             
                             <div className="p-8 space-y-4">
                                 <div className="w-20 h-1 bg-muted-foreground rounded-full mb-4"></div>
-                                <h3 className="text-lg text-background md:text-xl leading-snug">
+                                <h3 className="text-base text-background md:text-lg leading-snug">
                                     {testimonial.content}
                                 </h3>
                                 <div className="space-y-1">
-                                    <p className="text-lg font-bold text-background/70">
+                                    <p className="text-base font-bold text-background/70">
                                         {testimonial.client_name}
                                     </p>
                                     {testimonial.service_name && (
-                                        <p className="text-md text-background">
+                                        <p className="text-sm text-background">
                                             {testimonial.service_name}
                                         </p>
+                                    )}
+                                    {/* Star Rating */}
+                                    {testimonial.rating > 0 && (
+                                        <div className="flex items-center gap-0.5 pt-1">
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <Star
+                                                    key={star}
+                                                    className={`w-4 h-4 ${
+                                                        star <= testimonial.rating
+                                                            ? 'text-yellow-400 fill-yellow-400'
+                                                            : 'text-background/20 fill-transparent'
+                                                    }`}
+                                                />
+                                            ))}
+                                            <span className="text-xs text-background/50 ms-1 font-medium">
+                                                ({testimonial.rating}/5)
+                                            </span>
+                                        </div>
                                     )}
                                 </div>
                             </div>

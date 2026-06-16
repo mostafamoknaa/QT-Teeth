@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Eye } from 'lucide-react';
+import { Play, Eye, Star } from 'lucide-react';
 import { useTranslations } from '@/hooks/use-translations';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
@@ -21,7 +21,7 @@ export default function TestimonialsSection({ testimonials }) {
         <>
             <section id="testimonials" className="py-24 px-4 lg:px-24">
             <div className="max-w-7xl mx-auto text-center mb-16">
-                <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-background mb-4">
+                <h2 className="text-2xl lg:text-3xl font-black tracking-tighter text-background mb-4">
                     {t('clients.title')}
                 </h2>
                 <div className="w-20 h-1.5 bg-primary mx-auto mb-8"></div>
@@ -101,17 +101,35 @@ export default function TestimonialsSection({ testimonials }) {
                         
                         <div className="p-8 space-y-4">
                             <div className="w-20 h-1 bg-muted-foreground rounded-full mb-4"></div>
-                            <h3 className="text-lg text-background md:text-xl leading-snug">
+                            <h3 className="text-base text-background md:text-lg leading-snug">
                                 {testimonial.content}
                             </h3>
                             <div className="space-y-1">
-                                <p className="text-lg font-bold text-background/70">
+                                <p className="text-base font-bold text-background/70">
                                     {testimonial.client_name}
                                 </p>
                                 {testimonial.service_name && (
-                                    <p className="text-md text-background">
+                                    <p className="text-sm text-background">
                                         {testimonial.service_name}
                                     </p>
+                                )}
+                                {/* Star Rating */}
+                                {testimonial.rating > 0 && (
+                                    <div className="flex items-center gap-0.5 pt-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <Star
+                                                key={star}
+                                                className={`w-4 h-4 ${
+                                                    star <= testimonial.rating
+                                                        ? 'text-yellow-400 fill-yellow-400'
+                                                        : 'text-background/20 fill-transparent'
+                                                }`}
+                                            />
+                                        ))}
+                                        <span className="text-xs text-background/50 ms-1 font-medium">
+                                            ({testimonial.rating}/5)
+                                        </span>
+                                    </div>
                                 )}
                             </div>
                         </div>

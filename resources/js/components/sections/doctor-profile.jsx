@@ -11,16 +11,16 @@ export default function DoctorAhmedBadrSection() {
                     {/* Content */}
                     <div className="space-y-8">
                         <div className="space-y-4 max-w-4xl">
-                            <h2 className="text-2xl text-background md:text-3xl lg:text-4xl  font-bold tracking-tighter leading-snug">
+                            <h2 className="text-xl text-background md:text-2xl lg:text-3xl font-bold tracking-tight leading-snug">
                                 {t('hero.description')}
                             </h2>
                         </div>
 
-                        <p className="text-background text-base md:text-xl leading-relaxed text-justify">
+                        <p className="text-background text-sm md:text-base leading-relaxed text-justify">
                             {t('hero.profile_1')}
                         </p>
 
-                        <p className="text-background text-base md:text-xl leading-relaxed text-justify">
+                        <p className="text-background text-sm md:text-base leading-relaxed text-justify">
                             {t('hero.profile_2')}
                         </p>
                     </div>

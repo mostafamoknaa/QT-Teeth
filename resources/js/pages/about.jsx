@@ -35,19 +35,19 @@ export default function About() {
                     <div className="space-y-8">
                         <div className="space-y-6">
                             <div className='border border-t-4 border-background w-30'></div>
-                            <h1 className="text-4xl text-background md:text-5xl lg:text-6xl tracking-tighter">
+                            <h1 className="text-2xl text-background md:text-3xl lg:text-4xl tracking-tighter">
                                {t('about.title')}
                             </h1>
-                            <h2 className="text-xl text-background md:text-2xl lg:text-3xl font-bold">
+                            <h2 className="text-lg text-background md:text-xl lg:text-2xl font-bold">
                                 Badr Dental Center
                             </h2>
                         </div>
 
-                        <p className="text-background text-lg md:text-xl lg:text-2xl leading-relaxed text-justify">
+                        <p className="text-background text-sm md:text-base lg:text-lg leading-relaxed text-justify">
                             {t('about.description1')}
                         </p>
 
-                        <p className="text-background text-lg md:text-xl lg:text-2xl leading-relaxed text-justify font-medium">
+                        <p className="text-background text-sm md:text-base lg:text-lg leading-relaxed text-justify font-medium">
                            {t('about.description2')}
                         </p>
 
@@ -55,7 +55,7 @@ export default function About() {
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
                             {stats.map((stat, index) => (
                                 <div key={index} className="text-center p-6 bg-secondary rounded-3xl">
-                                    <p className="text-3xl md:text-4xl font-black text-foreground">
+                                    <p className="text-xl md:text-2xl font-black text-foreground">
                                         {stat.value}
                                     </p>
                                     <p className=" text-muted-foreground mt-3 font-bold uppercase tracking-widest leading-tight">
@@ -90,7 +90,7 @@ export default function About() {
                                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
                             />
                             {/* Name Badge */}
-                            <div className="absolute bottom-6 bg-foreground text-background px-8 md:px-15 py-3 rounded-2xl text-center text-lg md:text-xl font-bold z-10 mx-4">
+                            <div className="absolute bottom-6 bg-foreground text-background px-8 md:px-15 py-3 rounded-2xl text-center text-base md:text-lg font-bold z-10 mx-4">
                               {t('about.dr_badr.name')}
                             </div>
                         </div>
@@ -99,15 +99,15 @@ export default function About() {
                     <div className="space-y-8">
                         <div className='border border-t-4 border-foreground w-24'></div>
                         <div className="space-y-4">
-                            <h2 className="text-3xl md:text-4xl lg:text-5xl text-foreground font-bold tracking-tighter">
+                            <h2 className="text-xl md:text-2xl lg:text-3xl text-foreground font-bold tracking-tighter">
                               {t('about.dr_badr.short_name')}
                             </h2>
-                            <p className="text-lg md:text-xl text-foreground/60 font-medium">
+                            <p className="text-sm md:text-base text-foreground/60 font-medium">
                               {t('about.dr_badr.description')}
                             </p>
                         </div>
 
-                        <p className="text-muted-foreground text-lg md:text-xl leading-relaxed text-justify">
+                        <p className="text-muted-foreground text-sm md:text-base leading-relaxed text-justify">
                            {t('about.dr_badr.description2')}
                         </p>
 

@@ -13,6 +13,7 @@ export default function Footer() {
         { label: t('nav.home'), href: home.url() },
         { label: t('nav.about'), href: about.url() },
         { label: t('nav.services'), href: '/services' },
+        { label: t('nav.gallery') || 'معرض الصور', href: '/gallery' },
         { label: t('nav.clients'), href: '/clients' },
         { label: t('nav.articles'), href: '/articles' },
         { label: t('nav.doctors'), href: '/doctors' },

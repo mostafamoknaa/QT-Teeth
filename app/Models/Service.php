@@ -13,12 +13,12 @@ class Service extends Model
         'content',
         'image',
         'order',
+        'faqs',
     ];
 
-    public function comparisons()
-    {
-        return $this->hasMany(ServiceComparison::class);
-    }
+    protected $casts = [
+        'faqs' => 'array',
+    ];
 
     /**
      * Resolve route binding by slug first, then fall back to id.

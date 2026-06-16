@@ -33,6 +33,7 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         { href: home.url(), label: t('nav.home'), isRoute: true },
         { href: about.url(), label: t('nav.about'), isRoute: true },
         { href: '/services', label: t('nav.services'), isRoute: false },
+        { href: '/gallery', label: t('nav.gallery') || 'معرض الصور', isRoute: false },
         { href: '/clients', label: t('nav.clients'), isRoute: false },
         { href: '/articles', label: t('nav.articles'), isRoute: false },
         { href: '/doctors', label: t('nav.doctors'), isRoute: false },

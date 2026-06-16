@@ -42,6 +42,9 @@ class ServiceController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'order' => 'integer',
+            'faqs' => 'nullable|array',
+            'faqs.*.question' => 'required_with:faqs|string',
+            'faqs.*.answer' => 'required_with:faqs|string',
         ]);
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -58,14 +61,14 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         return Inertia::render('admin/services/show', [
-            'service' => $service->load('comparisons')
+            'service' => $service
         ]);
     }
 
     public function edit(Service $service)
     {
         return Inertia::render('admin/services/form', [
-            'service' => $service->load('comparisons')
+            'service' => $service
         ]);
     }
 
@@ -77,6 +80,9 @@ class ServiceController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'order' => 'integer',
+            'faqs' => 'nullable|array',
+            'faqs.*.question' => 'required_with:faqs|string',
+            'faqs.*.answer' => 'required_with:faqs|string',
         ]);
 
         if ($request->hasFile('image')) {

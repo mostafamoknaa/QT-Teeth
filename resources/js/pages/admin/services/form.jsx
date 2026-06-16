@@ -2,18 +2,11 @@ import { Head, useForm, Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ChevronLeft, Save, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
+import { ChevronLeft, Save, HelpCircle, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { getErrorMessage } from '@/lib/error-messages';
 import { useTranslations } from '@/hooks/use-translations';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { toast } from 'sonner';
 
 export default function ServiceForm({ service = null }) {
     const { t } = useTranslations();
@@ -24,16 +17,12 @@ export default function ServiceForm({ service = null }) {
         content: service?.content || '',
         order: service?.order || 0,
         image: null,
+        faqs: service?.faqs || [],
     });
 
-    const comparisonForm = useForm({
-        title: '',
-        before_image: null,
-        after_image: null,
-        order: 0,
-    });
-
-    const [deleteComparisonId, setDeleteComparisonId] = useState(null);
+    const [faqs, setFaqs] = useState(service?.faqs || []);
+    const [newQuestion, setNewQuestion] = useState('');
+    const [newAnswer, setNewAnswer] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,19 +34,25 @@ export default function ServiceForm({ service = null }) {
         post(url);
     };
 
-    const handleAddComparison = (e) => {
+    const handleAddFaq = (e) => {
         e.preventDefault();
-        comparisonForm.post(`/admin/services/${service?.id}/comparisons`, {
-            onSuccess: () => comparisonForm.reset(),
-        });
+        if (!newQuestion.trim() || !newAnswer.trim()) {
+            toast.error('يرجى ملء السؤال والجواب معاً');
+            return;
+        }
+        const updated = [...faqs, { question: newQuestion, answer: newAnswer }];
+        setFaqs(updated);
+        setData('faqs', updated);
+        setNewQuestion('');
+        setNewAnswer('');
+        toast.success('تمت إضافة السؤال مؤقتاً. اضغط على حفظ الخدمة لاعتماده.');
     };
 
-    const handleDeleteComparison = () => {
-        if (deleteComparisonId) {
-            comparisonForm.delete(`/admin/comparisons/${deleteComparisonId}`, {
-                onSuccess: () => setDeleteComparisonId(null),
-            });
-        }
+    const handleDeleteFaq = (index) => {
+        const updated = faqs.filter((_, i) => i !== index);
+        setFaqs(updated);
+        setData('faqs', updated);
+        toast.success('تم حذف السؤال. اضغط على حفظ الخدمة لتحديث البيانات.');
     };
 
     return (
@@ -155,127 +150,84 @@ export default function ServiceForm({ service = null }) {
 
                             <div className="flex justify-end gap-3 pt-8 border-t border-border/50">
                                 <Button variant="outline" type="button" className="h-12 px-8 rounded-xl font-bold" asChild>
-                                    <Link href="/admin/services">Cancel</Link>
+                                    <Link href="/admin/services">{t('admin.cancel') || 'إلغاء'}</Link>
                                 </Button>
                                 <Button type="submit" disabled={processing} className="h-12 px-8 rounded-xl font-black bg-foreground text-background hover:bg-primary hover:text-foreground">
                                     <Save className="mr-2 h-4 w-4" /> 
-                                    {service ? 'Update Service' : 'Create Service'}
+                                    {service ? (t('admin.save') || 'حفظ التعديلات') : (t('admin.create') || 'حفظ الخدمة')}
                                 </Button>
                             </div>
                         </form>
                     </div>
 
-                    {/* Comparisons Sidebar */}
+                    {/* FAQ Builder Sidebar */}
                     <div className="space-y-8">
-                        {service ? (
-                            <div className="bg-card p-6 border rounded-[2rem] shadow-sm space-y-6">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="font-black text-xl flex items-center gap-2">
-                                        <ImageIcon size={24} className="text-primary" />
-                                        Before & After
-                                    </h3>
-                                    <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
-                                        {service.comparisons?.length || 0} Cases
-                                    </div>
-                                </div>
-
-                                {/* Add Comparison Form */}
-                                <form onSubmit={handleAddComparison} className="p-4 bg-secondary/20 rounded-2xl border border-border/50 space-y-4">
-                                    <div className="space-y-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground">Case Title</Label>
-                                        <Input 
-                                            placeholder="e.g. Full Arch Reconstruction"
-                                            className="h-10 text-sm font-bold bg-background border-border/50"
-                                            value={comparisonForm.data.title}
-                                            onChange={e => comparisonForm.setData('title', e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground">Before</Label>
-                                            <Input 
-                                                type="file" 
-                                                className="h-10 text-xs bg-background border-border/50" 
-                                                onChange={e => comparisonForm.setData('before_image', e.target.files[0])}
-                                            />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground">After</Label>
-                                            <Input 
-                                                type="file" 
-                                                className="h-10 text-xs bg-background border-border/50"
-                                                onChange={e => comparisonForm.setData('after_image', e.target.files[0])}
-                                            />
-                                        </div>
-                                    </div>
-                                    <Button type="submit" size="sm" className="w-full font-bold h-10 rounded-xl" disabled={comparisonForm.processing}>
-                                        <Plus className="mr-2 h-4 w-4" /> Add Comparison
-                                    </Button>
-                                    {comparisonForm.errors.before_image && <p className="text-xs text-destructive">{comparisonForm.errors.before_image}</p>}
-                                    {comparisonForm.errors.after_image && <p className="text-xs text-destructive">{comparisonForm.errors.after_image}</p>}
-                                </form>
-
-                                {/* List Comparisons */}
-                                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                                    {service.comparisons?.map(comp => (
-                                        <div key={comp.id} className="group relative bg-background border border-border/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                                            <div className="grid grid-cols-2 aspect-video">
-                                                <img src={`/storage/${comp.before_image}`} className="w-full h-full object-cover border-r border-border/50" alt="Before" />
-                                                <img src={`/storage/${comp.after_image}`} className="w-full h-full object-cover" alt="After" />
-                                            </div>
-                                            <div className="p-3 bg-card flex justify-between items-center">
-                                                <span className="text-xs font-bold truncate pr-2">{comp.title || 'Untitled Case'}</span>
-                                                <Button 
-                                                    variant="ghost" 
-                                                    size="icon" 
-                                                    className="h-7 w-7 text-destructive hover:bg-destructive/10"
-                                                    onClick={() => setDeleteComparisonId(comp.id)}
-                                                    disabled={comparisonForm.processing}
-                                                >
-                                                    <Trash2 size={14} />
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    {(!service.comparisons || service.comparisons.length === 0) && (
-                                        <div className="text-center py-10 px-4 bg-muted/20 rounded-2xl border border-dashed border-border/50">
-                                            <ImageIcon className="mx-auto h-8 w-8 text-muted-foreground/30 mb-2" />
-                                            <p className="text-sm text-muted-foreground font-medium italic">No visual cases yet.</p>
-                                        </div>
-                                    )}
+                        <div className="bg-card p-6 border rounded-[2rem] shadow-sm space-y-6">
+                            <div className="flex items-center justify-between border-b pb-2">
+                                <h3 className="font-black text-xl flex items-center gap-2 text-foreground">
+                                    <HelpCircle size={24} className="text-primary" />
+                                    الأسئلة الشائعة (FAQ)
+                                </h3>
+                                <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">
+                                    {faqs.length} سؤال
                                 </div>
                             </div>
-                        ) : (
-                            <div className="bg-primary/5 p-8 border border-dashed border-primary/20 rounded-[2rem] text-center space-y-4">
-                                <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto">
-                                    <ImageIcon className="text-primary h-8 w-8" />
+
+                            {/* Add FAQ Form */}
+                            <div className="p-4 bg-secondary/20 rounded-2xl border border-border/50 space-y-4">
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold text-muted-foreground">السؤال</Label>
+                                    <Input 
+                                        placeholder="مثال: هل زраعة الأسنان مؤلمة؟"
+                                        className="h-10 text-sm font-semibold bg-background border-border/50"
+                                        value={newQuestion}
+                                        onChange={e => setNewQuestion(e.target.value)}
+                                    />
                                 </div>
                                 <div className="space-y-2">
-                                    <h3 className="font-black text-lg">Case Submissions</h3>
-                                    <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-                                        After creating the service, you will be able to upload Before & After visuals to showcase your results.
-                                    </p>
+                                    <Label className="text-xs font-bold text-muted-foreground">الجواب</Label>
+                                    <textarea 
+                                        placeholder="اكتب الإجابة هنا..."
+                                        className="w-full h-24 p-3 text-sm font-medium bg-background border border-border/50 rounded-xl resize-none outline-none focus:ring-1 focus:ring-primary"
+                                        value={newAnswer}
+                                        onChange={e => setNewAnswer(e.target.value)}
+                                    />
                                 </div>
+                                <Button type="button" onClick={handleAddFaq} size="sm" className="w-full font-bold h-10 rounded-xl">
+                                    <Plus className="mr-2 h-4 w-4" /> إضافة السؤال
+                                </Button>
                             </div>
-                        )}
+
+                            {/* List FAQs */}
+                            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+                                {faqs.map((faq, index) => (
+                                    <div key={index} className="p-4 bg-background border border-border/50 rounded-2xl shadow-sm space-y-2 relative group hover:border-primary/50 transition-colors">
+                                        <div className="flex justify-between items-start gap-2">
+                                            <h4 className="font-bold text-sm text-foreground leading-tight pr-6">{faq.question}</h4>
+                                            <Button 
+                                                type="button"
+                                                variant="ghost" 
+                                                size="icon" 
+                                                className="h-6 w-6 text-destructive hover:bg-destructive/10 rounded-full shrink-0"
+                                                onClick={() => handleDeleteFaq(index)}
+                                            >
+                                                <Trash2 size={12} />
+                                            </Button>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
+                                    </div>
+                                ))}
+                                {faqs.length === 0 && (
+                                    <div className="text-center py-8 px-4 bg-muted/10 rounded-2xl border border-dashed border-border/50">
+                                        <HelpCircle className="mx-auto h-8 w-8 text-muted-foreground/30 mb-2" />
+                                        <p className="text-sm text-muted-foreground font-medium italic">لا توجد أسئلة شائعة مضافة بعد.</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <Dialog open={!!deleteComparisonId} onOpenChange={(open) => !open && setDeleteComparisonId(null)}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                        <DialogDescription>
-                            This action cannot be undone. This will permanently delete the before/after comparison case.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setDeleteComparisonId(null)}>Cancel</Button>
-                        <Button variant="destructive" onClick={handleDeleteComparison}>Delete</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
         </>
     );
 }

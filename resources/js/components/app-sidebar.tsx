@@ -7,6 +7,7 @@ import {
     Users,
     CalendarCheck,
     Settings,
+    Image,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -59,6 +60,11 @@ export function AppSidebar() {
             title: t('admin.services'),
             href: '/admin/services',
             icon: HeartPulse,
+        },
+        {
+            title: t('admin.gallery_photos') || 'معرض الصور (قبل/بعد)',
+            href: '/admin/gallery-photos',
+            icon: Image,
         },
         {
             title: t('admin.appointments'),

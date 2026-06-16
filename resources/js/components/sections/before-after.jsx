@@ -19,7 +19,7 @@ export default function BeforeAfterSection() {
     return (
         <section id="cases" className="py-24 px-4 lg:px-24">
             <div className="text-center mb-16 space-y-4">
-                <h2 className="text-5xl lg:text-6xl font-black tracking-tighter text-background">
+                <h2 className="text-2xl lg:text-3xl font-black tracking-tighter text-background">
                     {t('before_after.title')}
                 </h2>
                 <div className="w-16 h-1.5 bg-primary mx-auto"></div>

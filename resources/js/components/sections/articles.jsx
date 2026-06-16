@@ -13,11 +13,11 @@ export default function LatestArticlesSection({ articles = [] }) {
         <section id="articles" className="py-24 px-4 lg:px-24">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
                 <div className="space-y-4">
-                    <h2 className="text-2xl lg:text-4xl text-background font-bold tracking-tighter">
+                    <h2 className="text-xl lg:text-3xl text-background font-bold tracking-tighter">
                         {t('articles.title')}
                     </h2>
                 </div>
-                <Link href='/articles' className="text-background text-lg cursor-pointer hover:text-primary transition-all pb-1">
+                <Link href='/articles' className="text-background text-base cursor-pointer hover:text-primary transition-all pb-1">
                     {t('articles.view_all')}
                 </Link>
             </div>
@@ -34,7 +34,7 @@ export default function LatestArticlesSection({ articles = [] }) {
                         </div>
                         <div className="p-8 flex flex-col justify-between flex-1 space-y-4">
                             <div className="space-y-3">
-                                <h3 className="text-lg lg:text-xl font-bold leading-snug group-hover:text-primary transition-colors">
+                                <h3 className="text-base lg:text-lg font-bold leading-snug group-hover:text-primary transition-colors">
                                     {article.title}
                                 </h3>
                                 <p className="text-sm  leading-relaxed line-clamp-2">
