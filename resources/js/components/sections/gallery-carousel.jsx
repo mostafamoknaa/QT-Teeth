@@ -142,7 +142,7 @@ export default function GalleryCarousel({ photos = [] }) {
             <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
 
             <div className="text-center mb-16 space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/30 rounded-full border border-border/50 text-primary font-bold text-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/30 rounded-full border border-border/50 text-background font-bold text-sm">
                     <Sparkles className="w-4 h-4" />
                     معرض الحالات الحقيقية
                 </div>

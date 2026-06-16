@@ -8,7 +8,6 @@ import { useTranslations } from '@/hooks/use-translations';
 
 export default function HomeVideoForm({ video = null }) {
     const { t } = useTranslations();
-    const [sourceType, setSourceType] = useState(video?.youtube_url ? 'youtube' : 'file');
 
     const { data, setData, post, processing, errors } = useForm({
         _method: video ? 'PUT' : 'POST',
@@ -96,78 +95,19 @@ export default function HomeVideoForm({ video = null }) {
                             <p className="text-xs text-muted-foreground">الصورة التي ستظهر للمستخدمين قبل الضغط على تشغيل الفيديو (يفضل نسبة أبعاد بورتريه رأسية)</p>
                         </div>
 
-                        {/* Video Source Selection */}
-                        <div className="space-y-2 md:col-span-2">
-                            <Label>مصدر الفيديو</Label>
-                            <div className="flex gap-4">
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input 
-                                        type="radio" 
-                                        name="sourceType" 
-                                        value="file" 
-                                        checked={sourceType === 'file'}
-                                        onChange={() => {
-                                            setSourceType('file');
-                                            setData('youtube_url', '');
-                                        }}
-                                        className="h-4 w-4"
-                                    />
-                                    <span>تحميل ملف فيديو محلي</span>
-                                </label>
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input 
-                                        type="radio" 
-                                        name="sourceType" 
-                                        value="youtube" 
-                                        checked={sourceType === 'youtube'}
-                                        onChange={() => {
-                                            setSourceType('youtube');
-                                            setData('video_file', null);
-                                        }}
-                                        className="h-4 w-4"
-                                    />
-                                    <span>رابط فيديو يوتيوب</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        {/* Local Video File Upload */}
-                        {sourceType === 'file' && (
-                            <div className="space-y-2 md:col-span-2">
-                                <Label htmlFor="video_file">{t('admin.video_file') || 'ملف الفيديو'}</Label>
-                                <div className="flex items-center gap-4">
-                                    <Input 
-                                        id="video_file" 
-                                        type="file" 
-                                        accept="video/*"
-                                        className="cursor-pointer" 
-                                        onChange={e => setData('video_file', e.target.files[0])}
-                                    />
-                                    {video?.video_path && !data.video_file && (
-                                        <div className="text-xs text-muted-foreground">
-                                            ملف الفيديو الحالي: <span className="font-mono">{video.video_path.split('/').pop()}</span>
-                                        </div>
-                                    )}
-                                </div>
-                                {errors.video_file && <p className="text-sm text-destructive">{errors.video_file}</p>}
-                                <p className="text-xs text-muted-foreground">الملفات المدعومة: MP4, WebM (الحد الأقصى للملف: 25 ميجابايت)</p>
-                            </div>
-                        )}
-
                         {/* YouTube URL */}
-                        {sourceType === 'youtube' && (
-                            <div className="space-y-2 md:col-span-2">
-                                <Label htmlFor="youtube_url">{t('admin.video_youtube_url') || 'رابط يوتيوب'}</Label>
-                                <Input 
-                                    id="youtube_url" 
-                                    type="url"
-                                    value={data.youtube_url} 
-                                    onChange={e => setData('youtube_url', e.target.value)} 
-                                    placeholder="https://www.youtube.com/watch?v=..."
-                                />
-                                {errors.youtube_url && <p className="text-sm text-destructive">{errors.youtube_url}</p>}
-                            </div>
-                        )}
+                        <div className="space-y-2 md:col-span-2">
+                            <Label htmlFor="youtube_url">{t('admin.video_youtube_url') || 'رابط يوتيوب'}</Label>
+                            <Input 
+                                id="youtube_url" 
+                                type="url"
+                                required
+                                value={data.youtube_url} 
+                                onChange={e => setData('youtube_url', e.target.value)} 
+                                placeholder="https://www.youtube.com/watch?v=..."
+                            />
+                            {errors.youtube_url && <p className="text-sm text-destructive">{errors.youtube_url}</p>}
+                        </div>
                     </div>
 
                     <div className="flex justify-end gap-3 pt-6 border-t font-black">

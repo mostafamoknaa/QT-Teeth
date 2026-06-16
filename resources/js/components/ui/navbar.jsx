@@ -106,13 +106,14 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     <div className="flex items-center gap-6">
                         <div className="flex items-center gap-6 border-l border-white/10 pl-6 h-4">
                             <div className="flex items-center gap-2">
-                                <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" />
-                                <span dir="ltr">01060000805</span>
+                                {/* <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" /> */}
+                                <span>للتواصل عبر واتساب :</span>
+                                <a href="https://wa.me/201060000841" target="_blank" rel="noopener noreferrer" dir="ltr">01060000841</a>
                             </div>
-                            <div className="flex items-center gap-2">
+                            {/* <div className="flex items-center gap-2">
                                 <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" />
                                 <span dir="ltr">01030000728</span>
-                            </div>
+                            </div> */}
                         </div>
                         <button
                             onClick={() => switchLanguage(locale === 'ar' ? 'en' : 'ar')}

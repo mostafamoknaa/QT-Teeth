@@ -24,7 +24,11 @@ export default function LatestArticlesSection({ articles = [] }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {articles.map((article, index) => (
-                    <div key={index} className="group text-background bg-secondary/30 flex rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl">
+                    <Link 
+                        key={index} 
+                        href={`/articles/${article.slug || article.id}`}
+                        className="group text-background bg-secondary/30 flex rounded-3xl overflow-hidden border border-border/50 transition-all duration-500 hover:shadow-xl"
+                    >
                         <div className="w-1/3 overflow-hidden">
                             <img 
                                 src={article.image ? `/storage/${article.image}` : 'https://placehold.co/600x400'} 
@@ -42,7 +46,7 @@ export default function LatestArticlesSection({ articles = [] }) {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </section>

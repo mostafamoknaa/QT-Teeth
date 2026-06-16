@@ -35,8 +35,11 @@ export default function HomeVideosIndex({ videos }) {
                         <h1 className="text-2xl font-bold tracking-tight">{t('admin.home_videos') || 'فيديوهات الصفحة الرئيسية'}</h1>
                         <p className="text-muted-foreground">{t('admin.home_videos_desc') || 'إدارة الفيديوهات الأربعة المعروضة في الصفحة الرئيسية'}</p>
                     </div>
-                    <Button asChild>
-                        <Link href="/admin/home-videos/create">
+                    <Button asChild disabled={videos.total >= 4}>
+                        <Link 
+                            href={videos.total >= 4 ? '#' : "/admin/home-videos/create"}
+                            className={videos.total >= 4 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}
+                        >
                             <Plus className="mr-2 h-4 w-4" /> {t('admin.add_home_video') || 'إضافة فيديو جديد'}
                         </Link>
                     </Button>

@@ -24,20 +24,20 @@ class HomeVideoController extends Controller
 
     public function store(Request $request)
     {
+        // Enforce limit of 4 videos
+        if (HomeVideo::count() >= 4) {
+            return redirect()->back()->with('error', 'You cannot add more than 4 videos.');
+        }
+
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
             'thumbnail' => 'required|image|max:2048',
-            'video_file' => 'nullable|file|mimes:mp4,webm,ogg,quicktime|max:25600',
-            'youtube_url' => 'nullable|string|url|max:255',
+            'youtube_url' => 'required|string|url|max:255',
             'order' => 'nullable|integer',
         ]);
 
         if ($request->hasFile('thumbnail')) {
             $validated['thumbnail'] = $request->file('thumbnail')->store('home_videos', 'public');
-        }
-
-        if ($request->hasFile('video_file')) {
-            $validated['video_path'] = $request->file('video_file')->store('home_videos', 'public');
         }
 
         HomeVideo::create($validated);
@@ -57,8 +57,7 @@ class HomeVideoController extends Controller
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
             'thumbnail' => 'nullable|image|max:2048',
-            'video_file' => 'nullable|file|mimes:mp4,webm,ogg,quicktime|max:25600',
-            'youtube_url' => 'nullable|string|url|max:255',
+            'youtube_url' => 'required|string|url|max:255',
             'order' => 'nullable|integer',
         ]);
 
@@ -71,16 +70,7 @@ class HomeVideoController extends Controller
             unset($validated['thumbnail']);
         }
 
-        if ($request->hasFile('video_file')) {
-            if ($homeVideo->video_path) {
-                Storage::disk('public')->delete($homeVideo->video_path);
-            }
-            $validated['video_path'] = $request->file('video_file')->store('home_videos', 'public');
-            // If local video file is uploaded, clear YouTube URL
-            $validated['youtube_url'] = null;
-        }
-
-        // If a YouTube URL is entered, clear local video file
+        // If a YouTube URL is entered, clear local video file if it exists (legacy)
         if ($request->filled('youtube_url')) {
             if ($homeVideo->video_path) {
                 Storage::disk('public')->delete($homeVideo->video_path);

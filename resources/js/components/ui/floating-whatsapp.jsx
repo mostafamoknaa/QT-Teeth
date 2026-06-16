@@ -14,7 +14,7 @@ export default function FloatingWhatsApp() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-6 left-6 z-50 p-4 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 hover:-translate-y-1 transition-all duration-300 animate-in fade-in slide-in-from-bottom"
+            className="fixed bottom-6 left-6 z-[110] p-4 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 hover:-translate-y-1 transition-all duration-300 animate-in fade-in slide-in-from-bottom"
             aria-label="Chat with us on WhatsApp"
         >
             <svg
