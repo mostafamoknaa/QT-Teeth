@@ -7,6 +7,7 @@ use App\Models\Doctor;
 use App\Models\Testimonial;
 use App\Models\Service;
 use App\Models\Offer;
+use App\Models\GalleryPhoto;
 use App\Notifications\WhatsappNotification;
 use Illuminate\Notifications\Notification;
 use Inertia\Inertia;
@@ -21,6 +22,7 @@ class SiteController extends Controller
             'services'        => Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
             'active_offers'   => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
             'home_videos'     => \App\Models\HomeVideo::orderBy('order')->get(),
+            'gallery_photos'  => GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -63,7 +65,7 @@ class SiteController extends Controller
     {
         return Inertia::render('services/index', [
             'canonical_url' => config('app.url') . '/services',
-            'services' => Service::with('comparisons')->orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
+            'services' => Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
         ]);
     }
 
@@ -71,7 +73,15 @@ class SiteController extends Controller
     {
         return Inertia::render('services/show', [
             'canonical_url' => config('app.url') . '/services/' . $service->url_key,
-            'service' => array_merge($service->load('comparisons')->toArray(), ['url_key' => $service->url_key]),
+            'service' => array_merge($service->toArray(), ['url_key' => $service->url_key]),
+        ]);
+    }
+
+    public function gallery()
+    {
+        return Inertia::render('gallery', [
+            'canonical_url'  => config('app.url') . '/gallery',
+            'gallery_photos' => GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 

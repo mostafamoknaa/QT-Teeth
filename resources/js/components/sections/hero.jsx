@@ -18,7 +18,7 @@ export default function HeroSection() {
             {/* Content */}
             <div className="relative h-full flex items-center justify-end px-4 lg:px-24">
                 <div className="max-w-2xl">
-                    <h1 className="text-4xl lg:text-[60px] font-black mb-8 leading-[1.1] tracking-tighter drop-shadow-2xl text-foreground">
+                    <h1 className="text-3xl lg:text-[45px] font-black mb-8 leading-[1.1] tracking-tighter drop-shadow-2xl text-foreground">
                         {t('hero.title')}
                     </h1>
                 </div>

@@ -1,21 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
 import { MapPin, Mail, Phone, Loader2 } from 'lucide-react';
 import { useForm, usePage } from '@inertiajs/react';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/error-messages';
 
-export default function BookingFormSection({ services = [] }) {
+export default function BookingFormSection({ services = [], defaultServiceId = '' }) {
     const { t } = useTranslations();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         phone: '',
         email: '',
-        service_id: '',
+        service_id: defaultServiceId || '',
         offer: '',
         branch: '',
         message: ''
     });
+
+    useEffect(() => {
+        if (defaultServiceId) {
+            setData('service_id', defaultServiceId);
+        } else {
+            const urlParams = new URLSearchParams(window.location.search);
+            const serviceId = urlParams.get('service_id');
+            if (serviceId) {
+                setData('service_id', serviceId);
+            }
+        }
+    }, [defaultServiceId]);
+
+    useEffect(() => {
+        if (window.location.hash === '#booking') {
+            const bookingSection = document.getElementById('booking');
+            if (bookingSection) {
+                setTimeout(() => {
+                    bookingSection.scrollIntoView({ behavior: 'smooth' });
+                }, 300); // Small delay to let Inertia finish rendering the DOM
+            }
+        }
+    }, []);
     const { global_services } = usePage().props;
     const formServices = services && services.length > 0 ? services : global_services || [];
 
@@ -57,10 +80,10 @@ export default function BookingFormSection({ services = [] }) {
                 <img src='/line.png' alt='Line' className="w-40 h-40" />
             </div>
             <div className="text-center mb-20 space-y-4">
-                <h2 className="text-3xl text-background lg:text-6xl  font-black tracking-tighter">
+                <h2 className="text-2xl text-background lg:text-4xl  font-black tracking-tighter">
                     {t('booking.title')}
                 </h2>
-                <p className="text-background font-medium text-lg">
+                <p className="text-background font-medium text-sm md:text-base">
                     {t('booking.subtitle')}
                 </p>
             </div>
@@ -68,13 +91,13 @@ export default function BookingFormSection({ services = [] }) {
             {/* Contact Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                 {contactCards.map((card, i) => (
-                    <span key={i} className="group flex flex-col items-center gap-6 p-10 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
+                    <span key={i} className="group flex flex-col items-center gap-6 p-6 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
                         <div className="p-6 bg-background rounded-2xl shadow-lg transition-colors">
                             <img src={card.icon} alt={card.title} className="w-15 h-15" />
                         </div>
                         <div className="space-y-2">
-                            <h4 className="text-xl font-bold">{card.title}</h4>
-                            <p className="font-medium whitespace-pre-line text-lg">{card.detail}</p>
+                            <h4 className="text-lg font-bold">{card.title}</h4>
+                            <p className="font-medium whitespace-pre-line text-base">{card.detail}</p>
                         </div>
                     </span>
                 ))}
@@ -183,7 +206,7 @@ export default function BookingFormSection({ services = [] }) {
                     </div>
                                     {/* Submit Button */}
                     <div className="md:col-span-3 flex justify-center mt-4">
-                        <button disabled={processing} type="submit" className="w-full md:w-auto bg-foreground text-background rounded-2xl px-8 sm:px-20 lg:px-40 py-6 font-black text-lg lg:text-xl hover:bg-primary hover:text-foreground transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:-translate-y-0 flex items-center justify-center gap-2">
+                        <button disabled={processing} type="submit" className="w-full md:w-auto bg-foreground text-background rounded-2xl px-8 sm:px-20 lg:px-40 py-6 font-black text-base lg:text-lg hover:bg-primary hover:text-foreground transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:-translate-y-0 flex items-center justify-center gap-2">
                             {processing && <Loader2 className="animate-spin" />}
                             {t('booking.form.submit_whatsapp')}
                         </button>

@@ -85,33 +85,24 @@ export default function ServiceShow({ service }) {
                             </div>
                         </div>
 
-                        {/* Comparisons Section */}
+                        {/* FAQs Section */}
                         <div className="border rounded-lg p-6 bg-card space-y-6">
                             <div className="flex items-center gap-2 border-b pb-2">
-                                <ArrowRightLeft className="h-5 w-5 text-primary" />
-                                <h2 className="text-lg font-semibold">{t('admin.before_after')}</h2>
+                                <Layers className="h-5 w-5 text-primary" />
+                                <h2 className="text-lg font-semibold">الأسئلة الشائعة (FAQs)</h2>
                             </div>
 
-                            {service.comparisons && service.comparisons.length > 0 ? (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    {service.comparisons.map((comp) => (
-                                        <div key={comp.id} className="border rounded-lg overflow-hidden flex flex-col gap-2 p-2 bg-muted/30">
-                                            <div className="grid grid-cols-2 gap-1">
-                                                <div className="relative">
-                                                    <img src={`/storage/${comp.before_image}`} alt="Before" className="w-full aspect-square object-cover rounded" />
-                                                    <span className="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1 rounded">{t('admin.before')}</span>
-                                                </div>
-                                                <div className="relative">
-                                                    <img src={`/storage/${comp.after_image}`} alt="After" className="w-full aspect-square object-cover rounded" />
-                                                    <span className="absolute bottom-1 right-1 bg-black/50 text-white text-[10px] px-1 rounded">{t('admin.after')}</span>
-                                                </div>
-                                            </div>
-                                            {comp.title && <p className="text-xs text-center font-medium">{comp.title}</p>}
+                            {service.faqs && service.faqs.length > 0 ? (
+                                <div className="space-y-4">
+                                    {service.faqs.map((faq, index) => (
+                                        <div key={index} className="border p-4 rounded-lg bg-muted/20">
+                                            <h4 className="font-bold text-sm text-foreground">{faq.question}</h4>
+                                            <p className="text-xs text-muted-foreground mt-1 whitespace-pre-wrap">{faq.answer}</p>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <p className="text-sm text-muted-foreground italic text-center py-4">{t('admin.no_comparisons') || 'لا توجد مقارنات لهذه الخدمة'}</p>
+                                <p className="text-sm text-muted-foreground italic text-center py-4">لا توجد أسئلة شائعة لهذه الخدمة</p>
                             )}
                         </div>
                     </div>

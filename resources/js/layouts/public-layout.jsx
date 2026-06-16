@@ -21,11 +21,15 @@ export default function AppLayout({ children, heroOptions }) {
 
     useEffect(() => {
         const unbind = router.on('finish', () => {
+            // Do not override scroll if the URL target is a hash anchor
+            if (window.location.hash) return;
+
             // Auto-scroll logic for large screens to avoid navigation confusion
             if (window.innerWidth >= 1024) {
                 const mainContent = document.getElementById('main-content');
                 if (mainContent) {
                     setTimeout(() => {
+                        if (window.location.hash) return;
                         mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 500); // 500ms delay to ensure Inertia finished its own scroll handling
                 }

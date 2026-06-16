@@ -4,12 +4,13 @@ import PublicLayout from '@/layouts/public-layout';
 import LocalBusinessSchema from '@/components/seo/LocalBusinessSchema';
 import DoctorAhmedBadrSection from '@/components/sections/doctor-profile';
 import ServicesCarouselSection from '@/components/sections/services-carousel';
+import GalleryCarousel from '@/components/sections/gallery-carousel';
 import LatestArticlesSection from '@/components/sections/articles';
 import BookingFormSection from '@/components/sections/booking';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-export default function Welcome({ articles, testimonials, services, home_videos = [] }) {
+export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [] }) {
     const [selectedVideo, setSelectedVideo] = useState(null);
 
     // Helper function to extract YouTube Video ID
@@ -36,6 +37,7 @@ export default function Welcome({ articles, testimonials, services, home_videos 
 
             <DoctorAhmedBadrSection />
             <ServicesCarouselSection services={services} />
+            <GalleryCarousel photos={gallery_photos} />
 
             {/* People Section / Dynamic Video Section */}
             {home_videos.length === 0 ? (

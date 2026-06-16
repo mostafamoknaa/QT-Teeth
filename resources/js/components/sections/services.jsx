@@ -41,11 +41,11 @@ export default function ServiceCardsSection() {
     return (
         <section id="services" className="py-24 px-4 lg:px-24 bg-background">
             <div className="text-center mb-20 space-y-4">
-                <h2 className="text-5xl lg:text-6xl font-black tracking-tighter">
+                <h2 className="text-3xl lg:text-4xl font-black tracking-tighter">
                     {t('services.title')}
                 </h2>
                 <div className="w-16 h-1.5 bg-primary mx-auto"></div>
-                <p className="text-muted-foreground max-w-2xl mx-auto font-medium text-lg leading-relaxed pt-2">
+                <p className="text-muted-foreground max-w-2xl mx-auto font-medium text-sm md:text-base leading-relaxed pt-2">
                     نحن متخصصون في جميع أنواع جراحات وتجميل الأسنان بأحدث التقنيات الطبية العالمية لضمان فخامة التجربة والنتائج المثالية.
                 </p>
             </div>

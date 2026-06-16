@@ -25,10 +25,10 @@ export default function ArticlesIndex({ articles = [] }) {
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-background">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-background">
                         {t('pages.articles.title')}
                     </h1>
-                    <p className="text-background/70 text-lg md:text-xl mt-4 max-w-2xl mx-auto">
+                    <p className="text-background/70 text-sm md:text-base mt-4 max-w-2xl mx-auto">
                         {t('pages.articles.subtitle')}
                     </p>
                 </div>
@@ -49,7 +49,7 @@ export default function ArticlesIndex({ articles = [] }) {
                                 />
                             </div>
                             <div className="p-6 space-y-4">
-                                <h3 className="text-lg md:text-xl font-bold leading-snug text-background group-hover:text-primary transition-colors line-clamp-2">
+                                <h3 className="text-base md:text-lg font-bold leading-snug text-background group-hover:text-primary transition-colors line-clamp-2">
                                     {article.title}
                                 </h3>
                                 <p className="text-sm text-background/60 leading-relaxed line-clamp-3">

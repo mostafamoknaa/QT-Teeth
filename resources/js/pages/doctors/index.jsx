@@ -18,10 +18,10 @@ export default function DoctorsIndex({ doctors = [] }) {
             <section className="py-12 md:py-20 px-6 lg:px-24">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl tracking-tighter text-background">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl tracking-tighter text-background">
                         {t('pages.doctors.title')}
                     </h1>
-                    <p className="text-background/70 text-lg md:text-xl mt-8 max-w-2xl mx-auto">
+                    <p className="text-background/70 text-sm md:text-base mt-4 max-w-2xl mx-auto">
                         {t('pages.doctors.subtitle')}
                     </p>
                 </div>
@@ -43,7 +43,7 @@ export default function DoctorsIndex({ doctors = [] }) {
                                 </div>
                             </div>
                             <div className="px-6 pb-10 space-y-4 text-center">
-                                <h3 className="text-xl md:text-2xl font-bold text-background">
+                                <h3 className="text-lg md:text-xl font-bold text-background">
                                     {doctor.name}
                                 </h3>
                                 <div className="border-b border-muted-foreground/50"></div>

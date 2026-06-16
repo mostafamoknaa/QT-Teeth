@@ -25,22 +25,22 @@ export default function AboutUsSection() {
                 <div className="order-1 lg:order-2 space-y-8">
                     <div className="space-y-4">
                         <div className="w-16 h-1.5 bg-foreground mb-6"></div>
-                        <h2 className="text-5xl lg:text-6xl font-black tracking-tighter">
+                        <h2 className="text-3xl lg:text-4xl font-black tracking-tighter">
                             {t('about.title')}
                         </h2>
-                        <h3 className="text-2xl text-foreground/60 font-medium">
+                        <h3 className="text-xl text-foreground/60 font-medium">
                             Badr Dental Center
                         </h3>
                     </div>
 
-                    <p className="text-muted-foreground text-lg leading-[1.8] text-justify font-medium">
+                    <p className="text-muted-foreground text-base leading-[1.8] text-justify font-medium">
                         {t('about.description')}
                     </p>
 
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
                         {stats.map((stat, index) => (
                             <div key={index} className="text-center p-6 bg-secondary/30 rounded-3xl hover:bg-primary/10 transition-colors group">
-                                <p className="text-4xl font-black text-foreground group-hover:text-primary transition-colors">
+                                <p className="text-2xl lg:text-3xl font-black text-foreground group-hover:text-primary transition-colors">
                                     {stat.value}
                                 </p>
                                 <p className="text-[12px] text-muted-foreground mt-3 font-bold uppercase tracking-widest leading-tight">

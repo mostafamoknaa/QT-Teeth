@@ -78,20 +78,20 @@ export default function Contact({ services = [] }) {
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
             </Head>
             <div className="text-center mb-20 space-y-4">
-                <h1 className="text-3xl lg:text-6xl text-background font-black tracking-tighter">
+                <h1 className="text-2xl lg:text-4xl text-background font-black tracking-tighter">
                    {t('nav.contact')}
                 </h1>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
                 {contactCards.map((card, i) => (
-                    <span key={i} className="group flex flex-col items-center gap-6 p-10 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
+                    <span key={i} className="group flex flex-col items-center gap-6 p-6 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
                         <div className="p-6 bg-background rounded-2xl shadow-lg transition-colors">
                             <img src={card.icon} alt={card.title} className="w-15 h-15" />
                         </div>
                         <div className="space-y-2">
-                            <h4 className="text-xl font-bold">{card.title}</h4>
-                            <p className="font-medium whitespace-pre-line text-lg">{card.detail}</p>
+                            <h4 className="text-lg font-bold">{card.title}</h4>
+                            <p className="font-medium whitespace-pre-line text-base">{card.detail}</p>
                         </div>
                     </span>
                 ))}
@@ -217,7 +217,7 @@ export default function Contact({ services = [] }) {
                     <button 
                         onClick={handleSubmit}
                         disabled={processing}
-                        className="w-full md:w-auto bg-foreground text-background rounded-2xl px-8 sm:px-20 lg:px-40 py-6 font-black text-lg lg:text-xl hover:bg-primary hover:text-foreground transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full md:w-auto bg-foreground text-background rounded-2xl px-8 sm:px-20 lg:px-40 py-6 font-black text-base lg:text-lg hover:bg-primary hover:text-foreground transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {processing ? t('booking.form.submitting') || 'Submitting...' : t('booking.form.submit_whatsapp')}
                     </button>

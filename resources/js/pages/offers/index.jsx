@@ -15,10 +15,10 @@ export default function OffersIndex({ offers }) {
             <section className="py-12 md:py-20 px-6 lg:px-24 min-h-[60vh]">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-foreground">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter text-foreground">
                         {t('pages.offers.title')}
                     </h1>
-                    <p className="text-foreground/70 text-lg md:text-xl mt-4 max-w-2xl mx-auto">
+                    <p className="text-foreground/70 text-sm md:text-base mt-4 max-w-2xl mx-auto">
                         {t('pages.offers.subtitle')}
                     </p>
                 </div>
@@ -38,10 +38,10 @@ export default function OffersIndex({ offers }) {
                                 />
                             </div>
                             <div className="p-8 space-y-4">
-                                <h3 className="text-xl md:text-2xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
+                                <h3 className="text-lg md:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
                                     {offer.title}
                                 </h3>
-                                <p className="text-base text-foreground/70 leading-relaxed line-clamp-4 whitespace-pre-line">
+                                <p className="text-sm md:text-base text-foreground/70 leading-relaxed line-clamp-4 whitespace-pre-line">
                                     {offer.content}
                                 </p>
                                 
