@@ -7,10 +7,11 @@ import ServicesCarouselSection from '@/components/sections/services-carousel';
 import GalleryCarousel from '@/components/sections/gallery-carousel';
 import LatestArticlesSection from '@/components/sections/articles';
 import BookingFormSection from '@/components/sections/booking';
+import OffersSection from '@/components/sections/offers-section';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [] }) {
+export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [], active_offers = [] }) {
     const [selectedVideo, setSelectedVideo] = useState(null);
 
     // Helper function to extract YouTube Video ID
@@ -38,6 +39,9 @@ export default function Welcome({ articles, testimonials, services, home_videos 
             <DoctorAhmedBadrSection />
             <ServicesCarouselSection services={services} />
             <GalleryCarousel photos={gallery_photos} />
+
+            {/* Offers Section */}
+            <OffersSection offers={active_offers} />
 
             {/* People Section / Dynamic Video Section */}
             {home_videos.length === 0 ? (

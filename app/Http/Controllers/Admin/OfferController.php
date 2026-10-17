@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -28,16 +29,24 @@ class OfferController extends Controller
 
     public function create()
     {
-        return Inertia::render('admin/offers/form');
+        return Inertia::render('admin/offers/form', [
+            'services' => Service::orderBy('order')->get(['id', 'title']),
+        ]);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'is_active' => 'boolean',
+            'title'               => 'required|string|max:255',
+            'badge_text'          => 'nullable|string|max:100',
+            'content'             => 'nullable|string',
+            'image'               => 'nullable|image|max:2048',
+            'is_active'           => 'boolean',
+            'discount_percentage' => 'nullable|string|max:20',
+            'original_price'      => 'nullable|numeric|min:0',
+            'discounted_price'    => 'nullable|numeric|min:0',
+            'valid_until'         => 'nullable|date',
+            'service_id'          => 'nullable|integer|exists:services,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -52,24 +61,31 @@ class OfferController extends Controller
     public function show(Offer $offer)
     {
         return Inertia::render('admin/offers/show', [
-            'offer' => $offer
+            'offer' => $offer->load('service')
         ]);
     }
 
     public function edit(Offer $offer)
     {
         return Inertia::render('admin/offers/form', [
-            'offer' => $offer
+            'offer'    => $offer,
+            'services' => Service::orderBy('order')->get(['id', 'title']),
         ]);
     }
 
     public function update(Request $request, Offer $offer)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'is_active' => 'boolean',
+            'title'               => 'required|string|max:255',
+            'badge_text'          => 'nullable|string|max:100',
+            'content'             => 'nullable|string',
+            'image'               => 'nullable|image|max:2048',
+            'is_active'           => 'boolean',
+            'discount_percentage' => 'nullable|string|max:20',
+            'original_price'      => 'nullable|numeric|min:0',
+            'discounted_price'    => 'nullable|numeric|min:0',
+            'valid_until'         => 'nullable|date',
+            'service_id'          => 'nullable|integer|exists:services,id',
         ]);
 
         if ($request->hasFile('image')) {

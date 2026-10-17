@@ -20,7 +20,7 @@ class SiteController extends Controller
             'articles'        => Article::where('is_published', true)->orderBy('published_at', 'desc')->take(6)->get()->map(fn($a) => array_merge($a->toArray(), ['url_key' => $a->url_key])),
             'testimonials'    => Testimonial::orderBy('order')->get(),
             'services'        => Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
-            'active_offers'   => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
+            'active_offers'   => Offer::active()->with('service')->orderBy('created_at', 'desc')->get(),
             'home_videos'     => \App\Models\HomeVideo::orderBy('order')->get(),
             'gallery_photos'  => GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
         ]);
@@ -31,7 +31,7 @@ class SiteController extends Controller
         return Inertia::render('contact', [
             'canonical_url' => config('app.url') . '/contact',
             'services'      => Service::orderBy('order')->get(),
-            'active_offers' => Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
+            'active_offers' => Offer::active()->with('service')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -105,7 +105,7 @@ class SiteController extends Controller
     {
         return Inertia::render('offers/index', [
             'canonical_url' => config('app.url') . '/offers',
-            'offers' => Offer::where('is_active', true)->orderBy('created_at', 'desc')->paginate(12),
+            'offers' => Offer::active()->with('service')->orderBy('created_at', 'desc')->paginate(12),
         ]);
     }
 
