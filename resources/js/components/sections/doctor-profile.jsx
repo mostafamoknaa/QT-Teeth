@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
 import { usePage } from '@inertiajs/react';
+import { Award, Sparkles, Calendar, ShieldCheck, Stethoscope, Users, Building2, Smile } from 'lucide-react';
 
 function useCountUp(target, duration = 1800, start = false) {
     const [val, setVal] = useState(0);
@@ -20,15 +21,24 @@ function useCountUp(target, duration = 1800, start = false) {
     return val;
 }
 
-function StatItem({ value, label, prefix = '', suffix = '', started }) {
+function StatItem({ value, label, prefix = '', suffix = '', icon: Icon, started, index = 0 }) {
     const numeric = parseInt(String(value).replace(/\D/g, ''), 10);
     const count = useCountUp(numeric, 1800, started);
+    const floatClass = index % 2 === 0 ? 'card-float-up-down' : 'card-float-down-up';
     return (
-        <div className="flex flex-col items-center text-center gap-1">
-            <div className="text-3xl md:text-4xl font-black text-[#D4AF37] tracking-tight">
-                {prefix}{count}{suffix}
+        <div 
+            style={{ animationDelay: `${index * 0.5}s` }}
+            className={`group flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl transition-all duration-500 hover:-translate-y-2.5 hover:bg-[#D4AF37]/10 cursor-default ${floatClass}`}
+        >
+            {Icon && (
+                <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center mb-3 text-[#D4AF37] group-hover:scale-115 group-hover:border-[#D4AF37] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] transition-all duration-300">
+                    <Icon className="w-6 h-6 group-hover:rotate-6 transition-transform" />
+                </div>
+            )}
+            <div className="text-3xl md:text-4xl lg:text-5xl font-black text-[#D4AF37] tracking-tight drop-shadow-sm font-sans group-hover:scale-105 transition-transform">
+                {prefix}{count.toLocaleString()}{suffix}
             </div>
-            <div className="text-xs md:text-sm text-background/70 font-medium leading-snug max-w-[120px]">
+            <div className="text-xs md:text-sm text-white/80 font-medium mt-1 leading-snug">
                 {label}
             </div>
         </div>
@@ -43,8 +53,13 @@ export default function DoctorAhmedBadrSection() {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) { setStarted(true); observer.disconnect(); } },
-            { threshold: 0.3 }
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setStarted(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2 }
         );
         if (sectionRef.current) observer.observe(sectionRef.current);
         return () => observer.disconnect();
@@ -52,54 +67,170 @@ export default function DoctorAhmedBadrSection() {
 
     const stats = locale === 'ar'
         ? [
-            { value: 30, suffix: '+', label: 'استشاري وأخصائي' },
-            { value: 10, suffix: '+', label: 'سنوات من الخبرة' },
-            { value: 2,  suffix: '',  label: 'فروع في مصر' },
-            { value: 15000, suffix: '+', label: 'مريض سعيد' },
+            { value: 30, suffix: '+', label: 'استشاري وأخصائي متخصص', icon: Users },
+            { value: 10, suffix: '+', label: 'سنوات خبرة وتميز', icon: Award },
+            { value: 2,  suffix: '',  label: 'فروع في مصر (الزايد والمنصورة)', icon: Building2 },
+            { value: 15000, suffix: '+', label: 'ابتسامة و مريض سعيد', icon: Smile },
         ]
         : [
-            { value: 30, suffix: '+', label: 'Consultants & Specialists' },
-            { value: 10, suffix: '+', label: 'Years of Experience' },
-            { value: 2,  suffix: '',  label: 'Branches in Egypt' },
-            { value: 15000, suffix: '+', label: 'Happy Patients' },
+            { value: 30, suffix: '+', label: 'Specialists & Consultants', icon: Users },
+            { value: 10, suffix: '+', label: 'Years of Excellence', icon: Award },
+            { value: 2,  suffix: '',  label: 'Branches in Egypt', icon: Building2 },
+            { value: 15000, suffix: '+', label: 'Smiles Transformed', icon: Smile },
+        ];
+
+    const highlights = locale === 'ar'
+        ? [
+            'علاج الأسنان في جلسة واحدة تحت التخدير الكلي',
+            'أحدث تقنيات زراعة الأسنان الفورية وتأهيل الفك',
+            'غرف تعقيم مطابقة لأعلى المعايير العالمية',
+            'خطط دفع وتقسيط ميسرة لكافة العلاجات',
+        ]
+        : [
+            'Single-session treatment under general anesthesia',
+            'Immediate implantology and full-arch rehabilitation',
+            'Hospital-grade sterilization protocols',
+            'Flexible installment and financing plans',
         ];
 
     return (
-        <section id="doctors" ref={sectionRef} className="py-12 md:py-20 px-6 lg:px-24 relative overflow-hidden">
-            <div className="max-w-7xl">
-                <div className="w-full">
-                    {/* Gold decorative line */}
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="h-1 w-10 bg-[#D4AF37] rounded-full" />
-                        <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-widest">
-                            {locale === 'ar' ? 'مركز بدر للأسنان' : 'Badr Dental Center'}
-                        </span>
-                    </div>
+        <section id="doctors" ref={sectionRef} className="py-16 md:py-24 px-4 sm:px-6 lg:px-16 relative overflow-hidden">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/4 -right-32 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+            <div className="absolute bottom-10 -left-32 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
-                    <div className="space-y-6">
-                        <div className="space-y-4 max-w-4xl">
-                            <h2 className="text-xl text-background md:text-2xl lg:text-3xl font-bold tracking-tight leading-snug">
-                                {t('hero.description')}
-                            </h2>
+            <div className="max-w-7xl mx-auto">
+                {/* 2-Column Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                    
+                    {/* Content Column (7 cols) */}
+                    <div className="lg:col-span-7 space-y-6 reveal-left">
+                        {/* Eyebrow */}
+                        <div className="eyebrow">
+                            {locale === 'ar' ? 'مركز بدر للأسنان' : 'BADR DENTAL CENTER'}
                         </div>
 
-                        <p className="text-background text-sm md:text-base leading-relaxed text-justify">
+                        {/* Title with Gold Gradient Accent */}
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                            {t('hero.description')}
+                        </h2>
+
+                        {/* Credentials Tag */}
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-gold text-xs sm:text-sm font-semibold text-[#D4AF37]">
+                            <Sparkles className="w-4 h-4 text-[#D4AF37] animate-pulse" />
+                            <span>
+                                {locale === 'ar'
+                                    ? 'نخبة من أكثر من 30 استشاري وأخصائي في جراحة وتجميل الفم والأسنان'
+                                    : 'A team of 30+ senior dental consultants and specialists'}
+                            </span>
+                        </div>
+
+                        {/* Description Paragraphs */}
+                        <p className="text-white/80 text-sm sm:text-base leading-relaxed text-justify">
                             {t('hero.profile_1')}
                         </p>
 
-                        <p className="text-background text-sm md:text-base leading-relaxed text-justify">
+                        <p className="text-white/70 text-sm sm:text-base leading-relaxed text-justify">
                             {t('hero.profile_2')}
                         </p>
+
+                        {/* Feature Highlights Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            {highlights.map((item, idx) => (
+                                <div key={idx} className="flex items-center gap-2.5 text-xs sm:text-sm text-white/90">
+                                    <div className="w-5 h-5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center shrink-0">
+                                        <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                                    </div>
+                                    <span>{item}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Action CTA */}
+                        <div className="pt-4 flex flex-wrap items-center gap-4">
+                            <a
+                                href="#booking"
+                                className="btn-glow-gold inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#c9a227] via-[#e8c84a] to-[#c9a227] text-black font-extrabold text-sm shadow-xl hover:scale-105 active:scale-95 transition-transform"
+                            >
+                                <Calendar className="w-4 h-4" />
+                                <span>{locale === 'ar' ? 'احجز استشارتك الآن' : 'Book Consultation Now'}</span>
+                            </a>
+                            <a
+                                href="#services"
+                                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full glass-dark text-white/90 hover:text-white border border-white/10 hover:border-[#D4AF37]/40 text-sm font-medium transition-all"
+                            >
+                                <Stethoscope className="w-4 h-4 text-[#D4AF37]" />
+                                <span>{locale === 'ar' ? 'استكشف خدماتنا' : 'Explore Services'}</span>
+                            </a>
+                        </div>
                     </div>
 
-                    {/* Stats Bar */}
-                    <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-background/10 pt-10">
+                    {/* Image Column (5 cols) */}
+                    <div className="lg:col-span-5 relative reveal-right">
+                        {/* Background Aura */}
+                        <div className="absolute -inset-3 bg-gradient-to-tr from-[#D4AF37]/25 via-transparent to-[#D4AF37]/15 rounded-[2.5rem] blur-2xl -z-10" />
+
+                        {/* Portrait Frame */}
+                        <div className="relative aspect-[4/5] max-w-md mx-auto rounded-[2.5rem] overflow-hidden border border-[#D4AF37]/35 shadow-2xl bg-black/50 group card-float-up-down">
+                            <img
+                                src="/dr-ahmed.jpg"
+                                alt="د. أحمد عبدالله بدر"
+                                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                            />
+
+                            {/* Top Badge: Years Experience */}
+                            <div className="absolute top-4 right-4 glass-dark px-3.5 py-2 rounded-2xl border border-[#D4AF37]/40 shadow-[0_0_20px_rgba(212,175,55,0.35)] flex items-center gap-2 backdrop-blur-md badge-float z-10">
+                                <Award className="w-5 h-5 text-[#D4AF37]" />
+                                <div className="text-right">
+                                    <div className="text-xs font-black text-[#D4AF37]">
+                                        {locale === 'ar' ? '+10 سنوات' : '+10 Years'}
+                                    </div>
+                                    <div className="text-[10px] text-white/70">
+                                        {locale === 'ar' ? 'خبرة وتميز' : 'Experience'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bottom Card Overlay */}
+                            <div className="absolute bottom-4 inset-x-4 glass-dark p-4 rounded-2xl border border-white/10 backdrop-blur-md">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <div className="text-base font-bold text-white">
+                                            {locale === 'ar' ? 'د. أحمد عبدالله بدر' : 'Dr. Ahmed Badr'}
+                                        </div>
+                                        <div className="text-xs text-[#D4AF37] font-medium mt-0.5">
+                                            {locale === 'ar'
+                                                ? 'استشاري زراعة وتجميل الفم والأسنان'
+                                                : 'Consultant of Oral Implantology & Aesthetics'}
+                                        </div>
+                                    </div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" title="متاح للحجز" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* Animated Stats Bar */}
+                <div className="mt-14 glass-dark rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl reveal">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 divide-y lg:divide-y-0 divide-white/10 lg:divide-x lg:divide-x-reverse">
                         {stats.map((s, i) => (
-                            <StatItem key={i} value={s.value} suffix={s.suffix} label={s.label} started={started} />
+                            <StatItem
+                                key={i}
+                                index={i}
+                                value={s.value}
+                                suffix={s.suffix}
+                                label={s.label}
+                                icon={s.icon}
+                                started={started}
+                            />
                         ))}
                     </div>
                 </div>
+
             </div>
         </section>
     );
 }
+

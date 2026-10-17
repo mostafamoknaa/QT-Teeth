@@ -1,5 +1,5 @@
 import { Link, useForm, usePage } from '@inertiajs/react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, Search, Twitter, Youtube, Calendar, Globe, Menu, X } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, Calendar, Globe, Menu, X, ArrowDown, ChevronDown, Sparkles } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
 import { home, about, branches, contact } from '@/routes';
@@ -9,6 +9,7 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 export default function NavBar({ showHero = true, heroOptions = {} }) {
     const { t } = useTranslations();
     const { locale, global_services, settings = {} } = usePage().props;
+    const isRTL = locale === 'ar';
 
     const getYouTubeId = (url) => {
         if (!url) return null;
@@ -16,10 +17,20 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     };
+
     const topServices = global_services || [];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const { post } = useForm();
     const { isCurrentUrl } = useCurrentUrl();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 30);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const switchLanguage = (newLocale) => {
         post(language.switch.url({ query: { locale: newLocale } }), {
@@ -27,13 +38,11 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         });
     };
 
-
-
     const navLinks = [
         { href: home.url(), label: t('nav.home'), isRoute: true },
         { href: about.url(), label: t('nav.about'), isRoute: true },
         { href: '/services', label: t('nav.services'), isRoute: false },
-        { href: '/gallery', label: t('nav.gallery') || 'معرض الصور', isRoute: false },
+        { href: '/gallery', label: t('nav.gallery') || 'معرض الحالات', isRoute: false },
         { href: '/clients', label: t('nav.clients'), isRoute: false },
         { href: '/articles', label: t('nav.articles'), isRoute: false },
         { href: '/doctors', label: t('nav.doctors'), isRoute: false },
@@ -50,101 +59,118 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
 
     return (
         <header className="w-full relative">
-            <div className="w-full z-50">
-                {/* Layer 1: Top Service Bar */}
+            <div className="w-full">
+                {/* Layer 1: Marquee Services Top Bar */}
                 <div
-                    className="relative z-50 w-full overflow-hidden border-b border-white/10 bg-foreground py-3 text-background"
+                    className="relative z-40 w-full overflow-hidden border-b border-white/10 bg-[#0d0d0d] py-2.5 text-white/80"
                     dir="ltr"
                 >
-                    {/* Gradient Overlays for the "Fade" effect */}
-                    <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-foreground to-transparent" />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-foreground to-transparent" />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#0d0d0d] to-transparent" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#0d0d0d] to-transparent" />
 
                     <div className="flex w-max items-center">
-                        {/* The Marquee Container */}
-                        <div className="flex animate-marquee gap-12 whitespace-nowrap px-6 hover:[animation-play-state:paused] motion-reduce:animate-none">
+                        <div className="flex animate-marquee gap-10 whitespace-nowrap px-6 hover:[animation-play-state:paused] motion-reduce:animate-none">
                             {[...topServices, ...topServices].map((service, i) => (
                                 <Link
                                     key={i}
                                     href={`/services/${service.url_key || service.id}`}
-                                    dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                                    className="group flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider transition-colors hover:text-primary"
+                                    dir={isRTL ? 'rtl' : 'ltr'}
+                                    className="group flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-white/70 hover:text-[#D4AF37] transition-colors"
                                 >
-                                    {/* Add a subtle separator or icon for extra flair */}
-                                    <span className="opacity-50 group-hover:opacity-100">•</span>
-                                    {service.title}
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] opacity-75 group-hover:opacity-100 shadow-[0_0_6px_#D4AF37]" />
+                                    <span>{service.title}</span>
                                 </Link>
                             ))}
                         </div>
-
-                        {/* Duplicate the set once for the seamless loop to catch the tail */}
-                        <div className="flex animate-marquee gap-12 whitespace-nowrap px-6 hover:[animation-play-state:paused] motion-reduce:animate-none" aria-hidden="true">
+                        <div className="flex animate-marquee gap-10 whitespace-nowrap px-6 hover:[animation-play-state:paused] motion-reduce:animate-none" aria-hidden="true">
                             {[...topServices, ...topServices].map((service, i) => (
                                 <Link
                                     key={`dup-${i}`}
                                     href={`/services/${service.url_key || service.id}`}
-                                    dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                                    className="group flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider transition-colors hover:text-primary"
+                                    dir={isRTL ? 'rtl' : 'ltr'}
+                                    className="group flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-white/70 hover:text-[#D4AF37] transition-colors"
                                 >
-                                    <span className="opacity-50 group-hover:opacity-100">•</span>
-                                    {service.title}
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] opacity-75 group-hover:opacity-100 shadow-[0_0_6px_#D4AF37]" />
+                                    <span>{service.title}</span>
                                 </Link>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                {/* Layer 2: Info Bar */}
-                <div className="bg-foreground text-background py-2 px-4 lg:px-24 hidden md:flex justify-between items-center text-[15px] font-medium border-b border-white relative z-40">
-                    <div className="flex items-center gap-5">
-                        <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                        <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer"><img src="/snapchat2.png" alt="Snapchat" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
-                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer"><img src='/tik-tok.png' alt="TikTok" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
+                {/* Layer 2: Info & Social Bar */}
+                <div className="bg-[#141414] text-white/80 py-2 px-6 lg:px-20 hidden md:flex justify-between items-center text-xs font-medium border-b border-white/5 relative z-30">
+                    <div className="flex items-center gap-4">
+                        <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors" aria-label="Facebook">
+                            <Facebook size={16} />
+                        </a>
+                        <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors" aria-label="Instagram">
+                            <Instagram size={16} />
+                        </a>
+                        <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors" aria-label="Snapchat">
+                            <img src="/snapchat2.png" alt="Snapchat" className="h-4 w-4 object-contain brightness-0 invert opacity-80 hover:opacity-100" />
+                        </a>
+                        <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] transition-colors" aria-label="TikTok">
+                            <img src='/tik-tok.png' alt="TikTok" className="h-4 w-4 object-contain brightness-0 invert opacity-80 hover:opacity-100" />
+                        </a>
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-6 border-l border-white/10 pl-6 h-4">
-                            <div className="flex items-center gap-2">
-                                {/* <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" /> */}
-                                <span>للتواصل عبر واتساب :</span>
-                                <a href="https://wa.me/201060000841" target="_blank" rel="noopener noreferrer" dir="ltr">01060000841</a>
+                        <div className="flex items-center gap-4 border-s border-white/10 ps-5">
+                            <div className="flex items-center gap-1.5">
+                                <span className="text-white/60">{locale === 'ar' ? 'واتساب الاستشارات:' : 'WhatsApp:'}</span>
+                                <a href="https://wa.me/201060000841" target="_blank" rel="noopener noreferrer" dir="ltr" className="text-[#D4AF37] font-bold font-mono hover:underline">
+                                    01060000841
+                                </a>
                             </div>
-                            {/* <div className="flex items-center gap-2">
-                                <Phone size={14} fill='white' className="text-foreground rotate-[270deg]" />
-                                <span dir="ltr">01030000728</span>
-                            </div> */}
                         </div>
                         <button
                             onClick={() => switchLanguage(locale === 'ar' ? 'en' : 'ar')}
-                            className="flex items-center gap-2 hover:text-primary transition-colors"
+                            className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors text-xs font-bold"
                         >
-                            <span className="font-medium">{locale === 'ar' ? 'English' : 'العربية'}</span>
+                            <Globe size={14} className="text-[#D4AF37]" />
+                            <span>{locale === 'ar' ? 'English' : 'العربية'}</span>
                         </button>
                     </div>
                 </div>
 
-                {/* Layer 3: Main Navigation */}
-                <nav className="bg-white py-3 md:py-4 px-4 lg:px-24 flex justify-between items-center z-40 shadow-sm border-b border-border">
-                    {/* Right Side: Logo and Nav Links */}
-                    <div className="flex items-center gap-16">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <img src="/logo.png" alt="Badr Dental" className="h-14 md:h-20 lg:h-24 w-auto drop-shadow-md" />
+                {/* Layer 3: Main Sticky Navigation with Frosted Glass */}
+                <nav
+                    className={`sticky top-0 z-50 transition-all duration-300 px-6 lg:px-20 flex justify-between items-center ${
+                        isScrolled
+                            ? 'bg-black/85 backdrop-blur-xl border-b border-[#D4AF37]/25 shadow-2xl py-3'
+                            : 'bg-black/60 backdrop-blur-md border-b border-white/10 py-4'
+                    }`}
+                >
+                    {/* Logo and Nav Links */}
+                    <div className="flex items-center gap-10 lg:gap-14">
+                        <Link href="/" className="flex items-center gap-2 group shrink-0">
+                            <img
+                                src="/current-logo.png"
+                                alt="Badr Dental Center"
+                                className="h-12 sm:h-14 md:h-16 w-auto brightness-0 invert transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]"
+                                onError={(e) => { e.target.src = "/logo.png"; }}
+                            />
                         </Link>
 
-                        <ul className="hidden xl:flex items-center gap-8">
+                        <ul className="hidden xl:flex items-center gap-7">
                             {navLinks.map((link) => (
                                 <li key={link.label} className="relative group">
                                     {link.children ? (
                                         <>
-                                            <button className="flex items-center gap-1 text-foreground hover:text-primary font-bold transition-all text-[15px] py-1 cursor-pointer">
-                                                {link.label}
-                                                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            <button className="flex items-center gap-1 text-white/85 hover:text-[#D4AF37] font-bold transition-all text-sm py-1 cursor-pointer">
+                                                <span>{link.label}</span>
+                                                <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 text-white/50 group-hover:text-[#D4AF37]" />
                                             </button>
-                                            <ul className="absolute top-full start-0 mt-2 bg-card border border-border/50 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[180px] overflow-hidden py-2 z-50">
+                                            <ul className="absolute top-full start-0 mt-2 glass-dark bg-black/90 border border-white/15 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[190px] overflow-hidden py-2 z-50 backdrop-blur-xl">
                                                 {link.children.map(child => (
                                                     <li key={child.label}>
-                                                        <Link href={child.href} className={`block px-6 py-2.5 hover:bg-secondary/50 transition-colors text-[14px] font-bold ${isCurrentUrl(child.href) ? 'text-primary' : 'text-foreground'}`}>
+                                                        <Link
+                                                            href={child.href}
+                                                            className={`block px-5 py-2.5 hover:bg-[#D4AF37]/15 hover:text-[#D4AF37] transition-colors text-xs font-bold ${
+                                                                isCurrentUrl(child.href) ? 'text-[#D4AF37] bg-[#D4AF37]/10' : 'text-white/85'
+                                                            }`}
+                                                        >
                                                             {child.label}
                                                         </Link>
                                                     </li>
@@ -154,10 +180,16 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                     ) : (
                                         <Link
                                             href={link.href}
-                                            className={`text-foreground hover:text-primary font-bold transition-all text-[15px] relative overflow-hidden py-1 block group ${isCurrentUrl(link.href) ? 'text-primary' : ''}`}
+                                            className={`text-white/85 hover:text-[#D4AF37] font-bold transition-all text-sm relative py-1 block group ${
+                                                isCurrentUrl(link.href) ? 'text-[#D4AF37]' : ''
+                                            }`}
                                         >
-                                            {link.label}
-                                            <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary transform transition-transform origin-start ${isCurrentUrl(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                                            <span>{link.label}</span>
+                                            <span
+                                                className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#D4AF37] shadow-[0_0_8px_#D4AF37] transform transition-transform origin-start ${
+                                                    isCurrentUrl(link.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                                }`}
+                                            />
                                         </Link>
                                     )}
                                 </li>
@@ -165,148 +197,184 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         </ul>
                     </div>
 
-                    {/* Left Side: CTA Buttons + Hamburger */}
-                    <div className="flex items-center gap-2 md:gap-3 xl:gap-5">
-                        {/* Offers button — hidden on very small screens, visible from sm up */}
+                    {/* CTA Buttons + Mobile Menu Toggle */}
+                    <div className="flex items-center gap-2.5 sm:gap-3.5">
+                        {/* Offers CTA */}
                         <Link
                             href="/offers"
-                            className="flex bg-primary text-primary-foreground px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
+                            className="hidden sm:inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full glass-dark text-white hover:text-white border border-[#D4AF37]/40 hover:border-[#D4AF37] hover:bg-[#D4AF37]/20 font-bold text-xs shadow-md transition-all whitespace-nowrap"
                         >
-                            <Calendar size={15} className="group-hover:rotate-12 transition-transform hidden md:block" />
-                            {t('nav.offers')}
+                            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            <span>{t('nav.offers')}</span>
                         </Link>
 
-                        {/* Book Now button */}
+                        {/* Book Now Button */}
                         <Link
                             href="/contact"
-                            className="bg-foreground text-background px-4 md:px-8 py-2 md:py-3.5 rounded-full font-black text-xs md:text-sm flex items-center gap-1.5 md:gap-3 hover:bg-foreground hover:text-primary transition-all duration-500 shadow-xl shadow-black/10 group whitespace-nowrap"
+                            className="btn-glow-gold bg-gradient-to-r from-[#c9a227] via-[#e8c84a] to-[#c9a227] text-black px-5 md:px-7 py-2.5 rounded-full font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
                         >
-                            <Calendar size={15} className="group-hover:rotate-12 transition-transform hidden md:block" />
-                            {t('nav.book_now')}
+                            <Calendar size={14} className="hidden sm:block" />
+                            <span>{t('nav.book_now')}</span>
                         </Link>
 
-                        {/* Hamburger — only visible below xl */}
+                        {/* Hamburger */}
                         <button
-                            className="xl:hidden p-2.5 hover:bg-secondary rounded-xl transition-colors border border-border"
+                            className="xl:hidden p-2.5 hover:bg-white/10 rounded-2xl transition-colors border border-white/10 text-white"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label="Toggle navigation menu"
                         >
-                            <Menu size={22} className="text-foreground" />
+                            <Menu size={22} />
                         </button>
                     </div>
                 </nav>
             </div>
 
-            {/* This container will sit after the Nav */}
-            <div className="relative">
-                {/* Hero Section */}
-                {showHero && (
-                    <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-foreground">
-                        {settings.home_cover_type === 'youtube' && settings.home_cover_youtube_url ? (
-                            /* 
-                             * YouTube Responsive Embed
-                             * Uses padding-bottom trick (56.25% = 16:9 ratio) to maintain aspect ratio
-                             * on ALL screen sizes including mobile without overflow.
-                             */
-                            <div
-                                className="w-full overflow-hidden pointer-events-none"
-                                style={{ position: 'relative', paddingBottom: '56.25%', maxHeight: '85vh' }}
-                            >
-                                <iframe
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        border: 'none',
-                                    }}
-                                    src={`https://www.youtube.com/embed/${getYouTubeId(settings.home_cover_youtube_url)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(settings.home_cover_youtube_url)}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    title="Hero Video"
-                                ></iframe>
-                            </div>
-                        ) : settings.home_cover_type === 'video' && settings.home_cover_video_path ? (
-                            <video
-                                src={`/storage/${settings.home_cover_video_path}`}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                className="w-full h-auto object-cover max-h-[85vh] aspect-video"
-                                style={{ display: 'block' }}
+            {/* Hero Section Container */}
+            {showHero && (
+                <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-black min-h-[70vh] lg:min-h-[85vh]">
+                    {/* Hero Media Background */}
+                    {settings.home_cover_type === 'youtube' && settings.home_cover_youtube_url ? (
+                        <div
+                            className="w-full h-full absolute inset-0 overflow-hidden pointer-events-none"
+                            style={{ position: 'absolute' }}
+                        >
+                            <iframe
+                                style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    width: '100vw',
+                                    height: '56.25vw',
+                                    minHeight: '100vh',
+                                    minWidth: '177.77vh',
+                                    transform: 'translate(-50%, -50%)',
+                                    border: 'none',
+                                }}
+                                src={`https://www.youtube.com/embed/${getYouTubeId(settings.home_cover_youtube_url)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(settings.home_cover_youtube_url)}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                title="Hero Video"
                             />
-                        ) : (
-                            <img
-                                src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/doctors.png"}
-                                alt="Hero"
-                                className="w-full h-auto object-cover max-h-[85vh]"
-                                style={{ display: 'block' }}
-                            />
-                        )}
-                        
-                        {/* Scroll Down Hint for UX */}
-                        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden lg:block">
-                            <div 
-                                onClick={() => document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="w-10 h-10 rounded-full border-2 border-white/20 flex items-center justify-center cursor-pointer hover:border-primary transition-colors text-white/50 hover:text-primary"
-                            >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
+                        </div>
+                    ) : settings.home_cover_type === 'video' && settings.home_cover_video_path ? (
+                        <video
+                            src={`/storage/${settings.home_cover_video_path}`}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                    ) : (
+                        <img
+                            src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/hero.png"}
+                            alt="Badr Dental Center Hero"
+                            className="absolute inset-0 w-full h-full object-cover"
+                            onError={(e) => { e.target.src = "/doctors.png"; }}
+                        />
+                    )}
+
+                    {/* Multi-layer Dark Gradient Overlays for Luxury Contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-black/50 to-black/40 pointer-events-none z-10" />
+                    <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/60 pointer-events-none z-10" />
+
+                    {/* Animated Headline Text Overlay */}
+                    <div className="relative z-20 max-w-5xl mx-auto px-6 py-24 sm:py-32 text-center flex flex-col items-center space-y-6">
+                        {/* Luxury Eyebrow Pill */}
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark border border-[#D4AF37]/40 shadow-xl animate-fade-in-up">
+                            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
+                            <span className="text-xs font-black tracking-widest text-[#D4AF37] uppercase">
+                                {locale === 'ar' ? 'فخامة التجربة ورعاية تفوق التوقعات' : 'LUXURY DENTAL CARE EXCELLENCE'}
+                            </span>
                         </div>
 
-                        {/* Wave Divider at absolute bottom of the hero area */}
-                        <div className="absolute bottom-[-1px] left-0 w-full overflow-hidden leading-[0] z-20">
-                            <img
-                                src="/hero.svg"
-                                alt="Wave Divider"
-                                className="w-full h-auto min-h-[40px] lg:min-h-[80px] object-fill brightness-0 invert opacity-10"
-                            />
+                        {/* Main Hero Headline */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight max-w-4xl drop-shadow-2xl animate-fade-in-up">
+                            {locale === 'ar' ? (
+                                <>
+                                    ابتسامتك المثالية تبدأ في <span className="gold-shimmer-text">مركز بدر لطب الأسنان</span>
+                                </>
+                            ) : (
+                                <>
+                                    Your Perfect Smile Begins at <span className="gold-shimmer-text">Badr Dental Center</span>
+                                </>
+                            )}
+                        </h1>
+
+                        {/* Subtitle */}
+                        <p className="text-white/85 text-sm sm:text-base md:text-lg max-w-2xl font-medium leading-relaxed drop-shadow animate-fade-in-up">
+                            {locale === 'ar'
+                                ? 'أكثر من 30 استشاري وأخصائي في زراعة وتجميل وتقويم وجراحة الأسنان بأحدث التقنيات وأعلى معايير التعقيم العالمية.'
+                                : 'Over 30 dental consultants and specialists providing world-class aesthetic restorations, dental implants, and smile makeovers.'}
+                        </p>
+
+                        {/* Floating CTAs */}
+                        <div className="pt-4 flex flex-wrap items-center justify-center gap-4 animate-fade-in-up">
+                            <a
+                                href="#booking"
+                                className="btn-glow-gold inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#c9a227] via-[#e8c84a] to-[#c9a227] text-black font-extrabold text-sm shadow-2xl hover:scale-105 active:scale-95 transition-all"
+                            >
+                                <Calendar size={16} />
+                                <span>{locale === 'ar' ? 'احجز موعد استشارتك' : 'Book a Consultation'}</span>
+                            </a>
+                            <a
+                                href="#services-carousel"
+                                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass-dark text-white hover:text-white border border-white/20 hover:border-[#D4AF37] text-sm font-bold shadow-lg transition-all"
+                            >
+                                <span>{locale === 'ar' ? 'استكشف التخصصات' : 'Explore Specialties'}</span>
+                            </a>
                         </div>
                     </div>
-                )}
 
-                {showHero && (heroOptions.subtitle || heroOptions.description) && (
-                    <div id="hero-content-anchor" className="flex items-center justify-start px-4 lg:px-24 py-12 bg-background border-b border-border/50 scroll-mt-20">
-                        <div className="max-w-2xl">
-                            {heroOptions.subtitle && (
-                                <h2 className="text-3xl lg:text-5xl text-foreground font-black mb-4 tracking-tighter leading-tight">
-                                    {heroOptions.subtitle}
-                                </h2>
-                            )}
-                            {heroOptions.description && (
-                                <p className="text-lg lg:text-xl text-muted-foreground font-medium max-w-xl">
-                                    {heroOptions.description}
-                                </p>
-                            )}
-                        </div>
+                    {/* Scroll Down Hint */}
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden md:block">
+                        <a
+                            href="#doctors"
+                            className="w-10 h-10 rounded-full glass-dark border border-white/20 flex items-center justify-center text-white/70 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shadow-lg"
+                            aria-label="Scroll down"
+                        >
+                            <ArrowDown size={18} />
+                        </a>
                     </div>
-                )}
-            </div>
 
-            {/* Mobile Menu Overlay - Refined */}
+                    {/* Bottom Smooth Gradient Transition into Content */}
+                    <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0d0d0d] to-transparent z-20 pointer-events-none" />
+                </div>
+            )}
+
+            {/* Mobile Menu Fullscreen Drawer */}
             {isMobileMenuOpen && (
-                <div className="fixed inset-0 bg-card z-[60] xl:hidden flex flex-col p-8 overflow-y-auto animate-in fade-in slide-in-from-top-4 duration-300">
-                    <div className="flex justify-between items-center mb-16">
-                        <img src="/logo.svg" alt="Badr Dental" className="h-14 w-auto"
-                            onError={(e) => { e.target.src = "https://placehold.co/120x50?text=LOGO"; }} />
-                        <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-secondary rounded-full border border-border">
-                            <X size={32} />
+                <div className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] xl:hidden flex flex-col p-6 sm:p-8 overflow-y-auto animate-in fade-in duration-300">
+                    <div className="flex justify-between items-center mb-10 pb-4 border-b border-white/10">
+                        <img
+                            src="/current-logo.png"
+                            alt="Badr Dental"
+                            className="h-12 w-auto brightness-0 invert drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]"
+                            onError={(e) => { e.target.src = "/logo.png"; }}
+                        />
+                        <button
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="p-2.5 rounded-2xl glass-dark border border-white/10 text-white hover:text-[#D4AF37] transition-colors"
+                            aria-label="Close menu"
+                        >
+                            <X size={24} />
                         </button>
                     </div>
 
-                    <ul className="flex flex-col gap-8 text-center text-3xl font-black">
+                    <ul className="flex flex-col gap-5 text-center text-xl font-black">
                         {navLinks.map((link) => (
                             <li key={link.label}>
                                 {link.children ? (
                                     <div className="flex flex-col items-center">
-                                        <span className="text-foreground/50 py-2 block uppercase tracking-tight">{link.label}</span>
-                                        <ul className="flex flex-col items-center gap-4 mt-2">
+                                        <span className="text-white/40 text-sm py-1 uppercase tracking-wider">{link.label}</span>
+                                        <ul className="flex flex-col items-center gap-3 mt-1">
                                             {link.children.map(child => (
                                                 <li key={child.label}>
                                                     <Link
                                                         href={child.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
-                                                        className={`hover:text-primary transition-colors py-2 block text-2xl uppercase tracking-tight ${isCurrentUrl(child.href) ? 'text-primary' : 'text-foreground'}`}
+                                                        className={`py-1.5 block text-lg font-bold ${
+                                                            isCurrentUrl(child.href) ? 'text-[#D4AF37]' : 'text-white/80'
+                                                        }`}
                                                     >
                                                         {child.label}
                                                     </Link>
@@ -318,7 +386,9 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                                     <Link
                                         href={link.href}
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className={`hover:text-primary transition-colors py-2 block uppercase tracking-tight ${isCurrentUrl(link.href) ? 'text-primary' : ''}`}
+                                        className={`py-2 block transition-colors ${
+                                            isCurrentUrl(link.href) ? 'text-[#D4AF37]' : 'text-white/90 hover:text-[#D4AF37]'
+                                        }`}
                                     >
                                         {link.label}
                                     </Link>
@@ -327,44 +397,37 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         ))}
                     </ul>
 
-                    <div className="mt-auto pt-16 flex flex-col gap-6 items-center border-t border-border/50">
-                        {/* CTA buttons inside mobile menu for very small screens */}
-                        <div className="flex flex-col sm:hidden gap-4 w-full max-w-xs">
+                    <div className="mt-auto pt-10 flex flex-col gap-6 items-center border-t border-white/10">
+                        <div className="flex flex-col gap-3 w-full max-w-xs">
                             <Link
                                 href="/offers"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="bg-primary text-primary-foreground px-6 py-3 rounded-full font-black text-base flex items-center justify-center gap-3 shadow-lg"
+                                className="btn-glow-gold bg-gradient-to-r from-[#c9a227] to-[#e8c84a] text-black px-6 py-3 rounded-full font-black text-sm flex items-center justify-center gap-2 shadow-lg"
                             >
-                                <Calendar size={18} />
-                                {t('nav.offers')}
+                                <Sparkles size={16} />
+                                <span>{t('nav.offers')}</span>
                             </Link>
                             <Link
                                 href="/contact"
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="bg-foreground text-background px-6 py-3 rounded-full font-black text-base flex items-center justify-center gap-3 shadow-lg"
+                                className="glass-dark border border-white/20 text-white px-6 py-3 rounded-full font-bold text-sm flex items-center justify-center gap-2 hover:border-[#D4AF37]"
                             >
-                                <Calendar size={18} />
-                                {t('nav.book_now')}
+                                <Calendar size={16} />
+                                <span>{t('nav.book_now')}</span>
                             </Link>
                         </div>
 
                         <button
                             onClick={() => { switchLanguage(locale === 'ar' ? 'en' : 'ar'); setIsMobileMenuOpen(false); }}
-                            className="flex items-center gap-4 text-xl font-black uppercase text-primary"
+                            className="flex items-center gap-2 text-base font-bold text-[#D4AF37] hover:underline"
                         >
-                            <Globe />
-                            {locale === 'ar' ? 'English' : 'العربية'}
+                            <Globe size={18} />
+                            <span>{locale === 'ar' ? 'English' : 'العربية'}</span>
                         </button>
-
-                        <div className="flex gap-8">
-                            <a href="https://www.facebook.com/Badrdentalclinic?mibextid=ZbWKwL" target="_blank"><Facebook className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                            <a href="https://www.instagram.com/badrdentalcenter?igsh=MTVianA4aTBhdHMyaQ%3D%3D" target="_blank"><Instagram className="hover:text-primary transition-colors cursor-pointer" size={24} /></a>
-                            <a href="https://www.snapchat.com/@ahmed_badr7655?share_id=iAcAUxzxQ_E&locale=en-US" target="_blank" rel="noopener noreferrer"><img src="/snapchat-black.png" alt="Snapchat" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
-                            <a href="https://www.tiktok.com/@badrdentalcenter0" target="_blank" rel="noopener noreferrer"><img src='/tik-tok-black.png' alt="TikTok" className="hover:text-primary transition-colors cursor-pointer h-6 w-6" /></a>
-                        </div>
                     </div>
                 </div>
             )}
         </header>
     );
 }
+

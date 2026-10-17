@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
-import { MapPin, Mail, Phone, Loader2 } from 'lucide-react';
+import { MapPin, Mail, Phone, Loader2, Sparkles, Send, CheckCircle2 } from 'lucide-react';
 import { useForm, usePage } from '@inertiajs/react';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/lib/error-messages';
 
 export default function BookingFormSection({ services = [], defaultServiceId = '' }) {
     const { t } = useTranslations();
+    const { locale, global_services } = usePage().props;
+    const isRTL = locale === 'ar';
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         phone: '',
@@ -35,11 +38,11 @@ export default function BookingFormSection({ services = [], defaultServiceId = '
             if (bookingSection) {
                 setTimeout(() => {
                     bookingSection.scrollIntoView({ behavior: 'smooth' });
-                }, 300); // Small delay to let Inertia finish rendering the DOM
+                }, 300);
             }
         }
     }, []);
-    const { global_services } = usePage().props;
+
     const formServices = services && services.length > 0 ? services : global_services || [];
 
     const handleSubmit = (e) => {
@@ -75,140 +78,205 @@ export default function BookingFormSection({ services = [], defaultServiceId = '
     ];
 
     return (
-        <section id="booking" className="py-24 px-4 lg:px-24">
-            <div className="ps-12">
-                <img src='/line.png' alt='Line' className="w-40 h-40" />
-            </div>
-            <div className="text-center mb-20 space-y-4">
-                <h2 className="text-2xl text-background lg:text-4xl  font-black tracking-tighter">
+        <section id="booking" className="py-20 md:py-28 px-4 sm:px-6 lg:px-16 relative overflow-hidden">
+            {/* Ambient Ambient Glow */}
+            <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#D4AF37]/5 blur-[150px] rounded-full pointer-events-none -z-10" />
+
+            {/* Section Header */}
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4 reveal">
+                <div className="eyebrow mx-auto justify-center">
+                    {locale === 'ar' ? 'حجز موعد واستشارة' : 'BOOK AN APPOINTMENT'}
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
                     {t('booking.title')}
                 </h2>
-                <p className="text-background font-medium text-sm md:text-base">
+                <p className="text-white/70 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
                     {t('booking.subtitle')}
                 </p>
             </div>
 
-            {/* Contact Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-                {contactCards.map((card, i) => (
-                    <span key={i} className="group flex flex-col items-center gap-6 p-6 text-background  bg-secondary/30 rounded-3xl border border-border/50 hover:bg-background hover:shadow-xl hover:text-foreground transition-all duration-500 text-center">
-                        <div className="p-6 bg-background rounded-2xl shadow-lg transition-colors">
-                            <img src={card.icon} alt={card.title} className="w-15 h-15" />
+            {/* Contact Cards Grid */}
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 reveal">
+                {contactCards.map((card, i) => {
+                    const floatClass = i === 0
+                        ? 'card-float-up-down'
+                        : i === 1
+                        ? 'card-float-down-up'
+                        : 'card-float-sway';
+
+                    return (
+                        <div
+                            key={i}
+                            style={{ animationDelay: `${i * 0.4}s` }}
+                            className={floatClass}
+                        >
+                            <a
+                                href={card.href}
+                                className="group flex flex-col items-center gap-5 p-7 text-white glass-dark rounded-[2rem] border border-white/10 hover:border-[#D4AF37]/60 hover:shadow-2xl hover:shadow-[#D4AF37]/25 hover:-translate-y-2 transition-all duration-500 text-center bg-black/50 h-full"
+                            >
+                                <div className="w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center p-3 group-hover:scale-110 group-hover:bg-[#D4AF37]/25 transition-all duration-300 shadow-lg">
+                                    <img src={card.icon} alt={card.title} className="w-10 h-10 object-contain drop-shadow" />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <h3 className="text-base sm:text-lg font-extrabold group-hover:text-[#D4AF37] transition-colors">
+                                        {card.title}
+                                    </h3>
+                                    <p className="text-white/70 font-medium text-xs sm:text-sm whitespace-pre-line leading-relaxed">
+                                        {card.detail}
+                                    </p>
+                                </div>
+                            </a>
                         </div>
-                        <div className="space-y-2">
-                            <h4 className="text-lg font-bold">{card.title}</h4>
-                            <p className="font-medium whitespace-pre-line text-base">{card.detail}</p>
-                        </div>
-                    </span>
-                ))}
+                    );
+                })}
             </div>
 
-            {/* Booking Form */}
-            <div className="max-w-6xl mx-auto">
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    {/* Name */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.name')}</label>
-                        <input 
-                            type="text" 
-                            placeholder={t('booking.form.full_name_placeholder')} 
-                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
-                            value={data.name}
-                            onChange={e => setData('name', e.target.value)}
-                        />
-                        {errors.name && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.name))}</p>}
-                    </div>
-
-                    {/* Phone */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.phone')}</label>
-                        <input 
-                            type="tel" 
-                            placeholder="+20 123... / +966 5..." 
-                            className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
-                            dir="ltr" 
-                            value={data.phone}
-                            onChange={e => setData('phone', e.target.value)}
-
-                        />
-                        {errors.phone ? (
-                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.phone))}</p>
-                        ) : (
-                            <p className="text-xs text-muted-foreground">{t('validation.phone.regex')}</p>
-                        )}
-                    </div>
-
-                    {/* Service */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.service')}</label>
-                        <select className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.service_id} onChange={e => setData('service_id', e.target.value)}>
-                            <option value="">{t('booking.form.service')}</option>
-                            {formServices.map(service => (
-                                <option key={service.id} value={service.id} className="text-foreground">{service.title}</option>
-                            ))}
-                        </select>
-                        {errors.service_id && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.service_id))}</p>}
-                    </div>
-
-                    {/* Offer */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('nav.offers')}</label>
-                        <select className="w-full border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.offer} onChange={e => setData('offer', e.target.value)}>
-                            <option value="">{t('nav.offers')}</option>
-                            {(usePage().props.active_offers || []).map(offer => (
-                                <option key={offer.id} value={offer.title} className="text-foreground">{offer.title}</option>
-                            ))}
-                        </select>
-                        {errors.offer && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.offer))}</p>}
-                    </div>
-
-                    {/* Email */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.email')}</label>
-                        <input 
-                            type="text" 
-                            placeholder="you@example.com" 
-                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium placeholder:text-background/50 transition-all" 
-                            value={data.email}
-                            onChange={e => setData('email', e.target.value)} 
-                        />
-                        {errors.email && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.email))}</p>}
-                    </div>
-
-                    {/* Branch */}
-                    <div className="space-y-3">
-                        <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.branch')}</label>
-                        <select className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium appearance-none cursor-pointer text-background" value={data.branch} onChange={e => setData('branch', e.target.value)}>
-                            <option value="">{t('booking.form.branch')}</option>
-                            <option value="المنصورة" className="text-foreground">{t('branches_page.mansoura.title')}</option>
-                            <option value="الشيخ زايد" className="text-foreground">{t('branches_page.sheikh_zayed.title')}</option>
-                        </select>
-                        {errors.branch && <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.branch))}</p>}
-                    </div>
-
-                    {/* Message */}
-                    <div className="md:col-span-2 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <label className="text-sm font-black text-background uppercase tracking-widest">{t('booking.form.message')}</label>
-                            <span className="text-xs text-background">{data.message?.length || 0} / 1000</span>
+            {/* Booking Form Card */}
+            <div className="max-w-5xl mx-auto glass-dark bg-black/60 rounded-[2.5rem] border border-white/10 p-6 sm:p-12 shadow-2xl reveal">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* Name */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.name')} <span className="text-[#D4AF37]">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder={t('booking.form.full_name_placeholder')}
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white placeholder:text-white/35 transition-all"
+                                value={data.name}
+                                onChange={e => setData('name', e.target.value)}
+                            />
+                            {errors.name && <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.name))}</p>}
                         </div>
-                        <textarea 
-                            placeholder={t('booking.form.message_placeholder')} 
-                            className="w-full  border border-border/50 p-5 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none font-medium h-40 resize-none placeholder:text-background/50 transition-all"
+
+                        {/* Phone */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.phone')} <span className="text-[#D4AF37]">*</span>
+                            </label>
+                            <input
+                                type="tel"
+                                placeholder="+20 123... / +966 5..."
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white placeholder:text-white/35 transition-all"
+                                dir="ltr"
+                                value={data.phone}
+                                onChange={e => setData('phone', e.target.value)}
+                            />
+                            {errors.phone ? (
+                                <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.phone))}</p>
+                            ) : (
+                                <p className="text-[11px] text-white/40">{t('validation.phone.regex')}</p>
+                            )}
+                        </div>
+
+                        {/* Service */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.service')}
+                            </label>
+                            <select
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white appearance-none cursor-pointer transition-all"
+                                value={data.service_id}
+                                onChange={e => setData('service_id', e.target.value)}
+                            >
+                                <option value="" className="bg-[#1a1a1a] text-white/60">{t('booking.form.service')}</option>
+                                {formServices.map(service => (
+                                    <option key={service.id} value={service.id} className="bg-[#1a1a1a] text-white">
+                                        {service.title}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.service_id && <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.service_id))}</p>}
+                        </div>
+
+                        {/* Offer */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('nav.offers')}
+                            </label>
+                            <select
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white appearance-none cursor-pointer transition-all"
+                                value={data.offer}
+                                onChange={e => setData('offer', e.target.value)}
+                            >
+                                <option value="" className="bg-[#1a1a1a] text-white/60">{t('nav.offers')}</option>
+                                {(usePage().props.active_offers || []).map(offer => (
+                                    <option key={offer.id} value={offer.title} className="bg-[#1a1a1a] text-white">
+                                        {offer.title}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.offer && <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.offer))}</p>}
+                        </div>
+
+                        {/* Email */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.email')}
+                            </label>
+                            <input
+                                type="email"
+                                placeholder="you@example.com"
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white placeholder:text-white/35 transition-all"
+                                value={data.email}
+                                onChange={e => setData('email', e.target.value)}
+                            />
+                            {errors.email && <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.email))}</p>}
+                        </div>
+
+                        {/* Branch */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.branch')}
+                            </label>
+                            <select
+                                className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white appearance-none cursor-pointer transition-all"
+                                value={data.branch}
+                                onChange={e => setData('branch', e.target.value)}
+                            >
+                                <option value="" className="bg-[#1a1a1a] text-white/60">{t('booking.form.branch')}</option>
+                                <option value="المنصورة" className="bg-[#1a1a1a] text-white">{t('branches_page.mansoura.title')}</option>
+                                <option value="الشيخ زايد" className="bg-[#1a1a1a] text-white">{t('branches_page.sheikh_zayed.title')}</option>
+                            </select>
+                            {errors.branch && <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.branch))}</p>}
+                        </div>
+                    </div>
+
+                    {/* Message Field */}
+                    <div className="space-y-2">
+                        <div className="flex justify-between items-center">
+                            <label className="text-xs font-bold text-white/90 uppercase tracking-wider block">
+                                {t('booking.form.message')}
+                            </label>
+                            <span className="text-[11px] text-white/40">{data.message?.length || 0} / 1000</span>
+                        </div>
+                        <textarea
+                            placeholder={t('booking.form.message_placeholder')}
+                            className="w-full bg-white/5 border border-white/15 p-4 rounded-2xl focus:ring-2 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none font-medium text-sm text-white h-32 resize-none placeholder:text-white/35 transition-all"
                             value={data.message}
                             onChange={e => setData('message', e.target.value)}
-                        ></textarea>
+                        />
                         {errors.message ? (
-                            <p className="text-sm text-destructive font-medium">{t(getErrorMessage(errors.message))}</p>
+                            <p className="text-xs text-red-400 font-medium">{t(getErrorMessage(errors.message))}</p>
                         ) : (
-                            <p className="text-xs text-muted-foreground">{t('validation.message.max')}</p>
+                            <p className="text-[11px] text-white/40">{t('validation.message.max')}</p>
                         )}
                     </div>
-                                    {/* Submit Button */}
-                    <div className="md:col-span-3 flex justify-center mt-4">
-                        <button disabled={processing} type="submit" className="w-full md:w-auto bg-foreground text-background rounded-2xl px-8 sm:px-20 lg:px-40 py-6 font-black text-base lg:text-lg hover:bg-primary hover:text-foreground transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95 disabled:opacity-70 disabled:hover:-translate-y-0 flex items-center justify-center gap-2">
-                            {processing && <Loader2 className="animate-spin" />}
-                            {t('booking.form.submit_whatsapp')}
+
+                    {/* Submit Button */}
+                    <div className="flex justify-center pt-4">
+                        <button
+                            disabled={processing}
+                            type="submit"
+                            className="btn-glow-gold w-full sm:w-auto min-w-[280px] bg-gradient-to-r from-[#c9a227] via-[#e8c84a] to-[#c9a227] text-black rounded-2xl px-10 py-4 font-extrabold text-base shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-60 flex items-center justify-center gap-2.5 transition-all"
+                        >
+                            {processing ? (
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                            ) : (
+                                <Send className="w-4 h-4 rtl:rotate-180" />
+                            )}
+                            <span>{t('booking.form.submit_whatsapp')}</span>
                         </button>
                     </div>
                 </form>
@@ -216,3 +284,4 @@ export default function BookingFormSection({ services = [], defaultServiceId = '
         </section>
     );
 }
+
