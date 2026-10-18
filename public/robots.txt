@@ -1,9 +1,42 @@
-User-agent: *
+# robots.txt for Badr Dental Center (https://badrdentalcenter.com)
+
+User-agent: Googlebot
+Allow: /
 Disallow: /admin/
 Disallow: /dashboard
-Disallow: /language
 Disallow: /settings/
 Disallow: /login
 Disallow: /register
 
+User-agent: Googlebot-Image
+Allow: /storage/
+Allow: /clinical_cases/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.svg
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /settings/
+Disallow: /login
+Disallow: /register
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /settings/
+Disallow: /language
+Disallow: /login
+Disallow: /register
+
+# Canonical Sitemaps
 Sitemap: https://badrdentalcenter.com/sitemap.xml

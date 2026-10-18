@@ -4,7 +4,21 @@ import { useTranslations } from "@/hooks/use-translations";
 
 export default function About() {
     const { t } = useTranslations();
-    const { canonical_url } = usePage().props;
+    const { locale, canonical_url } = usePage().props;
+    const isAr = locale === 'ar';
+    const pageUrl = canonical_url || "https://badrdentalcenter.com/about";
+
+    const title = isAr
+        ? "عن مركز بدر لطب الأسنان | أفضل أطباء واستشاريي زراعة وتجميل الأسنان"
+        : "About Badr Dental Center | Leading Dental Consultants in Egypt";
+
+    const desc = isAr
+        ? "تعرف على مركز بدر لطب الأسنان ونخبة من 30 استشاري في زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد. أحدث تقنيات طب الأسنان الرقمي منذ 2014."
+        : "Learn about Badr Dental Center, home to 30+ leading dental consultants in dental implants, Hollywood veneers, and orthodontics across Mansoura and Sheikh Zayed since 2014.";
+
+    const keywords = isAr
+        ? "عن مركز بدر، افضل دكتور زراعة اسنان، مركز بدر لطب الأسنان، عيادة اسنان بالمنصورة، عيادة اسنان بالشيخ زايد، دكتور احمد بدر"
+        : "about badr dental center, leading dentists egypt, dental implants consultants, sheikh zayed clinic, mansoura dental clinic";
 
     const stats = [
         { value: '15,000+', label: t('about.stats.happy_clients') },
@@ -16,16 +30,16 @@ export default function About() {
     return (
         <>
             <Head>
-                <title>عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر</title>
-                <meta name="description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد. خبرة طبية متميزة ورعاية متكاملة لابتسامتك منذ ٢٠١٤." />
-                <meta name="keywords" content="عن مركز بدر، افضل دكتور زراعة اسنان، اشطر دكتور اسنان، مركز بدر لطب الأسنان، عيادة اسنان بالمنصورة، عيادة اسنان بالشيخ زايد، المنصورة، الشيخ زايد، Badr Dental Center Egypt" />
-                <link rel="canonical" href={canonical_url || "https://badrdentalcenter.com/about"} />
-                <meta property="og:title" content="عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر" />
-                <meta property="og:description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد. خبرة طبية متميزة ورعاية متكاملة لابتسامتك منذ ٢٠١٤." />
+                <title>{title}</title>
+                <meta name="description" content={desc} />
+                <meta name="keywords" content={keywords} />
+                <link rel="canonical" href={pageUrl} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={desc} />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
-                <meta property="og:url" content="https://badrdentalcenter.com/about" />
-                <meta name="twitter:title" content="عن مركز بدر لطب الأسنان | افضل دكتور زراعة اسنان بمصر" />
-                <meta name="twitter:description" content="تعرف على مركز بدر لطب الأسنان ونخبة من أطباء زراعة وتجميل وتقويم الأسنان بالمنصورة والشيخ زايد." />
+                <meta property="og:url" content={pageUrl} />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={desc} />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
             </Head>
             {/* About Us Section */}

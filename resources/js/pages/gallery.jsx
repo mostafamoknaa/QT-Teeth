@@ -7,30 +7,44 @@ import { useTranslations } from '@/hooks/use-translations';
 
 export default function GalleryPage({ gallery_photos = [], canonical_url }) {
     const { t } = useTranslations();
+    const { locale } = usePage().props;
+    const isAr = locale === 'ar';
     const pageUrl = canonical_url || 'https://badrdentalcenter.com/gallery';
+
+    const title = isAr
+        ? 'معرض الصور قبل وبعد | مركز بدر لطب وتجميل الأسنان'
+        : 'Before & After Smile Gallery | Badr Dental Center';
+
+    const desc = isAr
+        ? 'شاهد نتائج حقيقية لصور قبل وبعد لزراعة الأسنان، ابتسامة هوليوود، فينير الأسنان، والتقويم في مركز بدر بالمنصورة والشيخ زايد بأيدي نخبة استشاريي مصر.'
+        : 'Explore real before and after smile transformations, dental implants, Hollywood veneers, and orthodontics at Badr Dental Center in Egypt.';
 
     return (
         <>
-            <Head title="معرض الصور قبل وبعد | مركز بدر لطب الأسنان">
-                <meta name="description" content="شاهد صور قبل وبعد لزراعة وتجميل وتقويم الأسنان بمركز بدر للأسنان بالمنصورة والشيخ زايد. نتائج حقيقية لابتسامات رائعة." />
-                <meta property="og:title" content="معرض الصور قبل وبعد | مركز بدر لطب الأسنان" />
-                <meta property="og:description" content="نتائج حقيقية لحالات زراعة وتجميل وتقويم الأسنان بمركز بدر للأسنان. احصل على الابتسامة التي تتمناها." />
+            <Head title={title}>
+                <meta name="description" content={desc} />
+                <meta name="keywords" content={isAr ? 'صور قبل وبعد اسنان, فينير قبل وبعد, زراعة الاسنان قبل وبعد, هوليوود سمايل مصر, مركز بدر للأسنان' : 'before and after teeth, dental implants before after egypt, veneers results egypt, badr dental center gallery'} />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={desc} />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
                 <meta property="og:url" content={pageUrl} />
                 <meta property="og:type" content="website" />
-                <meta name="twitter:title" content="معرض الصور قبل وبعد | مركز بدر لطب الأسنان" />
-                <meta name="twitter:description" content="نتائج حقيقية لحالات زراعة وتجميل وتقويم الأسنان بمركز بدر للأسنان. شاهد صور قبل وبعد." />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={desc} />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+                <link rel="canonical" href={pageUrl} />
             </Head>
 
             <div className="py-12 md:py-20">
                 {/* Hero / Header Section */}
                 <div className="text-center max-w-3xl mx-auto px-6 mb-12 space-y-4">
-                    <h1 className="text-xl md:text-2xl lg:text-3xl font-black tracking-tighter text-background">
-                        معرض الصور
+                    <h1 className="text-xl md:text-2xl lg:text-3xl font-black tracking-tighter text-white">
+                        {isAr ? 'معرض الصور الحقيقية (قبل / بعد)' : 'Clinical Smile Gallery (Before & After)'}
                     </h1>
-                    <p className="text-sm md:text-base text-background/80 font-medium leading-relaxed">
-                        نحن فخورون بابتسامتك! هنا نعرض بعض نتائج الحالات الحقيقية التي تشرفنا بعلاجها وتجميلها في عياداتنا.
+                    <p className="text-sm md:text-base text-white/80 font-medium leading-relaxed">
+                        {isAr 
+                            ? 'نحن فخورون بابتسامتك! هنا نعرض بعض نتائج الحالات الحقيقية التي تشرفنا بعلاجها وتجميلها في عياداتنا.'
+                            : 'Explore authentic clinical results and life-changing smile makeovers performed at Badr Dental Center.'}
                     </p>
                 </div>
 

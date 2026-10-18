@@ -57,33 +57,37 @@ Route::post('/language', function (\Illuminate\Http\Request $request) {
     return back();
 })->name('language.switch');
 
-// Dynamic sitemap.xml
+// Dynamic sitemap.xml with Multilingual Hreflang & Image Sitemap
 Route::get('/sitemap.xml', function () {
-    $domain = rtrim(config('app.url'), '/');
+    $domain = 'https://badrdentalcenter.com';
 
     $staticUrls = [
-        ['loc' => $domain . '/',         'priority' => '1.0', 'changefreq' => 'weekly'],
-        ['loc' => $domain . '/about',     'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/services',  'priority' => '0.9', 'changefreq' => 'weekly'],
-        ['loc' => $domain . '/articles',  'priority' => '0.8', 'changefreq' => 'weekly'],
-        ['loc' => $domain . '/branches',  'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/contact',   'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/doctors',   'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/egypt',     'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/saudi',     'priority' => '0.7', 'changefreq' => 'monthly'],
-        ['loc' => $domain . '/offers',    'priority' => '0.7', 'changefreq' => 'weekly'],
-        ['loc' => $domain . '/clients',   'priority' => '0.6', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/',         'priority' => '1.0', 'changefreq' => 'daily'],
+        ['loc' => $domain . '/services',  'priority' => '0.95', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/gallery',   'priority' => '0.90', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/offers',    'priority' => '0.90', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/about',     'priority' => '0.85', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/articles',  'priority' => '0.85', 'changefreq' => 'weekly'],
+        ['loc' => $domain . '/branches',  'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/contact',   'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/doctors',   'priority' => '0.80', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/egypt',     'priority' => '0.75', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/saudi',     'priority' => '0.75', 'changefreq' => 'monthly'],
+        ['loc' => $domain . '/clients',   'priority' => '0.70', 'changefreq' => 'monthly'],
     ];
 
-    $services  = \App\Models\Service::select('id', 'slug', 'updated_at')->get();
-    $articles  = \App\Models\Article::where('is_published', true)->select('id', 'slug', 'updated_at')->get();
+    $services  = \App\Models\Service::select('id', 'title', 'slug', 'image', 'updated_at')->get();
+    $articles  = \App\Models\Article::where('is_published', true)->select('id', 'title', 'slug', 'image', 'updated_at')->get();
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
-    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . PHP_EOL;
 
     foreach ($staticUrls as $url) {
         $xml .= "  <url>\n";
         $xml .= "    <loc>{$url['loc']}</loc>\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"ar\" href=\"{$url['loc']}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"{$url['loc']}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{$url['loc']}\" />\n";
         $xml .= "    <changefreq>{$url['changefreq']}</changefreq>\n";
         $xml .= "    <priority>{$url['priority']}</priority>\n";
         $xml .= "  </url>\n";
@@ -91,25 +95,52 @@ Route::get('/sitemap.xml', function () {
 
     foreach ($services as $service) {
         $key = $service->slug ?: $service->id;
+        $loc = "{$domain}/services/{$key}";
+        $lastmod = $service->updated_at ? $service->updated_at->toAtomString() : now()->toAtomString();
         $xml .= "  <url>\n";
-        $xml .= "    <loc>{$domain}/services/{$key}</loc>\n";
-        $xml .= "    <lastmod>{$service->updated_at->toAtomString()}</lastmod>\n";
-        $xml .= "    <changefreq>monthly</changefreq>\n";
-        $xml .= "    <priority>0.8</priority>\n";
+        $xml .= "    <loc>{$loc}</loc>\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"ar\" href=\"{$loc}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"{$loc}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{$loc}\" />\n";
+        $xml .= "    <lastmod>{$lastmod}</lastmod>\n";
+        $xml .= "    <changefreq>weekly</changefreq>\n";
+        $xml .= "    <priority>0.9</priority>\n";
+        if ($service->image) {
+            $imgUrl = "{$domain}/storage/" . ltrim($service->image, '/');
+            $xml .= "    <image:image>\n";
+            $xml .= "      <image:loc>{$imgUrl}</image:loc>\n";
+            $xml .= "      <image:title>" . htmlspecialchars($service->title ?? 'خدمات مركز بدر للأسنان') . "</image:title>\n";
+            $xml .= "    </image:image>\n";
+        }
         $xml .= "  </url>\n";
     }
 
     foreach ($articles as $article) {
         $key = $article->slug ?: $article->id;
+        $loc = "{$domain}/articles/{$key}";
+        $lastmod = $article->updated_at ? $article->updated_at->toAtomString() : now()->toAtomString();
         $xml .= "  <url>\n";
-        $xml .= "    <loc>{$domain}/articles/{$key}</loc>\n";
-        $xml .= "    <lastmod>{$article->updated_at->toAtomString()}</lastmod>\n";
-        $xml .= "    <changefreq>monthly</changefreq>\n";
-        $xml .= "    <priority>0.7</priority>\n";
+        $xml .= "    <loc>{$loc}</loc>\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"ar\" href=\"{$loc}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"{$loc}\" />\n";
+        $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{$loc}\" />\n";
+        $xml .= "    <lastmod>{$lastmod}</lastmod>\n";
+        $xml .= "    <changefreq>weekly</changefreq>\n";
+        $xml .= "    <priority>0.85</priority>\n";
+        if ($article->image) {
+            $imgUrl = "{$domain}/storage/" . ltrim($article->image, '/');
+            $xml .= "    <image:image>\n";
+            $xml .= "      <image:loc>{$imgUrl}</image:loc>\n";
+            $xml .= "      <image:title>" . htmlspecialchars($article->title ?? 'مقالات طب الأسنان') . "</image:title>\n";
+            $xml .= "    </image:image>\n";
+        }
         $xml .= "  </url>\n";
     }
 
     $xml .= '</urlset>';
+
+    // Also persist static sitemap file to public folder
+    @file_put_contents(public_path('sitemap.xml'), $xml);
 
     return response($xml, 200)->header('Content-Type', 'application/xml');
 })->name('sitemap');

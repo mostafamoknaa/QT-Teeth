@@ -24,9 +24,9 @@ class HomeVideoController extends Controller
 
     public function store(Request $request)
     {
-        // Enforce limit of 4 videos
-        if (HomeVideo::count() >= 4) {
-            return redirect()->back()->with('error', 'You cannot add more than 4 videos.');
+        // Enforce reasonable limit for homepage video reviews
+        if (HomeVideo::count() >= 12) {
+            return redirect()->back()->with('error', 'You cannot add more than 12 videos.');
         }
 
         $validated = $request->validate([

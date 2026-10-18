@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/layouts/public-layout';
 import LocalBusinessSchema from '@/components/seo/LocalBusinessSchema';
+import FAQSchema from '@/components/seo/FAQSchema';
 import DoctorAhmedBadrSection from '@/components/sections/doctor-profile';
+import ServicesVideoSpotlight from '@/components/sections/services-video-spotlight';
 import ServicesCarouselSection from '@/components/sections/services-carousel';
 import GalleryCarousel from '@/components/sections/gallery-carousel';
 import LatestArticlesSection from '@/components/sections/articles';
 import BookingFormSection from '@/components/sections/booking';
+import BranchesVideoSection from '@/components/sections/branches-video';
+import ClientPhotosCarousel from '@/components/sections/client-photos-carousel';
 import OffersSection from '@/components/sections/offers-section';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [], active_offers = [] }) {
-    const { locale } = usePage().props;
+    const { locale, canonical_url } = usePage().props;
+    const isAr = locale === 'ar';
     const [selectedVideo, setSelectedVideo] = useState(null);
     useScrollReveal();
 
@@ -25,26 +30,116 @@ export default function Welcome({ articles, testimonials, services, home_videos 
         return (match && match[2].length === 11) ? match[2] : null;
     };
 
+    const homeFaqs = [
+        {
+            question: isAr 
+                ? 'كم تكلفة زراعة الأسنان في مركز بدر لطب الأسنان؟' 
+                : 'How much do dental implants cost at Badr Dental Center?',
+            answer: isAr
+                ? 'يوفر مركز بدر باقات زراعة أسنان ألمانية وسويسرية معتمدة بضمان مدى الحياة وبأسعار تنافسية، مع خطط تقسيط ميسرة بدون فوائد وعروض دورية على زراعة الفك الكامل.'
+                : 'Badr Dental Center provides certified German and Swiss dental implants with lifetime warranties, flexible 0% interest installment plans, and special packages for full-arch implants.'
+        },
+        {
+            question: isAr
+                ? 'كم تستغرق مدة تقويم الأسنان والتقويم الشفاف؟'
+                : 'How long do braces and clear aligners take?',
+            answer: isAr
+                ? 'تتراوح مدة التقويم عادة بين 6 إلى 18 شهراً حسب الحالة. وبفضل تقنية التقويم الشفاف (Clear Aligners)، يمكن تحقيق نتائج سريعة وجمالية دون مظهر الأسلاك المعدنية.'
+                : 'Orthodontic treatment typically takes between 6 to 18 months depending on alignment complexity. Clear aligners offer a virtually invisible, faster, and comfortable alternative to traditional braces.'
+        },
+        {
+            question: isAr
+                ? 'هل تبييض الأسنان آمن ولا يضر طبقة المينا؟'
+                : 'Is teeth whitening safe for enamel?',
+            answer: isAr
+                ? 'نعم، يتم تبييض الأسنان في عياداتنا باستخدام أحدث أجهزة الليزر البارد المعتمدة عالمياً ومواد تبييض تحافظ على طبقة المينا وتقلل من حساسية الأسنان للحصول على ابتسامة ناصعة بأمان تام.'
+                : 'Yes, in-office laser teeth whitening is completely safe when performed under professional dental supervision using certified enamel-safe whitening gels.'
+        },
+        {
+            question: isAr
+                ? 'كيفية تخفيف ألم الأسنان فوراً وعلاج العصب؟'
+                : 'How to relieve toothache fast and treat root canals?',
+            answer: isAr
+                ? 'يُنصح بالمضمضة بالماء الدافئ والملح وتناول مسكن مناسب لحين زيارة الطبيب فوراً. في مركز بدر نستخدم الميكروسكوب الجراحي لعلاج العصب بدون ألم تماماً في جلسة واحدة.'
+                : 'Rinse with warm salt water and use recommended pain relief until visiting the clinic. At Badr Center, rotary microscopes enable 100% painless single-session root canal treatments.'
+        },
+        {
+            question: isAr
+                ? 'ما هي مدة التعافي بعد زراعة الأسنان؟'
+                : 'What is the dental implant recovery time?',
+            answer: isAr
+                ? 'بفضل تقنيات الزراعة الفورية بدون شق جراحي، يعود المريض لممارسة حياته الطبيعية خلال 24 إلى 48 ساعة فقط مع الالتزام بتعليمات الطبيب والأدوية الموصوفة.'
+                : 'Thanks to flapless guided implant technology, most patients resume normal daily activities within 24 to 48 hours with minimal downtime.'
+        },
+        {
+            question: isAr
+                ? 'كيفية العناية بالأسنان والوقاية من تسوس الأسنان والتهاب اللثة؟'
+                : 'How to care for teeth and prevent cavities and bleeding gums?',
+            answer: isAr
+                ? 'تنظيف الأسنان مرتين يومياً بمعجون يحتوي على الفلورايد، واستخدام خيط الأسنان الطبي وغسول الفم، مع الالتزام بزيارة طبيب الأسنان كل 6 أشهر للتنظيف وإزالة الجير.'
+                : 'Brush twice daily with fluoride toothpaste, floss daily, and schedule regular dental checkups and professional cleanings every 6 months to prevent plaque and gingivitis.'
+        },
+        {
+            question: isAr
+                ? 'متى يجب زيارة طبيب الأسنان؟'
+                : 'When should you visit a dentist?',
+            answer: isAr
+                ? 'يجب زيارة طبيب الأسنان كل 6 أشهر للفحص الدوري والتنظيف، أو فور الشعور بألم، نزيف باللثة، حساسية للمشروبات الباردة والساخنة، أو كسر في الأسنان.'
+                : 'You should visit your dentist every 6 months for preventive checkups, or immediately upon experiencing toothache, bleeding gums, temperature sensitivity, or chipped teeth.'
+        },
+        {
+            question: isAr
+                ? 'أين توجد فروع مركز بدر لطب الأسنان؟'
+                : 'Where are Badr Dental Center branches located?',
+            answer: isAr
+                ? 'يمتلك المركز فرعين رئيسيين في مصر: فرع المنصورة (حي الجامعة - أمام بوابة توشكى)، وفرع الشيخ زايد (محافظة الجيزة)، وكلاهما مجهز بأحدث تكنولوجيا طب الأسنان الرقمي.'
+                : 'The center operates two flagship branches in Egypt: Mansoura branch (University District) and Sheikh Zayed branch (Giza / West Cairo), both equipped with cutting-edge digital dentistry.'
+        }
+    ];
+
+    const metaTitle = isAr
+        ? 'أفضل مركز ودكتور أسنان في مصر والشيخ زايد والمنصورة | مركز بدر'
+        : 'Best Dentist & Dental Center in Egypt | Badr Dental Center';
+
+    const metaDesc = isAr
+        ? 'احجز مع نخبة من 30 استشاري بمركز بدر لطب الأسنان (الشيخ زايد والمنصورة). زراعة الأسنان الفورية، هوليوود سمايل، تقويم الأسنان، علاج العصب بدون ألم بجلسة واحدة وتخدير كلي مريح. متاح تقسيط.'
+        : 'Top dental clinic in Egypt for dental implants, Hollywood smile veneers, orthodontics, teeth whitening, and painless root canals in Sheikh Zayed & Mansoura with 30+ consultants. Book your consultation today!';
+
+    const metaKeywords = isAr
+        ? 'دكتور أسنان, عيادة أسنان, مركز أسنان, أفضل دكتور أسنان, أفضل عيادة أسنان, خدمات طب الأسنان, استشارة طبيب أسنان, دكتور أسنان للطوارئ, الكشف على الأسنان, علاج الأسنان, أخصائي أسنان, زراعة الأسنان, تبييض الأسنان, تقويم الأسنان, تجميل الأسنان, علاج عصب الأسنان, خلع الأسنان, حشو الأسنان, تيجان الأسنان, جسور الأسنان, فينير الأسنان, هوليود سمايل, علاج اللثة, طب أسنان الأطفال, خلع ضرس العقل, أطقم الأسنان, التقويم الشفاف, تنظيف الأسنان, تلميع الأسنان, علاج ألم الأسنان, دكتور أسنان قريب مني, عيادة أسنان قريبة مني, مركز أسنان قريب مني, دكتور أسنان في القاهرة, عيادة أسنان في القاهرة, دكتور أسنان في المنصورة, دكتور أسنان في الشيخ زايد, زراعة الأسنان في القاهرة, دكتور تقويم أسنان في القاهرة, تبييض الأسنان في القاهرة, عيادة أسنان مفتوحة الآن, دكتور تجميل أسنان, دكتور زراعة أسنان, أخصائي تقويم الأسنان, حجز موعد دكتور أسنان, استشارة دكتور أسنان, احجز موعد مع دكتور أسنان, حجز عيادة أسنان, حجز استشارة زراعة الأسنان, حجز موعد تبييض الأسنان, أسعار علاج الأسنان, أسعار زراعة الأسنان, أسعار تقويم الأسنان, أسعار تبييض الأسنان, رقم عيادة الأسنان, كم تكلفة زراعة الأسنان, كم تستغرق مدة تقويم الأسنان, هل تبييض الأسنان آمن, مركز بدر لطب الاسنان, دكتور احمد بدر, Badr Dental Center'
+        : 'Dentist, Dental clinic, Dental center, Dental care, Best dentist, Best dental clinic, Dental services, Family dentist, Private dentist, Dental consultation, Emergency dentist, Dental checkup, Dental treatment, Dental specialist, Dental implants, Teeth whitening, Orthodontics, Braces, Cosmetic dentistry, Root canal treatment, Tooth extraction, Dental fillings, Dental crowns, Dental bridges, Dental veneers, Hollywood smile, Gum treatment, Pediatric dentistry, Wisdom tooth removal, Dentures, Clear aligners, Dental cleaning, Teeth polishing, Toothache treatment, Dentist near me, Dental clinic near me, Dental center near me, Dentist in Cairo, Dental clinic in Cairo, Dentist in Alexandria, Dentist in Mansoura, Dentist in Sheikh Zayed, Dental implants in Cairo, Orthodontist in Cairo, Teeth whitening in Cairo, Dental clinic open now, Affordable dentist near me, Experienced dentist, Cosmetic dentist, Implant dentist, Dentist appointment, Dentist consultation, Book a dentist appointment, Dental clinic booking, Dental implant consultation, Teeth whitening appointment, Orthodontic consultation, Dental treatment prices, Dental implants prices, Braces prices, Teeth whitening prices, Dental clinic contact number, Badr Dental Center';
+
+    const pageUrl = canonical_url || 'https://badrdentalcenter.com/';
+
     return (
         <>
-            <Head title="افضل دكتور اسنان في الشيخ زايد والمنصورة | مركز بدر للأسنان">
-                <meta name="description" content="هل تبحث عن اشطر دكتور اسنان؟ مركز بدر لطب الأسنان بالمنصورة والشيخ زايد يقدم خدمات زراعة وتجميل وتقويم الأسنان بأحدث التقنيات وبأيدي أكثر من ٣٠ استشاري. متاح التقسيط." />
-                <meta name="keywords" content="افضل دكتور اسنان في الشيخ زايد والمنصورة، اشطر دكتور اسنان، افضل دكتور زراعة اسنان، مركز بدر للأسنان، زراعة الأسنان، تجميل الأسنان، تقويم الأسنان، علاج الجذور، حشوات حديثة، تركيبات ثابتة، علاج أسنان الأطفال، زراعة الفك، تخدير كلي، المنصورة، الشيخ زايد، Badr Dental Center" />
-                <meta property="og:title" content="مركز بدر لعلاج وتجميل وزراعة وتقويم الأسنان" />
-                <meta property="og:description" content="أكثر من ٣٠ استشاري وأخصائي. زراعة ومتخصصون في تجميل وتقويم الأسنان. فروع في المنصورة والشيخ زايد. علاج في جلسة واحدة تحت تخدير كلي." />
+            <Head title={metaTitle}>
+                <meta name="description" content={metaDesc} />
+                <meta name="keywords" content={metaKeywords} />
+                <meta property="og:title" content={metaTitle} />
+                <meta property="og:description" content={metaDesc} />
                 <meta property="og:image" content="https://badrdentalcenter.com/og-image.png" />
-                <meta property="og:url" content="https://badrdentalcenter.com/" />
-                <meta name="twitter:title" content="مركز بدر لعلاج وتجميل وزراعة وتقويم الأسنان" />
-                <meta name="twitter:description" content="أكثر من ٣٠ استشاري وأخصائي في زراعة ومتخصصون في تجميل وتقويم الأسنان. فروع المنصورة والشيخ زايد." />
+                <meta property="og:url" content={pageUrl} />
+                <meta name="twitter:title" content={metaTitle} />
+                <meta name="twitter:description" content={metaDesc} />
                 <meta name="twitter:image" content="https://badrdentalcenter.com/og-image.png" />
+                <link rel="canonical" href={pageUrl} />
             </Head>
 
+            {/* Structured Data JSON-LD Schemas */}
+            <LocalBusinessSchema />
+            <FAQSchema faqs={homeFaqs} />
+
             <DoctorAhmedBadrSection />
+            <ServicesVideoSpotlight />
             <ServicesCarouselSection services={services} />
             <GalleryCarousel photos={gallery_photos} />
 
             {/* Offers Section */}
             <OffersSection offers={active_offers} />
+
+            {/* Photos with Clients 3D Coverflow Carousel */}
+            <ClientPhotosCarousel />
 
             {/* People Section / Dynamic Video Section */}
             {home_videos.length === 0 ? (
@@ -90,17 +185,17 @@ export default function Welcome({ articles, testimonials, services, home_videos 
                         </svg>
                     </div>
 
-                    <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                    <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 max-w-7xl mx-auto">
                         {home_videos.map((video, index) => {
                             const offsetClass = index % 2 === 0 
-                                ? 'md:translate-y-6 lg:translate-y-8' 
-                                : 'md:-translate-y-4 lg:-translate-y-6';
+                                ? 'md:translate-y-5 lg:translate-y-6' 
+                                : 'md:-translate-y-3 lg:-translate-y-4';
 
-                            const floatAnimClass = index === 0
+                            const floatAnimClass = (index % 4 === 0)
                                 ? 'card-float-up-down'
-                                : index === 1
+                                : (index % 4 === 1)
                                 ? 'card-float-down-up'
-                                : index === 2
+                                : (index % 4 === 2)
                                 ? 'card-float-sway'
                                 : 'card-float-sway-reverse';
 
@@ -149,6 +244,7 @@ export default function Welcome({ articles, testimonials, services, home_videos 
 
             <LatestArticlesSection articles={articles} />
             <BookingFormSection services={services} />
+            <BranchesVideoSection />
 
             <LocalBusinessSchema />
 

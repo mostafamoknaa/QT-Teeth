@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from '@/hooks/use-translations';
 import { usePage } from '@inertiajs/react';
-import { Award, Sparkles, Calendar, ShieldCheck, Stethoscope, Users, Building2, Smile } from 'lucide-react';
+import { Award, Sparkles, Calendar, ShieldCheck, Stethoscope, Users, Building2, Smile, Play } from 'lucide-react';
 
 function useCountUp(target, duration = 1800, start = false) {
     const [val, setVal] = useState(0);
@@ -156,11 +156,13 @@ export default function DoctorAhmedBadrSection() {
                                 <span>{locale === 'ar' ? 'احجز استشارتك الآن' : 'Book Consultation Now'}</span>
                             </a>
                             <a
-                                href="#services"
-                                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full glass-dark text-white/90 hover:text-white border border-white/10 hover:border-[#D4AF37]/40 text-sm font-medium transition-all"
+                                href="#services-spotlight"
+                                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full glass-dark text-white hover:text-[#D4AF37] border border-[#D4AF37]/40 hover:border-[#D4AF37] hover:bg-[#D4AF37]/15 text-sm font-bold transition-all shadow-lg group/btn"
                             >
-                                <Stethoscope className="w-4 h-4 text-[#D4AF37]" />
-                                <span>{locale === 'ar' ? 'استكشف خدماتنا' : 'Explore Services'}</span>
+                                <div className="w-6 h-6 rounded-full bg-[#D4AF37] flex items-center justify-center text-black group-hover/btn:scale-110 transition-transform">
+                                    <Play className="w-3 h-3 fill-black ml-0.5" />
+                                </div>
+                                <span>{locale === 'ar' ? 'شاهد فيديو عن خدماتنا' : 'Watch Services Video'}</span>
                             </a>
                         </div>
                     </div>
@@ -212,20 +214,70 @@ export default function DoctorAhmedBadrSection() {
 
                 </div>
 
-                {/* Animated Stats Bar */}
-                <div className="mt-14 glass-dark rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl reveal">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 divide-y lg:divide-y-0 divide-white/10 lg:divide-x lg:divide-x-reverse">
-                        {stats.map((s, i) => (
-                            <StatItem
-                                key={i}
-                                index={i}
-                                value={s.value}
-                                suffix={s.suffix}
-                                label={s.label}
-                                icon={s.icon}
-                                started={started}
-                            />
-                        ))}
+                {/* 2. ENHANCED 4 LUXURY STAT CARDS (Matching the bottom of reference image with floating animations) */}
+                <div className="mt-8 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 reveal">
+                    {/* Card 1: 25+ Years Experience */}
+                    <div 
+                        style={{ animationDelay: '0s' }}
+                        className="card-float-up-down group relative glass-dark p-6 rounded-[2rem] border border-white/10 hover:border-[#D4AF37] transition-all duration-500 shadow-xl hover:shadow-[0_15px_35px_rgba(212,175,55,0.3)] hover:-translate-y-2 text-center overflow-hidden"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center mb-3 text-[#D4AF37] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all">
+                            <Award className="w-6 h-6" />
+                        </div>
+                        <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C89B27] font-sans">
+                            {started ? '25+' : '0'}
+                        </div>
+                        <div className="text-xs sm:text-sm text-white/80 font-bold mt-2">
+                            {locale === 'ar' ? 'سنوات من الخبرة والتميز' : 'Years of Experience'}
+                        </div>
+                    </div>
+
+                    {/* Card 2: 25,000+ Cases Treated */}
+                    <div 
+                        style={{ animationDelay: '0.3s' }}
+                        className="card-float-down-up group relative glass-dark p-6 rounded-[2rem] border border-white/10 hover:border-[#D4AF37] transition-all duration-500 shadow-xl hover:shadow-[0_15px_35px_rgba(212,175,55,0.3)] hover:-translate-y-2 text-center overflow-hidden"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center mb-3 text-[#D4AF37] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all">
+                            <Smile className="w-6 h-6" />
+                        </div>
+                        <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C89B27] font-sans">
+                            {started ? '25,000+' : '0'}
+                        </div>
+                        <div className="text-xs sm:text-sm text-white/80 font-bold mt-2">
+                            {locale === 'ar' ? 'حالة تم علاجها بنجاح' : 'Cases Successfully Treated'}
+                        </div>
+                    </div>
+
+                    {/* Card 3: 12,000+ Implants */}
+                    <div 
+                        style={{ animationDelay: '0.6s' }}
+                        className="card-float-sway group relative glass-dark p-6 rounded-[2rem] border border-white/10 hover:border-[#D4AF37] transition-all duration-500 shadow-xl hover:shadow-[0_15px_35px_rgba(212,175,55,0.3)] hover:-translate-y-2 text-center overflow-hidden"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center mb-3 text-[#D4AF37] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all">
+                            <ShieldCheck className="w-6 h-6" />
+                        </div>
+                        <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C89B27] font-sans">
+                            {started ? '12,000+' : '0'}
+                        </div>
+                        <div className="text-xs sm:text-sm text-white/80 font-bold mt-2">
+                            {locale === 'ar' ? 'حالات زراعة ناجحة' : 'Successful Implants'}
+                        </div>
+                    </div>
+
+                    {/* Card 4: 5,000+ Orthodontics */}
+                    <div 
+                        style={{ animationDelay: '0.9s' }}
+                        className="card-float-sway-reverse group relative glass-dark p-6 rounded-[2rem] border border-white/10 hover:border-[#D4AF37] transition-all duration-500 shadow-xl hover:shadow-[0_15px_35px_rgba(212,175,55,0.3)] hover:-translate-y-2 text-center overflow-hidden"
+                    >
+                        <div className="w-12 h-12 mx-auto rounded-2xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center mb-3 text-[#D4AF37] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.5)] transition-all">
+                            <Sparkles className="w-6 h-6" />
+                        </div>
+                        <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#C89B27] font-sans">
+                            {started ? '5,000+' : '0'}
+                        </div>
+                        <div className="text-xs sm:text-sm text-white/80 font-bold mt-2">
+                            {locale === 'ar' ? 'حالات تقويم ناجحة' : 'Successful Orthodontics'}
+                        </div>
                     </div>
                 </div>
 

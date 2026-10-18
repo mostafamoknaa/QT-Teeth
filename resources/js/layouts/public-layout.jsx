@@ -38,15 +38,29 @@ export default function AppLayout({ children, heroOptions }) {
         return () => unbind();
     }, []);
 
+    const pageCanonical = canonical_url || 'https://badrdentalcenter.com';
+
     return (
         <div className="min-h-screen bg-transparent text-foreground font-tajawal selection:bg-primary/30">
             {/* Shared base meta — each page overrides title/description via its own <Head> */}
             <Head>
-                <meta property="og:site_name" content="مركز بدر لطب الأسنان" />
+                <meta property="og:site_name" content={isRtl ? 'مركز بدر لطب الأسنان' : 'Badr Dental Center'} />
                 <meta property="og:type" content="website" />
+                <meta property="og:locale" content={isRtl ? 'ar_EG' : 'en_US'} />
+                <meta property="og:locale:alternate" content={isRtl ? 'en_US' : 'ar_EG'} />
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="theme-color" content="#0a1628" />
-                <meta name="robots" content="index, follow" />
+                <meta name="theme-color" content="#09090b" />
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+                
+                {/* Canonical & Multilingual Alternate Hreflang */}
+                <link rel="canonical" href={pageCanonical} />
+                <link rel="alternate" hrefLang="ar" href={pageCanonical} />
+                <link rel="alternate" hrefLang="en" href={pageCanonical} />
+                <link rel="alternate" hrefLang="x-default" href={pageCanonical} />
+
+                {/* Local SEO Geo Tags */}
+                <meta name="geo.region" content="EG-DK, EG-GZ" />
+                <meta name="geo.placename" content="Mansoura, Sheikh Zayed" />
             </Head>
 
             <NavBar heroOptions={heroOptions} />
