@@ -99,7 +99,7 @@ export default function About() {
                     <div className="relative group overflow-hidden rounded-[40px]">
                         <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl flex items-end justify-center bg-background/50 relative">
                             <img 
-                                src="/dr-ahmed.jpg" 
+                                src="/dr-ahmed.jpeg" 
                                 alt="د. بدر" 
                                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
                             />

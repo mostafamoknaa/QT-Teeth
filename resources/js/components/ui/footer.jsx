@@ -234,11 +234,18 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Bottom Copyrights */}
-                <div className="border-t border-white/10 pt-8 text-center text-xs text-white/60">
-                    <p>
-                        {settings?.copyrights || `© ${new Date().getFullYear()} Badr Dental Center. All rights reserved.`}
-                    </p>
+                {/* Bottom Copyrights & Agency Badge */}
+                <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 text-xs text-white/70">
+                    <div className="flex items-center gap-2.5">
+                        <img
+                            src="/agency.jpeg"
+                            alt="Nine One Marketing Agency"
+                            className="h-20 w-20 sm:h-20 sm:w-20 rounded-full object-cover border border-[#D4AF37]/60 shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                        />
+                        <p>
+                            © {new Date().getFullYear()} <span className="text-white font-bold">Nine One Marketing Agency</span>. All rights reserved.
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>

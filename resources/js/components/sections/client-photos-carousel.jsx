@@ -12,7 +12,7 @@ import { usePage } from '@inertiajs/react';
 const CLIENT_PHOTOS = [
     {
         id: 1,
-        image: '/client1.jpeg',
+        image: '/client01.jpeg',
         tag_ar: 'لحظات مع عملائنا • 1',
         tag_en: 'Client Moments • 1',
         caption_ar: 'ابتسامة مشرقة وثقة جديدة مع د. أحمد بدر',
@@ -20,7 +20,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 2,
-        image: '/client2.jpeg',
+        image: '/client02.jpeg',
         tag_ar: 'لحظات مع عملائنا • 2',
         tag_en: 'Client Moments • 2',
         caption_ar: 'سعادة حقيقية بعد اكتمال تصميم الابتسامة',
@@ -28,7 +28,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 3,
-        image: '/client3.jpeg',
+        image: '/client03.jpeg',
         tag_ar: 'لحظات مع عملائنا • 3',
         tag_en: 'Client Moments • 3',
         caption_ar: 'زيارة ممتعة وابتسامة هوليوود المتألقة',
@@ -36,7 +36,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 4,
-        image: '/client4.jpeg',
+        image: '/client04.jpeg',
         tag_ar: 'لحظات مع عملائنا • 4',
         tag_en: 'Client Moments • 4',
         caption_ar: 'نتائج استثنائية ورضا تام من عملائنا الأعزاء',
@@ -44,7 +44,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 5,
-        image: '/client5.jpeg',
+        image: '/client05.jpeg',
         tag_ar: 'لحظات مع عملائنا • 5',
         tag_en: 'Client Moments • 5',
         caption_ar: 'أجواء عائلية ورعاية طبية على أعلى مستوى',
@@ -52,7 +52,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 6,
-        image: '/client6.jpeg',
+        image: '/client06.jpeg',
         tag_ar: 'لحظات مع عملائنا • 6',
         tag_en: 'Client Moments • 6',
         caption_ar: 'فرحة ابتسامة جديدة وجمال طبيعي متناسق',
@@ -60,7 +60,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 7,
-        image: '/client7.jpeg',
+        image: '/client07.jpeg',
         tag_ar: 'لحظات مع عملائنا • 7',
         tag_en: 'Client Moments • 7',
         caption_ar: 'ثقة متبادلة وتجربة علاجية مريحة وبدون ألم',
@@ -68,7 +68,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 8,
-        image: '/client8.jpeg',
+        image: '/client08.jpeg',
         tag_ar: 'لحظات مع عملائنا • 8',
         tag_en: 'Client Moments • 8',
         caption_ar: 'ذكريات مميزة مع نخبة من رواد مركز بدر للأسنان',
@@ -76,7 +76,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 9,
-        image: '/client9.jpeg',
+        image: '/client09.jpeg',
         tag_ar: 'لحظات مع عملائنا • 9',
         tag_en: 'Client Moments • 9',
         caption_ar: 'ابتسامة ساحرة تعكس دقة واحترافية الفريق الطبي',
@@ -84,7 +84,7 @@ const CLIENT_PHOTOS = [
     },
     {
         id: 10,
-        image: '/client10.jpeg',
+        image: '/client010.jpeg',
         tag_ar: 'لحظات مع عملائنا • 10',
         tag_en: 'Client Moments • 10',
         caption_ar: 'فخورون بكوننا جزءاً من قصة نجاح كل ابتسامة',
@@ -96,7 +96,8 @@ export default function ClientPhotosCarousel() {
     const { locale } = usePage().props;
     const isRTL = locale === 'ar';
 
-    const [activeIndex, setActiveIndex] = useState(0);
+    // Default to index 6 (client07) in the center/middle
+    const [activeIndex, setActiveIndex] = useState(6);
     const [touchStartX, setTouchStartX] = useState(null);
     const [isHovered, setIsHovered] = useState(false);
     const totalPhotos = CLIENT_PHOTOS.length;
