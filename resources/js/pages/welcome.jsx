@@ -214,6 +214,14 @@ export default function Welcome({ articles, testimonials, services, home_videos 
                                             alt={video.title || 'Video Review'} 
                                             loading="lazy"
                                             decoding="async"
+                                            onError={(e) => {
+                                                if (video.youtube_url) {
+                                                    const yId = getYouTubeId(video.youtube_url);
+                                                    if (yId && !e.target.src.includes('img.youtube.com')) {
+                                                        e.target.src = `https://img.youtube.com/vi/${yId}/maxresdefault.jpg`;
+                                                    }
+                                                }
+                                            }}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
                                         />
                                         
