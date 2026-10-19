@@ -8,21 +8,36 @@ use App\Models\Testimonial;
 use App\Models\Service;
 use App\Models\Offer;
 use App\Models\GalleryPhoto;
+use App\Models\HomeVideo;
 use App\Notifications\WhatsappNotification;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
+
 class SiteController extends Controller
 {
     public function index()
     {
         return Inertia::render('welcome', [
             'canonical_url'   => config('app.url') . '/',
-            'articles'        => Article::where('is_published', true)->orderBy('published_at', 'desc')->take(6)->get()->map(fn($a) => array_merge($a->toArray(), ['url_key' => $a->url_key])),
-            'testimonials'    => Testimonial::orderBy('order')->get(),
-            'services'        => Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
-            'active_offers'   => Offer::active()->with('service')->orderBy('created_at', 'desc')->get(),
-            'home_videos'     => \App\Models\HomeVideo::orderBy('order')->get(),
-            'gallery_photos'  => GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
+            'articles'        => Cache::remember('home_articles', 1800, fn() => 
+                Article::where('is_published', true)->orderBy('published_at', 'desc')->take(6)->get()->map(fn($a) => array_merge($a->toArray(), ['url_key' => $a->url_key]))
+            ),
+            'testimonials'    => Cache::remember('home_testimonials', 3600, fn() => 
+                Testimonial::orderBy('order')->get()
+            ),
+            'services'        => Cache::remember('home_services', 3600, fn() => 
+                Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key]))
+            ),
+            'active_offers'   => Cache::remember('home_active_offers', 1800, fn() => 
+                Offer::active()->with('service')->orderBy('created_at', 'desc')->get()
+            ),
+            'home_videos'     => Cache::remember('home_videos', 3600, fn() => 
+                HomeVideo::orderBy('order')->get()
+            ),
+            'gallery_photos'  => Cache::remember('home_gallery_photos', 3600, fn() => 
+                GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get()
+            ),
         ]);
     }
 

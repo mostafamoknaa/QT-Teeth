@@ -238,9 +238,11 @@ export default function Footer() {
                 <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 text-xs text-white/70">
                     <div className="flex items-center gap-2.5">
                         <img
-                            src="/agency.jpeg"
+                            src="/agency.webp"
                             alt="Nine One Marketing Agency"
                             className="h-20 w-20 sm:h-20 sm:w-20 rounded-full object-cover border border-[#D4AF37]/60 shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                            loading="lazy"
+                            decoding="async"
                         />
                         <p>
                             © {new Date().getFullYear()} <span className="text-white font-bold">Nine One Marketing Agency</span>. All rights reserved.

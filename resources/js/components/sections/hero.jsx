@@ -8,9 +8,11 @@ export default function HeroSection() {
             {/* Background Image with Overlay */}
             <div className="absolute inset-0">
                 <img 
-                    src="/hero.png" 
+                    src="/hero.webp" 
                     alt="Dental Hero" 
                     className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-1000"
+                    fetchPriority="high"
+                    decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-l from-foreground/80 via-foreground/20 to-transparent"></div>
             </div>

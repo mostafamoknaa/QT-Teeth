@@ -266,9 +266,10 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                         />
                     ) : (
                         <img
-                            src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/hero.png"}
+                            src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/hero.webp"}
                             alt="Badr Dental Center Hero"
                             className="absolute inset-0 w-full h-full object-cover"
+                            decoding="async"
                             onError={(e) => { e.target.src = "/doctors.png"; }}
                         />
                     )}

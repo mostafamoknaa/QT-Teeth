@@ -54,6 +54,7 @@ export default function BranchesVideoSection() {
                         className="w-full h-full border-0"
                         src="https://www.youtube.com/embed/ADSE4mnt1TI?rel=0&modestbranding=1"
                         title="Branches and Locations - Badr Dental Center"
+                        loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                     />

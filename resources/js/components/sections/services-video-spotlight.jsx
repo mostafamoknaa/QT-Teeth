@@ -138,6 +138,7 @@ export default function ServicesVideoSpotlight() {
                                         className="w-full h-full border-0"
                                         src="https://www.youtube.com/embed/Ke7_owbedQc?rel=0&modestbranding=1&playsinline=1"
                                         title="Badr Dental Center - Services and What We Do"
+                                        loading="lazy"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                         allowFullScreen
                                     />

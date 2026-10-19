@@ -36,7 +36,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $locale = app()->getLocale();
-        $translations = json_decode(file_get_contents(lang_path("$locale.json")), true);
+        $translations = \Illuminate\Support\Facades\Cache::remember("translations_{$locale}", 86400, function () use ($locale) {
+            $path = lang_path("$locale.json");
+            return file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+        });
 
         // Build a canonical URL from the production domain + current path.
         // Individual controller actions can override this by passing their own canonical_url prop.
@@ -52,8 +55,12 @@ class HandleInertiaRequests extends Middleware
             'locale'         => $locale,
             'translations'   => $translations,
             'canonical_url'  => $canonicalUrl,
-            'global_services' => \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
-            'active_offers'  => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
+            'global_services' => \Illuminate\Support\Facades\Cache::remember('global_services_shared', 3600, function () {
+                return \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key]));
+            }),
+            'active_offers'  => \Illuminate\Support\Facades\Cache::remember('active_offers_shared', 1800, function () {
+                return \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get();
+            }),
             'sidebarOpen'    => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings'       => \App\Models\Setting::getAllSettings(),
         ];

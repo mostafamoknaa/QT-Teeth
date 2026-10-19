@@ -175,9 +175,12 @@ export default function DoctorAhmedBadrSection() {
                         {/* Portrait Frame */}
                         <div className="relative aspect-[4/5] max-w-md mx-auto rounded-[2.5rem] overflow-hidden border border-[#D4AF37]/35 shadow-2xl bg-black/50 group card-float-up-down">
                             <img
-                                src="/dr-ahmed.jpeg"
+                                src="/dr-ahmed.webp"
                                 alt="د. أحمد عبدالله بدر"
                                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                fetchPriority="high"
+                                loading="eager"
+                                decoding="async"
                             />
 
                             {/* Top Badge: Years Experience */}

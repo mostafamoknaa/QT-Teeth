@@ -212,6 +212,8 @@ export default function Welcome({ articles, testimonials, services, home_videos 
                                         <img 
                                             src={`/storage/${video.thumbnail}`} 
                                             alt={video.title || 'Video Review'} 
+                                            loading="lazy"
+                                            decoding="async"
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
                                         />
                                         

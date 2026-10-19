@@ -99,9 +99,11 @@ export default function About() {
                     <div className="relative group overflow-hidden rounded-[40px]">
                         <div className="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl flex items-end justify-center bg-background/50 relative">
                             <img 
-                                src="/dr-ahmed.jpeg" 
+                                src="/dr-ahmed.webp" 
                                 alt="د. بدر" 
                                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
+                                loading="lazy"
+                                decoding="async"
                             />
                             {/* Name Badge */}
                             <div className="absolute bottom-6 bg-foreground text-background px-8 md:px-15 py-3 rounded-2xl text-center text-base md:text-lg font-bold z-10 mx-4">

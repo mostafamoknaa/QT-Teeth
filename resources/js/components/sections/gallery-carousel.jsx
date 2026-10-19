@@ -12,7 +12,7 @@ import {
 import { useTranslations } from '@/hooks/use-translations';
 import { usePage } from '@inertiajs/react';
 
-// The 10 Master Clinical Cases from public folder
+// The 10 Master Clinical Cases from public folder (Optimized WebP format)
 const CLINICAL_CASES = [
     {
         id: 1,
@@ -21,9 +21,9 @@ const CLINICAL_CASES = [
         tag_en: 'Veneers • Case 1',
         title_ar: 'تصميم ابتسامة هوليوود وتبييض متطور',
         title_en: 'Hollywood Smile & Advanced Whitening',
-        poster: '/10.png',
-        before: '/clinical_cases/10_before.png',
-        after: '/clinical_cases/10_after.png',
+        poster: '/10.webp',
+        before: '/clinical_cases/10_before.webp',
+        after: '/clinical_cases/10_after.webp',
     },
     {
         id: 2,
@@ -32,9 +32,9 @@ const CLINICAL_CASES = [
         tag_en: 'Veneers • Case 2',
         title_ar: 'إغلاق الفراغات وتعديل الإطباق بالفينير',
         title_en: 'Gap Closure & Occlusion Correction',
-        poster: '/11.png',
-        before: '/clinical_cases/11_before.png',
-        after: '/clinical_cases/11_after.png',
+        poster: '/11.webp',
+        before: '/clinical_cases/11_before.webp',
+        after: '/clinical_cases/11_after.webp',
     },
     {
         id: 3,
@@ -43,9 +43,9 @@ const CLINICAL_CASES = [
         tag_en: 'Cosmetic • Case 3',
         title_ar: 'تجميل الابتسامة وتبييض الأسنان الفوري',
         title_en: 'Smile Rejuvenation & Whitening',
-        poster: '/12.png',
-        before: '/clinical_cases/12_before.png',
-        after: '/clinical_cases/12_after.png',
+        poster: '/12.webp',
+        before: '/clinical_cases/12_before.webp',
+        after: '/clinical_cases/12_after.webp',
     },
     {
         id: 4,
@@ -54,9 +54,9 @@ const CLINICAL_CASES = [
         tag_en: 'Alignment • Case 4',
         title_ar: 'علاج وتجميل الأسنان المزدحمة وتناسق اللثة',
         title_en: 'Crowded Teeth Alignment & Gum Harmony',
-        poster: '/13.png',
-        before: '/clinical_cases/13_before.png',
-        after: '/clinical_cases/13_after.png',
+        poster: '/13.webp',
+        before: '/clinical_cases/13_before.webp',
+        after: '/clinical_cases/13_after.webp',
     },
     {
         id: 5,
@@ -65,9 +65,9 @@ const CLINICAL_CASES = [
         tag_en: '3D Veneers • Case 5',
         title_ar: 'فينير تجميلي متطور عالي الشفافية',
         title_en: 'Ultra-Translucent Aesthetic Veneers',
-        poster: '/14.png',
-        before: '/clinical_cases/14_before.png',
-        after: '/clinical_cases/14_after.png',
+        poster: '/14.webp',
+        before: '/clinical_cases/14_before.webp',
+        after: '/clinical_cases/14_after.webp',
     },
     {
         id: 6,
@@ -76,9 +76,9 @@ const CLINICAL_CASES = [
         tag_en: 'Restoration • Case 6',
         title_ar: 'ترميم وتجميل الأسنان وتصحيح التآكل',
         title_en: 'Anterior Tooth Reconstruction',
-        poster: '/15.png',
-        before: '/clinical_cases/15_before.png',
-        after: '/clinical_cases/15_after.png',
+        poster: '/15.webp',
+        before: '/clinical_cases/15_before.webp',
+        after: '/clinical_cases/15_after.webp',
     },
     {
         id: 7,
@@ -87,9 +87,9 @@ const CLINICAL_CASES = [
         tag_en: 'Zirconia • Case 7',
         title_ar: 'ابتسامة هوليوود زيركون فائقة البياض والجمال',
         title_en: 'Zirconia Hollywood Smile',
-        poster: '/16.png',
-        before: '/clinical_cases/16_before.png',
-        after: '/clinical_cases/16_after.png',
+        poster: '/16.webp',
+        before: '/clinical_cases/16_before.webp',
+        after: '/clinical_cases/16_after.webp',
     },
     {
         id: 8,
@@ -98,9 +98,9 @@ const CLINICAL_CASES = [
         tag_en: 'Whitening • Case 8',
         title_ar: 'علاج التصبغات الشديدة وتوحيد لون الابتسامة',
         title_en: 'Deep Stain Removal & Color Correction',
-        poster: '/17.png',
-        before: '/clinical_cases/17_before.png',
-        after: '/clinical_cases/17_after.png',
+        poster: '/17.webp',
+        before: '/clinical_cases/17_before.webp',
+        after: '/clinical_cases/17_after.webp',
     },
     {
         id: 9,
@@ -109,9 +109,9 @@ const CLINICAL_CASES = [
         tag_en: 'Restoration • Case 9',
         title_ar: 'علاج الأسنان المتكسرة وتنسيق خط الابتسامة',
         title_en: 'Chipped Teeth Restoration & Smile Contouring',
-        poster: '/18.jpeg',
-        before: '/clinical_cases/18_before.png',
-        after: '/clinical_cases/18_after.png',
+        poster: '/18.webp',
+        before: '/clinical_cases/18_before.webp',
+        after: '/clinical_cases/18_after.webp',
     },
     {
         id: 10,
@@ -120,9 +120,9 @@ const CLINICAL_CASES = [
         tag_en: 'Full Rehab • Case 10',
         title_ar: 'إعادة تأهيل شامل للابتسامة والأسنان العلوية',
         title_en: 'Comprehensive Upper Smile Rehabilitation',
-        poster: '/20.png',
-        before: '/clinical_cases/20_before.png',
-        after: '/clinical_cases/20_after.png',
+        poster: '/20.webp',
+        before: '/clinical_cases/20_before.webp',
+        after: '/clinical_cases/20_after.webp',
     },
 ];
 
