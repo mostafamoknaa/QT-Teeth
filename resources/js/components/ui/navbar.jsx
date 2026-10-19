@@ -273,59 +273,6 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                             onError={(e) => { e.target.src = "/doctors.png"; }}
                         />
                     )}
-
-                    {/* Multi-layer Dark Gradient Overlays for Luxury Contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-black/50 to-black/40 pointer-events-none z-10" />
-                    <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/60 pointer-events-none z-10" />
-
-                    {/* Animated Headline Text Overlay */}
-                    <div className="relative z-20 max-w-5xl mx-auto px-6 py-24 sm:py-32 text-center flex flex-col items-center space-y-6">
-                        {/* Luxury Eyebrow Pill */}
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark border border-[#D4AF37]/40 shadow-xl animate-fade-in-up">
-                            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
-                            <span className="text-xs font-black tracking-widest text-[#D4AF37] uppercase">
-                                {locale === 'ar' ? 'فخامة التجربة ورعاية تفوق التوقعات' : 'LUXURY DENTAL CARE EXCELLENCE'}
-                            </span>
-                        </div>
-
-                        {/* Main Hero Headline */}
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight max-w-4xl drop-shadow-2xl animate-fade-in-up">
-                            {locale === 'ar' ? (
-                                <>
-                                    ابتسامتك المثالية تبدأ في <span className="gold-shimmer-text">مركز بدر لطب الأسنان</span>
-                                </>
-                            ) : (
-                                <>
-                                    Your Perfect Smile Begins at <span className="gold-shimmer-text">Badr Dental Center</span>
-                                </>
-                            )}
-                        </h1>
-
-                        {/* Subtitle */}
-                        <p className="text-white/85 text-sm sm:text-base md:text-lg max-w-2xl font-medium leading-relaxed drop-shadow animate-fade-in-up">
-                            {locale === 'ar'
-                                ? 'أكثر من 30 استشاري وأخصائي في زراعة وتجميل وتقويم وجراحة الأسنان بأحدث التقنيات وأعلى معايير التعقيم العالمية.'
-                                : 'Over 30 dental consultants and specialists providing world-class aesthetic restorations, dental implants, and smile makeovers.'}
-                        </p>
-
-                        {/* Floating CTAs */}
-                        <div className="pt-4 flex flex-wrap items-center justify-center gap-4 animate-fade-in-up">
-                            <a
-                                href="#booking"
-                                className="btn-glow-gold inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#c9a227] via-[#e8c84a] to-[#c9a227] text-black font-extrabold text-sm shadow-2xl hover:scale-105 active:scale-95 transition-all"
-                            >
-                                <Calendar size={16} />
-                                <span>{locale === 'ar' ? 'احجز موعد استشارتك' : 'Book a Consultation'}</span>
-                            </a>
-                            <a
-                                href="#services-carousel"
-                                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass-dark text-white hover:text-white border border-white/20 hover:border-[#D4AF37] text-sm font-bold shadow-lg transition-all"
-                            >
-                                <span>{locale === 'ar' ? 'استكشف التخصصات' : 'Explore Specialties'}</span>
-                            </a>
-                        </div>
-                    </div>
-
                     {/* Scroll Down Hint */}
                     <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden md:block">
                         <a
