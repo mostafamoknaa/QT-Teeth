@@ -236,18 +236,27 @@ export default function Footer() {
 
                 {/* Bottom Copyrights & Agency Badge */}
                 <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 text-xs text-white/70">
-                    <div className="flex items-center gap-2.5">
+                    <a
+                        href="https://www.91ksa.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/agency inline-flex items-center gap-3 hover:text-white transition-all cursor-pointer"
+                    >
                         <img
                             src="/agency.webp"
                             alt="Nine One Marketing Agency"
-                            className="h-20 w-20 sm:h-20 sm:w-20 rounded-full object-cover border border-[#D4AF37]/60 shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                            className="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border border-[#D4AF37]/60 shadow-[0_0_10px_rgba(212,175,55,0.3)] group-hover/agency:border-[#D4AF37] group-hover/agency:scale-110 transition-all duration-300"
                             loading="lazy"
                             decoding="async"
                         />
-                        <p>
-                            © {new Date().getFullYear()} <span className="text-white font-bold">Nine One Marketing Agency</span>. All rights reserved.
+                        <p className="text-center sm:text-start leading-snug">
+                            © {new Date().getFullYear()}{' '}
+                            <span className="text-white font-black underline decoration-[#D4AF37]/50 underline-offset-4 group-hover/agency:text-[#D4AF37] transition-colors">
+                                Nine One Marketing Agency
+                            </span>
+                            . All rights reserved.
                         </p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </footer>

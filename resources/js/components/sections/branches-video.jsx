@@ -10,8 +10,8 @@ export default function BranchesVideoSection() {
         {
             name_ar: 'فرع المنصورة',
             name_en: 'Mansoura Branch',
-            address_ar: 'حي الجامعة، أمام بوابة توشكى، المنصورة',
-            address_en: 'University District, in front of Toshka Gate, Mansoura',
+            address_ar: 'حى الجامعة اعلى توكيل اسكودا - المنصورة - الدقهلية',
+            address_en: 'Al-Jam\'a District, above the Skoda dealership - Mansoura - Dakahlia',
             phone: '01060000805',
             phoneDisplay: '+20 106 0000 805',
             mapUrl: 'https://maps.app.goo.gl/HzMFLXHveNFaMsi37',
@@ -19,8 +19,8 @@ export default function BranchesVideoSection() {
         {
             name_ar: 'فرع الشيخ زايد',
             name_en: 'Sheikh Zayed Branch',
-            address_ar: 'الشيخ زايد، وصلة دهشور، الجيزة',
-            address_en: 'Sheikh Zayed, Dahshur Link, Giza / Greater Cairo',
+            address_ar: 'الشيخ زايد - الحى ١٢ كورت يارد مول - الجيزة - القاهرة',
+            address_en: 'Sheikh Zayed - District 12, Courtyard Mall - Giza - Cairo',
             phone: '01030000728',
             phoneDisplay: '+20 103 0000 728',
             mapUrl: 'https://maps.app.goo.gl/hnnERt4HpXiUg87z5',

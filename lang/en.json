@@ -141,12 +141,12 @@
         "main_subtitle": "We are available in two distinct locations to be closer to you",
         "mansoura": {
             "title": "Mansoura Branch",
-            "address": "Jihan St. extension, University District, Badr Tower",
+            "address": "University District, Above Skoda Agency - Mansoura - Dakahlia",
             "phone": "01060000805"
         },
         "sheikh_zayed": {
             "title": "Sheikh Zayed Branch",
-            "address": "District 11, Square 209, Block 2",
+            "address": "Sheikh Zayed - 12th District, Courtyard Mall - Giza - Cairo",
             "phone": "01030000728"
         },
         "book_now_btn": "Book Your Appointment Now",
@@ -228,14 +228,14 @@
         },
         "branches": {
             "b1_name": "Mansoura Branch",
-            "b1_address": "Jihan St. Extension, University District, Badr Tower",
+            "b1_address": "University District, Above Skoda Agency - Mansoura - Dakahlia",
             "b1_location": "The ideal care destination in the Egyptian Delta",
             "b1_d1": "Strategic location in the heart of Mansoura",
             "b1_d2": "Specialized team in all dental fields",
             "b1_d3": "Latest equipment ensuring treatment quality",
             "b1_d4": "Comfortable environment for the whole family",
             "b2_name": "Sheikh Zayed Branch",
-            "b2_address": "Sheikh Zayed, District 11, Square 209, Block 2",
+            "b2_address": "Sheikh Zayed - 12th District, Courtyard Mall - Giza - Cairo",
             "b2_location": "The ideal care destination in Greater Cairo",
             "b2_d1": "Modern location in Sheikh Zayed area",
             "b2_d2": "Specialized team in all dental fields",
@@ -369,14 +369,14 @@
         "branches_subtitle": "Choose the branch closest and most suitable to your plan",
         "branches": {
             "b1_name": "Mansoura Branch",
-            "b1_address": "Jihan St. Extension, University District, Badr Tower",
+            "b1_address": "University District, Above Skoda Agency - Mansoura - Dakahlia",
             "b1_location": "The ideal care destination in the Egyptian Delta",
             "b1_d1": "Strategic location in the heart of Mansoura",
             "b1_d2": "Specialized team in all dental fields",
             "b1_d3": "Latest equipment ensuring treatment quality",
             "b1_d4": "Comfortable environment for the whole family",
             "b2_name": "Sheikh Zayed Branch",
-            "b2_address": "Sheikh Zayed, District 11, Square 209, Block 2",
+            "b2_address": "Sheikh Zayed - 12th District, Courtyard Mall - Giza - Cairo",
             "b2_location": "The ideal care destination in Greater Cairo",
             "b2_d1": "Modern location in Sheikh Zayed area",
             "b2_d2": "Specialized team in all dental fields",
