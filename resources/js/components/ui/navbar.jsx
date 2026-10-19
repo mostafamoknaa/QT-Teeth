@@ -18,6 +18,19 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
         return (match && match[2].length === 11) ? match[2] : null;
     };
 
+    const getHeroImageSrc = () => {
+        if (settings.home_cover_type === 'image' && settings.home_cover_image_path) {
+            if (settings.home_cover_image_path.includes('kUJsnop7CuR9NLbVrDkvqacrqRSXU8biDkK1JJyX')) {
+                return '/hero-banner.webp';
+            }
+            if (settings.home_cover_image_path.startsWith('/') || settings.home_cover_image_path.startsWith('http')) {
+                return settings.home_cover_image_path;
+            }
+            return `/storage/${settings.home_cover_image_path}`;
+        }
+        return '/hero-banner.webp';
+    };
+
     const topServices = global_services || [];
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -134,12 +147,12 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                     </div>
                 </div>
 
-                {/* Layer 3: Main Sticky Navigation with Frosted Glass */}
+                {/* Layer 3: Main Sticky Navigation with Solid Background */}
                 <nav
-                    className={`sticky top-0 z-50 transition-all duration-300 px-6 lg:px-20 flex justify-between items-center ${
+                    className={`sticky top-0 z-50 transition-all duration-300 px-6 lg:px-20 flex justify-between items-center bg-[#0d0d0d] ${
                         isScrolled
-                            ? 'bg-black/85 backdrop-blur-xl border-b border-[#D4AF37]/25 shadow-2xl py-3'
-                            : 'bg-black/60 backdrop-blur-md border-b border-white/10 py-4'
+                            ? 'bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-[#D4AF37]/25 shadow-2xl py-3'
+                            : 'border-b border-white/10 py-4'
                     }`}
                 >
                     {/* Logo and Nav Links */}
@@ -229,27 +242,13 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                 </nav>
             </div>
 
-            {/* Hero Section Container */}
+            {/* Hero Banner Section (Full image displayed directly under the nav) */}
             {showHero && (
-                <div className="w-full relative overflow-hidden flex flex-col items-center justify-center bg-black min-h-[70vh] lg:min-h-[85vh]">
-                    {/* Hero Media Background */}
+                <div className="w-full relative bg-[#09090b] flex flex-col items-center justify-center">
                     {settings.home_cover_type === 'youtube' && settings.home_cover_youtube_url ? (
-                        <div
-                            className="w-full h-full absolute inset-0 overflow-hidden pointer-events-none"
-                            style={{ position: 'absolute' }}
-                        >
+                        <div className="w-full relative aspect-video overflow-hidden pointer-events-none">
                             <iframe
-                                style={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    width: '100vw',
-                                    height: '56.25vw',
-                                    minHeight: '100vh',
-                                    minWidth: '177.77vh',
-                                    transform: 'translate(-50%, -50%)',
-                                    border: 'none',
-                                }}
+                                className="w-full h-full"
                                 src={`https://www.youtube.com/embed/${getYouTubeId(settings.home_cover_youtube_url)}?autoplay=1&mute=1&loop=1&playlist=${getYouTubeId(settings.home_cover_youtube_url)}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 title="Hero Video"
@@ -262,30 +261,20 @@ export default function NavBar({ showHero = true, heroOptions = {} }) {
                             loop
                             muted
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="w-full h-auto block"
                         />
                     ) : (
-                        <img
-                            src={settings.home_cover_type === 'image' && settings.home_cover_image_path ? `/storage/${settings.home_cover_image_path}` : "/hero.webp"}
-                            alt="Badr Dental Center Hero"
-                            className="absolute inset-0 w-full h-full object-cover"
-                            decoding="async"
-                            onError={(e) => { e.target.src = "/doctors.png"; }}
-                        />
-                    )}
-                    {/* Scroll Down Hint */}
-                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 animate-bounce hidden md:block">
-                        <a
-                            href="#doctors"
-                            className="w-10 h-10 rounded-full glass-dark border border-white/20 flex items-center justify-center text-white/70 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all shadow-lg"
-                            aria-label="Scroll down"
-                        >
-                            <ArrowDown size={18} />
+                        <a href="#booking" className="w-full block overflow-hidden" title={locale === 'ar' ? 'احجز موعد استشارتك الآن' : 'Book a Consultation'}>
+                            <img
+                                src={getHeroImageSrc()}
+                                alt="مركز بدر لطب الأسنان - Badr Dental Center"
+                                className="w-full h-auto block"
+                                fetchPriority="high"
+                                decoding="async"
+                                onError={(e) => { e.target.src = "/hero-banner.webp"; }}
+                            />
                         </a>
-                    </div>
-
-                    {/* Bottom Smooth Gradient Transition into Content */}
-                    <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#0d0d0d] to-transparent z-20 pointer-events-none" />
+                    )}
                 </div>
             )}
 
