@@ -55,12 +55,8 @@ class HandleInertiaRequests extends Middleware
             'locale'         => $locale,
             'translations'   => $translations,
             'canonical_url'  => $canonicalUrl,
-            'global_services' => \Illuminate\Support\Facades\Cache::remember('global_services_shared', 3600, function () {
-                return \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key]));
-            }),
-            'active_offers'  => \Illuminate\Support\Facades\Cache::remember('active_offers_shared', 1800, function () {
-                return \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get();
-            }),
+            'global_services' => \App\Models\Service::orderBy('order')->get()->map(fn($s) => array_merge($s->toArray(), ['url_key' => $s->url_key])),
+            'active_offers'  => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
             'sidebarOpen'    => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings'       => \App\Models\Setting::getAllSettings(),
         ];
