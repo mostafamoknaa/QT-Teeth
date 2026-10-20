@@ -114,27 +114,69 @@ class SiteController extends Controller
 
     public function storeAppointment(\Illuminate\Http\Request $request)
     {
+        // Normalize empty strings to null for optional integer fields
+        if ($request->service_id === '' || $request->service_id === null) {
+            $request->merge(['service_id' => null]);
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|regex:/^(\+?[0-9\s\-\(\)]{7,20})$/',
-            'email' => 'nullable|email|max:255',
-            'service_id' => 'nullable|integer|exists:services,id',
-            'offer' => 'nullable|string|max:255',
-            'branch' => 'nullable|string|max:255',
-            'message' => 'nullable|string|max:1000',
+            'name'       => 'required|string|max:255',
+            'phone'      => 'required|regex:/^(\+?[0-9\s\-\(\)]{7,20})$/',
+            'email'      => 'nullable|email|max:255',
+            'service_id' => 'nullable|exists:services,id',
+            'offer'      => 'nullable|string|max:255',
+            'branch'     => 'nullable|string|max:255',
+            'message'    => 'nullable|string|max:1000',
         ], [
-            'phone.regex' => 'validation.phone.regex',
-            'phone.required' => 'validation.phone.required',
-            'name.required' => 'validation.name.required',
-            'email.email' => 'validation.email',
-            'service_id.exists' => 'validation.service.exists',
-            'message.max' => 'validation.message.max',
+            'phone.regex'        => 'validation.phone.regex',
+            'phone.required'     => 'validation.phone.required',
+            'name.required'      => 'validation.name.required',
+            'email.email'        => 'validation.email',
+            'service_id.exists'  => 'validation.service.exists',
+            'message.max'        => 'validation.message.max',
         ]);
 
+        // Cast service_id to int if present
+        if (!empty($validated['service_id'])) {
+            $validated['service_id'] = (int) $validated['service_id'];
+        } else {
+            $validated['service_id'] = null;
+        }
+
         $appointment = \App\Models\Appointment::create($validated);
+        $appointment->load('service');
 
-        // $appointment->notify(new WhatsappNotification($appointment));
+        // Build WhatsApp message for admin
+        $serviceName = $appointment->service ? $appointment->service->title : ($validated['service_id'] ?? '');
+        $lines = [];
+        $lines[] = '📋 *طلب حجز جديد - مركز بدر لطب الأسنان*';
+        $lines[] = '';
+        $lines[] = '👤 *الاسم:* ' . $validated['name'];
+        $lines[] = '📞 *الهاتف:* ' . $validated['phone'];
+        if (!empty($validated['email'])) {
+            $lines[] = '📧 *البريد الإلكتروني:* ' . $validated['email'];
+        }
+        if ($serviceName) {
+            $lines[] = '🦷 *الخدمة:* ' . $serviceName;
+        }
+        if (!empty($validated['offer'])) {
+            $lines[] = '🎁 *العرض:* ' . $validated['offer'];
+        }
+        if (!empty($validated['branch'])) {
+            $lines[] = '📍 *الفرع:* ' . $validated['branch'];
+        }
+        if (!empty($validated['message'])) {
+            $lines[] = '💬 *رسالة:* ' . $validated['message'];
+        }
+        $lines[] = '';
+        $lines[] = '🕐 *وقت الطلب:* ' . now()->format('Y-m-d H:i');
 
-        return back()->with('success', 'Your appointment request has been submitted successfully.');
+        $whatsappMessage = implode("\n", $lines);
+        $adminPhone = '201060000841'; // Egyptian number without leading zero
+        $whatsappUrl = 'https://wa.me/' . $adminPhone . '?text=' . rawurlencode($whatsappMessage);
+
+        return back()
+            ->with('success', 'Your appointment request has been submitted successfully.')
+            ->with('whatsapp_url', $whatsappUrl);
     }
 }

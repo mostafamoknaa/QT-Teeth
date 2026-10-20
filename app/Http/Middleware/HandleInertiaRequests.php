@@ -59,6 +59,10 @@ class HandleInertiaRequests extends Middleware
             'active_offers'  => \App\Models\Offer::where('is_active', true)->orderBy('created_at', 'desc')->get(),
             'sidebarOpen'    => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'settings'       => \App\Models\Setting::getAllSettings(),
+            'flash'          => [
+                'success'       => $request->session()->get('success'),
+                'whatsapp_url'  => $request->session()->get('whatsapp_url'),
+            ],
         ];
     }
 }

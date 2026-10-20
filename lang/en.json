@@ -82,11 +82,11 @@
         "title": "Book an Appointment",
         "subtitle": "Book your appointment now with the dentist with ease",
         "info": {
-            "call_us": "Call Us",
+            "call_us": "WhatsApp",
             "send_email": "Send an Email",
             "visit_us": "Visit the Clinic",
             "mansoura_zayed": "Mansoura Branch\nSheikh Zayed Branch",
-            "phone_detail": "01060000805 \n 01030000728",
+            "phone_detail": "01060000841",
             "email_detail": "info@badrdentalcenter.com"
         },
         "form": {
@@ -98,7 +98,8 @@
             "branch": "Branch",
             "message": "Message",
             "message_placeholder": "Please describe the service you are interested in",
-            "submit_whatsapp": "Book"
+            "submit_whatsapp": "Book",
+            "success": "Booking request sent! WhatsApp will open to send the details."
         },
         "success_message": "Your appointment has been successfully booked! We will contact you shortly to confirm the details.",
         "error_message": "An error occurred while booking your appointment. Please try again later or contact us directly."
