@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('offers', OfferController::class);
         Route::resource('home-videos', \App\Http\Controllers\Admin\HomeVideoController::class);
         Route::resource('gallery-photos', \App\Http\Controllers\Admin\GalleryPhotoController::class)->only(['index', 'store', 'destroy']);
+        Route::resource('ratings', \App\Http\Controllers\Admin\RatingPhotoController::class)->only(['index', 'store', 'destroy']);
         Route::get('site-settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('site-settings.index');
         Route::post('site-settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('site-settings.store');
         Route::resource('appointments', \App\Http\Controllers\Admin\AppointmentController::class)->only(['index', 'show', 'destroy']);

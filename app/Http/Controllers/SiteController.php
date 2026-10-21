@@ -8,6 +8,7 @@ use App\Models\Testimonial;
 use App\Models\Service;
 use App\Models\Offer;
 use App\Models\GalleryPhoto;
+use App\Models\RatingPhoto;
 use App\Models\HomeVideo;
 use App\Notifications\WhatsappNotification;
 use Illuminate\Notifications\Notification;
@@ -26,6 +27,7 @@ class SiteController extends Controller
             'active_offers'   => Offer::active()->with('service')->orderBy('created_at', 'desc')->get(),
             'home_videos'     => HomeVideo::orderBy('order')->get(),
             'gallery_photos'  => GalleryPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
+            'ratings'         => RatingPhoto::orderBy('order')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 

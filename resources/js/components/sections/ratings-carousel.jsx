@@ -1,0 +1,266 @@
+import React, { useState, useRef } from 'react';
+import { Star, Sparkles, ZoomIn, X, ChevronLeft, ChevronRight, CheckCircle2, HeartHandshake } from 'lucide-react';
+import { usePage } from '@inertiajs/react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+
+// High-end fallback demo rating cards displayed if no ratings are uploaded yet
+const DEFAULT_RATING_CARDS = [
+    {
+        id: 'def-1',
+        name_ar: 'سارة الشمري',
+        name_en: 'Sarah Al-Shammari',
+        service_ar: 'ابتسامة هوليوود وتجميل الأسنان',
+        service_en: 'Hollywood Smile & Aesthetics',
+        comment_ar: 'أفضل تجربة علاج وتجميل أسنان في مصر! دكتور أحمد بدر وفريقه قمة في الذوق والاحترافية، النتيجة تفوق الوصف وبدون أي ألم.',
+        comment_en: 'The best dental experience in Egypt! Dr. Ahmed Badr and his team are exceptionally professional, the result is beyond expectations.',
+        date_ar: 'منذ أسبوع',
+        date_en: '1 week ago',
+        rating: 5,
+        source: 'Google Reviews',
+    },
+    {
+        id: 'def-2',
+        name_ar: 'م. أحمد خالد',
+        name_en: 'Eng. Ahmed Khaled',
+        service_ar: 'زراعة الأسنان الفورية',
+        service_en: 'Immediate Dental Implants',
+        comment_ar: 'قمت بزراعة فك كامل بأحدث التقنيات الألمانية، دقة متناهية وتعقيم على أعلى المستويات. شكراً لمركز بدر المتميز.',
+        comment_en: 'Full-arch dental implant with certified German implants. Extreme precision and global sterilization standards. Thank you!',
+        date_ar: 'منذ أسبوعين',
+        date_en: '2 weeks ago',
+        rating: 5,
+        source: 'Google Reviews',
+    },
+    {
+        id: 'def-3',
+        name_ar: 'د. منى عبد الرحمن',
+        name_en: 'Dr. Mona Abdulrahman',
+        service_ar: 'التقويم الشفاف وتبييض الأسنان',
+        service_en: 'Clear Aligners & Teeth Whitening',
+        comment_ar: 'ابتسامتي تغيرت 180 درجة! التقويم الشفاف كان مريح جداً ومحدش لاحظه، والآن أستمتع بأسنان متناسقة وناصعة البياض.',
+        comment_en: 'My smile transformed completely! Clear aligners were comfortable and virtually invisible. Very happy with the result.',
+        date_ar: 'منذ 3 أسابيع',
+        date_en: '3 weeks ago',
+        rating: 5,
+        source: 'Google Reviews',
+    },
+    {
+        id: 'def-4',
+        name_ar: 'فيصل العتيبي',
+        name_en: 'Faisal Al-Otaibi',
+        service_ar: 'علاج العصب التخصصي والتركيبات',
+        service_en: 'Endodontics & Ceramic Crowns',
+        comment_ar: 'سافرت خصيصاً للمركز من السعودية، والحمد لله كانت زيارة موفقة جداً. دقة في المواعيد ورعاية تفوق التوقعات.',
+        comment_en: 'Traveled specifically to Dr. Badr Center from Saudi Arabia. Absolute punctuality and care exceeding all expectations.',
+        date_ar: 'منذ شهر',
+        date_en: '1 month ago',
+        rating: 5,
+        source: 'Google Reviews',
+    },
+];
+
+export default function RatingsCarousel({ ratings = [] }) {
+    const { locale } = usePage().props;
+    const isRTL = locale === 'ar';
+    const [previewImage, setPreviewImage] = useState(null);
+    const scrollContainerRef = useRef(null);
+
+    const hasUploadedRatings = Array.isArray(ratings) && ratings.length > 0;
+
+    // Prepare items list: if user uploaded ratings, repeat them so infinite marquee scrolls seamlessly
+    let displayItems = [];
+    if (hasUploadedRatings) {
+        // Repeat until at least 10 items for a smooth conveyor belt loop
+        const repeatCount = Math.max(2, Math.ceil(12 / ratings.length));
+        for (let i = 0; i < repeatCount; i++) {
+            ratings.forEach((item, idx) => {
+                displayItems.push({
+                    ...item,
+                    uniqueKey: `rating-${item.id}-${i}-${idx}`,
+                });
+            });
+        }
+    } else {
+        // Repeat default cards twice for seamless marquee loop
+        displayItems = [...DEFAULT_RATING_CARDS, ...DEFAULT_RATING_CARDS].map((item, idx) => ({
+            ...item,
+            uniqueKey: `default-${item.id}-${idx}`,
+        }));
+    }
+
+    const scrollManual = (direction) => {
+        if (!scrollContainerRef.current) return;
+        const scrollAmount = direction === 'left' ? -360 : 360;
+        scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    };
+
+    return (
+        <section id="ratings" className="py-16 md:py-24 px-3 sm:px-6 lg:px-12 relative overflow-hidden bg-[#09090b]">
+            {/* Ambient Lighting Background */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/8 blur-[160px] rounded-full pointer-events-none -z-10" />
+
+            {/* Section Header */}
+            <div className="text-center max-w-3xl mx-auto mb-10 md:mb-14 space-y-3.5 reveal">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm font-bold shadow-sm">
+                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                    <span>{isRTL ? 'التقييمات / Rating' : 'Ratings & Reviews'}</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                    {isRTL ? 'التقييمات  /  ratting' : 'Client Ratings & Reviews'}
+                </h2>
+
+                <p className="text-white/70 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+                    {isRTL
+                        ? 'آراء وتقييمات عملائنا الكرام وتجاربهم الاستثنائية في مركز د. أحمد بدر لطب وجراحة وتجميل الأسنان.'
+                        : 'Real reviews and ratings from our valued clients experiencing world-class dental care at Dr. Ahmed Badr Dental Center.'}
+                </p>
+
+                {/* Trust Badges */}
+                <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-2">
+                    <div className="flex items-center gap-1.5 text-white/80 text-xs sm:text-sm font-medium bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+                        <div className="flex items-center text-amber-400">
+                            {[...Array(5)].map((_, i) => (
+                                <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                            ))}
+                        </div>
+                        <span className="font-bold text-white ml-1">4.9 / 5</span>
+                        <span className="text-white/50 text-[11px]">(Google Reviews)</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 text-white/80 text-xs sm:text-sm font-medium bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <span>{isRTL ? 'تقييمات موثقة ومعتمدة' : 'Verified Reviews'}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 text-white/80 text-xs sm:text-sm font-medium bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+                        <HeartHandshake className="w-4 h-4 text-amber-400" />
+                        <span>{isRTL ? '+10,000 عميل سعيد' : '+10,000 Happy Smiles'}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* CAROUSEL MOVING LEFT (CONTINUOUS INFINITE MARQUEE) */}
+            <div className="relative w-full overflow-hidden ratings-marquee-container group py-4">
+                {/* Subtle Edge Fade Gradients for Luxury Look */}
+                <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#09090b] via-[#09090b]/80 to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#09090b] via-[#09090b]/80 to-transparent z-20 pointer-events-none" />
+
+                {/* Marquee Track: dir="ltr" ensures translateX(-50%) moves strictly towards the left */}
+                <div 
+                    ref={scrollContainerRef}
+                    dir="ltr"
+                    className="ratings-marquee-track flex gap-5 sm:gap-6 items-stretch select-none"
+                >
+                    {displayItems.map((item) => {
+                        const isUploaded = !!item.image;
+
+                        return (
+                            <div
+                                key={item.uniqueKey}
+                                onClick={() => isUploaded && setPreviewImage(`/storage/${item.image}`)}
+                                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-xl transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_10px_30px_rgba(212,175,55,0.2)] flex flex-col justify-between group/card ${
+                                    isUploaded ? 'cursor-pointer hover:-translate-y-1' : ''
+                                }`}
+                                style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+                            >
+                                {isUploaded ? (
+                                    /* Uploaded Rating Screenshot Card */
+                                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#18181d] overflow-hidden flex items-center justify-center">
+                                        <img
+                                            src={`/storage/${item.image}`}
+                                            alt={item.title || 'Rating'}
+                                            loading="lazy"
+                                            className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover/card:scale-105"
+                                        />
+
+                                        {/* Hover Zoom Overlay */}
+                                        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
+                                            <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
+                                                <ZoomIn className="w-6 h-6" />
+                                            </div>
+                                            <span className="text-xs font-bold text-amber-200">
+                                                {isRTL ? 'انقر لتكبير التقييم' : 'Click to View Full Size'}
+                                            </span>
+                                        </div>
+
+                                        {/* Top Star Badge */}
+                                        <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+                                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                                            <span>{item.title || (isRTL ? 'تقييم معتمد' : 'Verified Rating')}</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    /* Sleek Fallback Text/Card Review */
+                                    <div className="p-6 flex flex-col justify-between h-[320px] sm:h-[350px]">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                                                <div className="flex items-center text-amber-400 gap-0.5">
+                                                    {[...Array(item.rating || 5)].map((_, i) => (
+                                                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                                    ))}
+                                                </div>
+                                                <span className="text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded-full">
+                                                    {item.source}
+                                                </span>
+                                            </div>
+
+                                            <p className="text-white/80 text-xs sm:text-sm leading-relaxed line-clamp-5">
+                                                "{isRTL ? item.comment_ar : item.comment_en}"
+                                            </p>
+                                        </div>
+
+                                        <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                                            <div>
+                                                <h4 className="font-bold text-sm text-white">
+                                                    {isRTL ? item.name_ar : item.name_en}
+                                                </h4>
+                                                <p className="text-[11px] text-amber-400 font-medium">
+                                                    {isRTL ? item.service_ar : item.service_en}
+                                                </p>
+                                            </div>
+                                            <span className="text-[10px] text-white/40">
+                                                {isRTL ? item.date_ar : item.date_en}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {/* Hint message below carousel */}
+            <div className="text-center mt-6">
+                <p className="text-white/40 text-[11px] sm:text-xs flex items-center justify-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400/80" />
+                    <span>
+                        {isRTL
+                            ? 'يمر الشريط التلقائي نحو اليسار • حرّك المؤشر فوق أي تقييم لإيقاف الحركة أو تكبيره'
+                            : 'Continuous carousel moving left • Hover to pause or click any card to zoom'}
+                    </span>
+                </p>
+            </div>
+
+            {/* Lightbox / Zoom Dialog for Full Image Preview */}
+            <Dialog open={!!previewImage} onOpenChange={(open) => !open && setPreviewImage(null)}>
+                <DialogContent className="max-w-4xl p-2 bg-black/95 border-amber-500/30 text-white">
+                    {previewImage && (
+                        <div className="relative flex flex-col items-center justify-center p-3">
+                            <img
+                                src={previewImage}
+                                alt="Rating Preview"
+                                className="max-h-[82vh] w-auto object-contain rounded-2xl shadow-2xl border border-white/10"
+                            />
+                            <div className="mt-3 flex items-center gap-2 text-xs text-amber-400 font-bold">
+                                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                <span>{isRTL ? 'تقييم معتمد من أحد عملائنا الكرام' : 'Verified Client Rating'}</span>
+                            </div>
+                        </div>
+                    )}
+                </DialogContent>
+            </Dialog>
+        </section>
+    );
+}

@@ -495,3 +495,24 @@
 .whatsapp-floating-widget:hover {
     animation-play-state: paused;
 }
+
+@keyframes ratings-marquee-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.ratings-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: ratings-marquee-left 35s linear infinite;
+    will-change: transform;
+}
+
+.ratings-marquee-track:hover,
+.ratings-marquee-container:hover .ratings-marquee-track {
+    animation-play-state: paused;
+}

@@ -11,12 +11,13 @@ import LatestArticlesSection from '@/components/sections/articles';
 import BookingFormSection from '@/components/sections/booking';
 import BranchesVideoSection from '@/components/sections/branches-video';
 import ClientPhotosCarousel from '@/components/sections/client-photos-carousel';
+import RatingsCarousel from '@/components/sections/ratings-carousel';
 import OffersSection from '@/components/sections/offers-section';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [], active_offers = [] }) {
+export default function Welcome({ articles, testimonials, services, home_videos = [], gallery_photos = [], active_offers = [], ratings = [] }) {
     const { locale, canonical_url } = usePage().props;
     const isAr = locale === 'ar';
     const [selectedVideo, setSelectedVideo] = useState(null);
@@ -140,6 +141,9 @@ export default function Welcome({ articles, testimonials, services, home_videos 
 
             {/* Photos with Clients 3D Coverflow Carousel */}
             <ClientPhotosCarousel />
+
+            {/* Ratings & Reviews Carousel (Moving Left) */}
+            <RatingsCarousel ratings={ratings} />
 
             {/* People Section / Dynamic Video Section */}
             {home_videos.length === 0 ? (
