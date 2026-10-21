@@ -72,25 +72,19 @@ export default function RatingsCarousel({ ratings = [] }) {
         : (Array.isArray(pageProps.ratings) && pageProps.ratings.length > 0 ? pageProps.ratings : []);
 
     const hasUploadedRatings = allRatings.length > 0;
+    const baseItems = hasUploadedRatings ? allRatings : DEFAULT_RATING_CARDS;
 
-    // Prepare items: duplicate to ensure seamless conveyor belt loop
-    let displayItems = [];
-    if (hasUploadedRatings) {
-        // Repeat enough times so loop is wide and seamless
-        const repeatCount = Math.max(2, Math.ceil(12 / allRatings.length));
-        for (let i = 0; i < repeatCount; i++) {
-            allRatings.forEach((item, idx) => {
-                displayItems.push({
-                    ...item,
-                    uniqueKey: `rating-${item.id}-${i}-${idx}`,
-                });
+    // Ensure enough cards inside each group so it spans wider than any screen resolution
+    const minCards = 8;
+    const repeatCount = Math.max(1, Math.ceil(minCards / baseItems.length));
+    const groupItems = [];
+    for (let i = 0; i < repeatCount; i++) {
+        baseItems.forEach((item, idx) => {
+            groupItems.push({
+                ...item,
+                uniqueSubId: `${item.id || idx}-${i}`,
             });
-        }
-    } else {
-        displayItems = [...DEFAULT_RATING_CARDS, ...DEFAULT_RATING_CARDS].map((item, idx) => ({
-            ...item,
-            uniqueKey: `default-${item.id}-${idx}`,
-        }));
+        });
     }
 
     const scrollManual = (direction) => {
@@ -99,25 +93,111 @@ export default function RatingsCarousel({ ratings = [] }) {
         scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     };
 
+    const renderCard = (item, idx, groupPrefix) => {
+        const isUploaded = !!item.image;
+        const imageUrl = isUploaded ? `/storage/${item.image}` : null;
+
+        return (
+            <div
+                key={`${groupPrefix}-${item.uniqueSubId}-${idx}`}
+                onClick={() => isUploaded && setPreviewImage(imageUrl)}
+                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-2xl transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_30px_rgba(212,175,55,0.25)] flex flex-col justify-between group/card ${
+                    isUploaded ? 'cursor-pointer hover:-translate-y-1.5' : ''
+                }`}
+                style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+            >
+                {isUploaded ? (
+                    /* Uploaded Rating Screenshot Card */
+                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#1a1a20] overflow-hidden flex items-center justify-center p-3">
+                        <img
+                            src={imageUrl}
+                            alt={item.title || 'Rating'}
+                            loading="lazy"
+                            className="w-full h-full object-contain rounded-xl transition-transform duration-500 group-hover/card:scale-105"
+                            onError={(e) => {
+                                console.error('Failed to load rating image:', imageUrl);
+                            }}
+                        />
+
+                        {/* Hover Zoom Overlay */}
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
+                            <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
+                                <ZoomIn className="w-6 h-6" />
+                            </div>
+                            <span className="text-xs font-bold text-amber-200">
+                                {isRTL ? 'انقر لتكبير التقييم' : 'Click to View Full Size'}
+                            </span>
+                        </div>
+
+                        {/* Top Star Badge */}
+                        <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                            <span>{item.title || (isRTL ? 'تقييم معتمد' : 'Verified Rating')}</span>
+                        </div>
+                    </div>
+                ) : (
+                    /* Sleek Fallback Text/Card Review */
+                    <div className="p-6 flex flex-col justify-between h-[320px] sm:h-[350px]">
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                                <div className="flex items-center text-amber-400 gap-0.5">
+                                    {[...Array(item.rating || 5)].map((_, i) => (
+                                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                    ))}
+                                </div>
+                                <span className="text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded-full">
+                                    {item.source}
+                                </span>
+                            </div>
+
+                            <p className="text-white/80 text-xs sm:text-sm leading-relaxed line-clamp-5">
+                                "{isRTL ? item.comment_ar : item.comment_en}"
+                            </p>
+                        </div>
+
+                        <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                            <div>
+                                <h4 className="font-bold text-sm text-white">
+                                    {isRTL ? item.name_ar : item.name_en}
+                                </h4>
+                                <p className="text-[11px] text-amber-400 font-medium">
+                                    {isRTL ? item.service_ar : item.service_en}
+                                </p>
+                            </div>
+                            <span className="text-[10px] text-white/40">
+                                {isRTL ? item.date_ar : item.date_en}
+                            </span>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return (
         <section id="ratings" className="py-16 md:py-24 px-3 sm:px-6 lg:px-12 relative overflow-hidden bg-[#09090b]">
-            {/* Inline Keyframes & Styles to guarantee rendering across all caching states */}
+            {/* Inline Keyframes & Styles for a Perfectly Seamless, Never-Ending Circular Marquee Loop */}
             <style>{`
-                @keyframes ratingsScrollLeft {
+                @keyframes seamlessLoopLeft {
                     0% {
                         transform: translate3d(0, 0, 0);
                     }
                     100% {
-                        transform: translate3d(-50%, 0, 0);
+                        transform: translate3d(-100%, 0, 0);
                     }
                 }
-                .ratings-marquee-inner {
+                .ratings-marquee-wrapper {
                     display: flex !important;
                     width: max-content !important;
-                    animation: ratingsScrollLeft 32s linear infinite !important;
+                }
+                .ratings-marquee-track {
+                    display: flex !important;
+                    gap: 1.5rem !important;
+                    padding-right: 1.5rem !important;
+                    animation: seamlessLoopLeft 80s linear infinite !important;
                     will-change: transform;
                 }
-                .ratings-marquee-inner:hover {
+                .ratings-marquee-wrapper:hover .ratings-marquee-track {
                     animation-play-state: paused !important;
                 }
             `}</style>
@@ -192,91 +272,20 @@ export default function RatingsCarousel({ ratings = [] }) {
                     <ChevronRight className="w-5 h-5" />
                 </button>
 
-                {/* MARQUEE TRACK (Moving strictly towards the left) */}
+                {/* CONTINUOUS CIRCULAR MARQUEE: Two identical tracks for seamless, uninterrupted loop */}
                 <div 
                     ref={scrollContainerRef}
-                    className="ratings-marquee-inner flex gap-5 sm:gap-6 items-stretch"
+                    className="ratings-marquee-wrapper"
                 >
-                    {displayItems.map((item) => {
-                        const isUploaded = !!item.image;
-                        const imageUrl = isUploaded ? `/storage/${item.image}` : null;
+                    {/* Track 1 */}
+                    <div className="ratings-marquee-track">
+                        {groupItems.map((item, idx) => renderCard(item, idx, 'g1'))}
+                    </div>
 
-                        return (
-                            <div
-                                key={item.uniqueKey}
-                                onClick={() => isUploaded && setPreviewImage(imageUrl)}
-                                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-2xl transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_30px_rgba(212,175,55,0.25)] flex flex-col justify-between group/card ${
-                                    isUploaded ? 'cursor-pointer hover:-translate-y-1.5' : ''
-                                }`}
-                                style={{ direction: isRTL ? 'rtl' : 'ltr' }}
-                            >
-                                {isUploaded ? (
-                                    /* Uploaded Rating Screenshot Card */
-                                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#1a1a20] overflow-hidden flex items-center justify-center p-3">
-                                        <img
-                                            src={imageUrl}
-                                            alt={item.title || 'Rating'}
-                                            loading="lazy"
-                                            className="w-full h-full object-contain rounded-xl transition-transform duration-500 group-hover/card:scale-105"
-                                            onError={(e) => {
-                                                console.error('Failed to load rating image:', imageUrl);
-                                            }}
-                                        />
-
-                                        {/* Hover Zoom Overlay */}
-                                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
-                                            <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
-                                                <ZoomIn className="w-6 h-6" />
-                                            </div>
-                                            <span className="text-xs font-bold text-amber-200">
-                                                {isRTL ? 'انقر لتكبير التقييم' : 'Click to View Full Size'}
-                                            </span>
-                                        </div>
-
-                                        {/* Top Star Badge */}
-                                        <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
-                                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                                            <span>{item.title || (isRTL ? 'تقييم معتمد' : 'Verified Rating')}</span>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    /* Sleek Fallback Text/Card Review */
-                                    <div className="p-6 flex flex-col justify-between h-[320px] sm:h-[350px]">
-                                        <div className="space-y-4">
-                                            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                                                <div className="flex items-center text-amber-400 gap-0.5">
-                                                    {[...Array(item.rating || 5)].map((_, i) => (
-                                                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                                                    ))}
-                                                </div>
-                                                <span className="text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded-full">
-                                                    {item.source}
-                                                </span>
-                                            </div>
-
-                                            <p className="text-white/80 text-xs sm:text-sm leading-relaxed line-clamp-5">
-                                                "{isRTL ? item.comment_ar : item.comment_en}"
-                                            </p>
-                                        </div>
-
-                                        <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                                            <div>
-                                                <h4 className="font-bold text-sm text-white">
-                                                    {isRTL ? item.name_ar : item.name_en}
-                                                </h4>
-                                                <p className="text-[11px] text-amber-400 font-medium">
-                                                    {isRTL ? item.service_ar : item.service_en}
-                                                </p>
-                                            </div>
-                                            <span className="text-[10px] text-white/40">
-                                                {isRTL ? item.date_ar : item.date_en}
-                                            </span>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    })}
+                    {/* Track 2 (Identical Clone for 100% Seamless Infinite Circular Loop) */}
+                    <div className="ratings-marquee-track" aria-hidden="true">
+                        {groupItems.map((item, idx) => renderCard(item, idx, 'g2'))}
+                    </div>
                 </div>
             </div>
 
@@ -286,8 +295,8 @@ export default function RatingsCarousel({ ratings = [] }) {
                     <Sparkles className="w-3.5 h-3.5 text-amber-400/80" />
                     <span>
                         {isRTL
-                            ? 'يمر الشريط التلقائي نحو اليسار • ضع المؤشر فوق أي تقييم لإيقاف الحركة أو النقر للتكبير'
-                            : 'Continuous carousel moving left • Hover to pause or click any card to zoom'}
+                            ? 'شريط دائري مستمر وهادئ • ضع المؤشر فوق أي تقييم لإيقاف الحركة أو النقر للتكبير'
+                            : 'Continuous calm circular loop • Hover to pause or click any card to zoom'}
                     </span>
                 </p>
             </div>
