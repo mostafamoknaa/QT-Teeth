@@ -89,7 +89,7 @@ export default function RatingsCarousel({ ratings = [] }) {
 
     const scrollManual = (direction) => {
         if (!scrollContainerRef.current) return;
-        const scrollAmount = direction === 'left' ? -380 : 380;
+        const scrollAmount = direction === 'left' ? -300 : 300;
         scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     };
 
@@ -101,70 +101,70 @@ export default function RatingsCarousel({ ratings = [] }) {
             <div
                 key={`${groupPrefix}-${item.uniqueSubId}-${idx}`}
                 onClick={() => isUploaded && setPreviewImage(imageUrl)}
-                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-2xl transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_30px_rgba(212,175,55,0.25)] flex flex-col justify-between group/card ${
-                    isUploaded ? 'cursor-pointer hover:-translate-y-1.5' : ''
+                className={`flex-shrink-0 w-[260px] sm:w-[300px] md:w-[330px] bg-[#121216] border border-white/10 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_8px_25px_rgba(212,175,55,0.2)] flex flex-col justify-between group/card ${
+                    isUploaded ? 'cursor-pointer hover:-translate-y-1' : ''
                 }`}
                 style={{ direction: isRTL ? 'rtl' : 'ltr' }}
             >
                 {isUploaded ? (
-                    /* Uploaded Rating Screenshot Card */
-                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#1a1a20] overflow-hidden flex items-center justify-center p-3">
+                    /* Uploaded Rating Screenshot Card (Compact Height) */
+                    <div className="relative w-full h-[170px] sm:h-[195px] bg-[#16161c] overflow-hidden flex items-center justify-center p-2">
                         <img
                             src={imageUrl}
                             alt={item.title || 'Rating'}
                             loading="lazy"
-                            className="w-full h-full object-contain rounded-xl transition-transform duration-500 group-hover/card:scale-105"
+                            className="w-full h-full object-contain rounded-lg transition-transform duration-500 group-hover/card:scale-105"
                             onError={(e) => {
                                 console.error('Failed to load rating image:', imageUrl);
                             }}
                         />
 
                         {/* Hover Zoom Overlay */}
-                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
-                            <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
-                                <ZoomIn className="w-6 h-6" />
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 text-white">
+                            <div className="w-9 h-9 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
+                                <ZoomIn className="w-4 h-4" />
                             </div>
-                            <span className="text-xs font-bold text-amber-200">
-                                {isRTL ? 'انقر لتكبير التقييم' : 'Click to View Full Size'}
+                            <span className="text-[11px] font-bold text-amber-200">
+                                {isRTL ? 'انقر للتكبير' : 'Click to View'}
                             </span>
                         </div>
 
                         {/* Top Star Badge */}
-                        <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
-                            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        <div className="absolute top-2 right-2 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                            <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
                             <span>{item.title || (isRTL ? 'تقييم معتمد' : 'Verified Rating')}</span>
                         </div>
                     </div>
                 ) : (
                     /* Sleek Fallback Text/Card Review */
-                    <div className="p-6 flex flex-col justify-between h-[320px] sm:h-[350px]">
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div className="p-4 flex flex-col justify-between h-[170px] sm:h-[195px]">
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between border-b border-white/10 pb-2">
                                 <div className="flex items-center text-amber-400 gap-0.5">
                                     {[...Array(item.rating || 5)].map((_, i) => (
-                                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                        <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                                     ))}
                                 </div>
-                                <span className="text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded-full">
+                                <span className="text-[9px] text-white/50 bg-white/5 px-2 py-0.5 rounded-full">
                                     {item.source}
                                 </span>
                             </div>
 
-                            <p className="text-white/80 text-xs sm:text-sm leading-relaxed line-clamp-5">
+                            <p className="text-white/80 text-xs leading-relaxed line-clamp-3">
                                 "{isRTL ? item.comment_ar : item.comment_en}"
                             </p>
                         </div>
 
-                        <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <div className="pt-2 border-t border-white/10 flex items-center justify-between">
                             <div>
-                                <h4 className="font-bold text-sm text-white">
+                                <h4 className="font-bold text-xs text-white">
                                     {isRTL ? item.name_ar : item.name_en}
                                 </h4>
-                                <p className="text-[11px] text-amber-400 font-medium">
+                                <p className="text-[10px] text-amber-400 font-medium">
                                     {isRTL ? item.service_ar : item.service_en}
                                 </p>
                             </div>
-                            <span className="text-[10px] text-white/40">
+                            <span className="text-[9px] text-white/40">
                                 {isRTL ? item.date_ar : item.date_en}
                             </span>
                         </div>

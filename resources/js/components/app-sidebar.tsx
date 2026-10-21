@@ -52,11 +52,11 @@ export function AppSidebar() {
             href: '/admin/doctors',
             icon: Users,
         },
-        {
-            title: t('admin.testimonials'),
-            href: '/admin/testimonials',
-            icon: MessageSquare,
-        },
+        // {
+        //     title: t('admin.testimonials'),
+        //     href: '/admin/testimonials',
+        //     icon: MessageSquare,
+        // },
         {
             title: t('admin.services'),
             href: '/admin/services',
