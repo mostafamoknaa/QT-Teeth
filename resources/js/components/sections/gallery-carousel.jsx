@@ -274,29 +274,6 @@ export default function GalleryCarousel({ photos = [] }) {
                             </>
                         )}
                     </button>
-
-                    {/* WhatsApp Widget on this section */}
-                    <a
-                        href="https://wa.me/201060000841?text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%86%D8%AA%D8%A7%D8%A6%D8%AC%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%D8%A7%D8%AA"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center cursor-pointer whatsapp-floating-widget select-none"
-                        aria-label="Chat on WhatsApp"
-                    >
-                        <div className="relative flex items-center transition-transform duration-300 group-hover:scale-105 active:scale-95">
-                            <img
-                                src="/whatsapp-pill.png"
-                                alt="WhatsApp 01060000841"
-                                className="h-11 sm:h-12 w-auto object-contain block drop-shadow-[0_12px_28px_rgba(37,211,102,0.75)]"
-                            />
-                            <span
-                                className="absolute left-[50px] sm:left-[56px] right-3 sm:right-4 text-white font-black text-xs sm:text-sm tracking-wider font-mono drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] text-center"
-                                dir="ltr"
-                            >
-                                01060000841
-                            </span>
-                        </div>
-                    </a>
                 </div>
             </div>
 
@@ -493,6 +470,30 @@ export default function GalleryCarousel({ photos = [] }) {
                 </div>
             </div>
 
+            {/* WhatsApp Widget Centered on Screen */}
+            <div className="flex justify-center items-center my-8">
+                <a
+                    href="https://wa.me/201060000841?text=%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%86%D8%AA%D8%A7%D8%A6%D8%AC%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%D8%A7%D8%AA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center cursor-pointer whatsapp-floating-widget select-none"
+                    aria-label="Chat on WhatsApp"
+                >
+                    <div className="relative flex items-center transition-transform duration-300 group-hover:scale-105 active:scale-95">
+                        <img
+                            src="/whatsapp-pill.png"
+                            alt="WhatsApp 01060000841"
+                            className="h-11 sm:h-12 w-auto object-contain block drop-shadow-[0_12px_28px_rgba(37,211,102,0.75)]"
+                        />
+                        <span
+                            className="absolute left-[50px] sm:left-[56px] right-3 sm:right-4 text-white font-black text-xs sm:text-sm tracking-wider font-mono drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] text-center"
+                            dir="ltr"
+                        >
+                            01060000841
+                        </span>
+                    </div>
+                </a>
+            </div>
             {/* BOTTOM PAGINATION INDICATOR */}
             <div className="mt-6 text-center reveal">
                 {/* Numeric Counter: e.g. '1 / 10' + optional Pause state */}
@@ -523,6 +524,8 @@ export default function GalleryCarousel({ photos = [] }) {
                     </p>
                 </div>
             </div>
+
+
         </section>
     );
 }
