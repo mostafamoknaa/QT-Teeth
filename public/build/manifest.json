@@ -181,8 +181,8 @@
       "_createLucideIcon-BHL9-lfh.js"
     ]
   },
-  "_gallery-carousel-DQSTwcbq.js": {
-    "file": "assets/gallery-carousel-DQSTwcbq.js",
+  "_gallery-carousel-4EUBhxAw.js": {
+    "file": "assets/gallery-carousel-4EUBhxAw.js",
     "name": "gallery-carousel",
     "imports": [
       "_utils-DLXQs17k.js",
@@ -485,7 +485,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-DqXRpUiI.css",
+    "file": "assets/app-CTfoRG0g.css",
     "name": "app",
     "names": [
       "app.css"
@@ -494,7 +494,7 @@
     "isEntry": true
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-D8xPlspG.js",
+    "file": "assets/app-CRk_i-Ig.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -1225,7 +1225,7 @@
     ]
   },
   "resources/js/pages/gallery.jsx": {
-    "file": "assets/gallery-Bnm5h92R.js",
+    "file": "assets/gallery-B7ao1LbQ.js",
     "name": "gallery",
     "src": "resources/js/pages/gallery.jsx",
     "isDynamicEntry": true,
@@ -1233,7 +1233,7 @@
       "_utils-DLXQs17k.js",
       "_arrow-left-CGsOo-sD.js",
       "_public-layout-C4UEbE3p.js",
-      "_gallery-carousel-DQSTwcbq.js",
+      "_gallery-carousel-4EUBhxAw.js",
       "_sparkles-uscQdG14.js",
       "_use-translations-Dt46R_eQ.js"
     ]
@@ -1355,7 +1355,7 @@
     ]
   },
   "resources/js/pages/welcome.jsx": {
-    "file": "assets/welcome-D-ML5aU0.js",
+    "file": "assets/welcome-BQQ79nID.js",
     "name": "welcome",
     "src": "resources/js/pages/welcome.jsx",
     "isDynamicEntry": true,
@@ -1369,7 +1369,7 @@
       "_public-layout-C4UEbE3p.js",
       "_chevron-left-CGWSRfJs.js",
       "_use-current-url-C6WQeHem.js",
-      "_gallery-carousel-DQSTwcbq.js",
+      "_gallery-carousel-4EUBhxAw.js",
       "_loader-circle-CieUWL6-.js",
       "_percent-DLweVNj9.js",
       "_phone-B9GapwWK.js",
