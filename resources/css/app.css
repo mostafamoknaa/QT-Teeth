@@ -475,3 +475,23 @@
     box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25), 0 0 25px rgba(212, 175, 55, 0.2);
     border-color: rgba(212, 175, 55, 0.7);
 }
+
+@keyframes whatsapp-float-bounce {
+    0%, 100% {
+        transform: translateY(0);
+        filter: drop-shadow(0 12px 25px rgba(37, 211, 102, 0.65));
+    }
+    50% {
+        transform: translateY(-8px);
+        filter: drop-shadow(0 22px 42px rgba(37, 211, 102, 0.95));
+    }
+}
+
+.whatsapp-floating-widget {
+    animation: whatsapp-float-bounce 2.6s ease-in-out infinite;
+    will-change: transform, filter;
+}
+
+.whatsapp-floating-widget:hover {
+    animation-play-state: paused;
+}

@@ -68,10 +68,10 @@ export default function BookingFormSection({ services = [], defaultServiceId = '
 
     const contactCards = [
         {
-            icon: "/phone.png",
+            icon: "/whatsapp.png",
             title: t('booking.info.call_us'),
-            detail: t('booking.info.phone_detail'),
-            href: `tel:${t('booking.info.phone_detail')}`
+            detail: "01060000841",
+            href: "https://wa.me/201060000841"
         },
         {
             icon: "/mail.png",
@@ -122,6 +122,8 @@ export default function BookingFormSection({ services = [], defaultServiceId = '
                         >
                             <a
                                 href={card.href}
+                                target={card.href?.startsWith('http') ? '_blank' : undefined}
+                                rel={card.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                                 className="group flex flex-col items-center gap-5 p-7 text-white glass-dark rounded-[2rem] border border-white/10 hover:border-[#D4AF37]/60 hover:shadow-2xl hover:shadow-[#D4AF37]/25 hover:-translate-y-2 transition-all duration-500 text-center bg-black/50 h-full"
                             >
                                 <div className="w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center p-3 group-hover:scale-110 group-hover:bg-[#D4AF37]/25 transition-all duration-300 shadow-lg">
