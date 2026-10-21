@@ -130,10 +130,12 @@ export default function Welcome({ articles, testimonials, services, home_videos 
             <LocalBusinessSchema />
             <FAQSchema faqs={homeFaqs} />
 
+            {/* Clinical Results (Before & After) directly under hero banner */}
+            <GalleryCarousel photos={gallery_photos} />
+
             <DoctorAhmedBadrSection />
             <ServicesVideoSpotlight />
             <ServicesCarouselSection services={services} />
-            <GalleryCarousel photos={gallery_photos} />
 
             {/* Offers Section */}
             <OffersSection offers={active_offers} />
