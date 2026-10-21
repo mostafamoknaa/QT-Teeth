@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Star, Sparkles, ZoomIn, X, ChevronLeft, ChevronRight, CheckCircle2, HeartHandshake } from 'lucide-react';
+import { Star, Sparkles, ZoomIn, ChevronLeft, ChevronRight, CheckCircle2, HeartHandshake } from 'lucide-react';
 import { usePage } from '@inertiajs/react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-// High-end fallback demo rating cards displayed if no ratings are uploaded yet
+// Fallback rating cards if no images uploaded
 const DEFAULT_RATING_CARDS = [
     {
         id: 'def-1',
@@ -60,20 +60,26 @@ const DEFAULT_RATING_CARDS = [
 ];
 
 export default function RatingsCarousel({ ratings = [] }) {
-    const { locale } = usePage().props;
+    const pageProps = usePage().props;
+    const locale = pageProps.locale || 'ar';
     const isRTL = locale === 'ar';
     const [previewImage, setPreviewImage] = useState(null);
     const scrollContainerRef = useRef(null);
 
-    const hasUploadedRatings = Array.isArray(ratings) && ratings.length > 0;
+    // Get ratings from either direct prop or Inertia page props
+    const allRatings = (Array.isArray(ratings) && ratings.length > 0)
+        ? ratings
+        : (Array.isArray(pageProps.ratings) && pageProps.ratings.length > 0 ? pageProps.ratings : []);
 
-    // Prepare items list: if user uploaded ratings, repeat them so infinite marquee scrolls seamlessly
+    const hasUploadedRatings = allRatings.length > 0;
+
+    // Prepare items: duplicate to ensure seamless conveyor belt loop
     let displayItems = [];
     if (hasUploadedRatings) {
-        // Repeat until at least 10 items for a smooth conveyor belt loop
-        const repeatCount = Math.max(2, Math.ceil(12 / ratings.length));
+        // Repeat enough times so loop is wide and seamless
+        const repeatCount = Math.max(2, Math.ceil(12 / allRatings.length));
         for (let i = 0; i < repeatCount; i++) {
-            ratings.forEach((item, idx) => {
+            allRatings.forEach((item, idx) => {
                 displayItems.push({
                     ...item,
                     uniqueKey: `rating-${item.id}-${i}-${idx}`,
@@ -81,7 +87,6 @@ export default function RatingsCarousel({ ratings = [] }) {
             });
         }
     } else {
-        // Repeat default cards twice for seamless marquee loop
         displayItems = [...DEFAULT_RATING_CARDS, ...DEFAULT_RATING_CARDS].map((item, idx) => ({
             ...item,
             uniqueKey: `default-${item.id}-${idx}`,
@@ -90,12 +95,33 @@ export default function RatingsCarousel({ ratings = [] }) {
 
     const scrollManual = (direction) => {
         if (!scrollContainerRef.current) return;
-        const scrollAmount = direction === 'left' ? -360 : 360;
+        const scrollAmount = direction === 'left' ? -380 : 380;
         scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     };
 
     return (
         <section id="ratings" className="py-16 md:py-24 px-3 sm:px-6 lg:px-12 relative overflow-hidden bg-[#09090b]">
+            {/* Inline Keyframes & Styles to guarantee rendering across all caching states */}
+            <style>{`
+                @keyframes ratingsScrollLeft {
+                    0% {
+                        transform: translate3d(0, 0, 0);
+                    }
+                    100% {
+                        transform: translate3d(-50%, 0, 0);
+                    }
+                }
+                .ratings-marquee-inner {
+                    display: flex !important;
+                    width: max-content !important;
+                    animation: ratingsScrollLeft 32s linear infinite !important;
+                    will-change: transform;
+                }
+                .ratings-marquee-inner:hover {
+                    animation-play-state: paused !important;
+                }
+            `}</style>
+
             {/* Ambient Lighting Background */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/8 blur-[160px] rounded-full pointer-events-none -z-10" />
 
@@ -140,42 +166,65 @@ export default function RatingsCarousel({ ratings = [] }) {
                 </div>
             </div>
 
-            {/* CAROUSEL MOVING LEFT (CONTINUOUS INFINITE MARQUEE) */}
-            <div className="relative w-full overflow-hidden ratings-marquee-container group py-4">
-                {/* Subtle Edge Fade Gradients for Luxury Look */}
+            {/* CAROUSEL CONTAINER: Explicit dir="ltr" to reset RTL overflow context */}
+            <div dir="ltr" className="relative w-full overflow-hidden group py-4 select-none">
+                {/* Edge Fade Gradients */}
                 <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#09090b] via-[#09090b]/80 to-transparent z-20 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#09090b] via-[#09090b]/80 to-transparent z-20 pointer-events-none" />
 
-                {/* Marquee Track: dir="ltr" ensures translateX(-50%) moves strictly towards the left */}
+                {/* Left Navigation Button */}
+                <button
+                    type="button"
+                    onClick={() => scrollManual('left')}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-amber-400 hover:border-amber-400 hover:bg-black/90 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-xl cursor-pointer"
+                    aria-label="Scroll left"
+                >
+                    <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Right Navigation Button */}
+                <button
+                    type="button"
+                    onClick={() => scrollManual('right')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/70 border border-white/20 text-white/80 hover:text-amber-400 hover:border-amber-400 hover:bg-black/90 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 shadow-xl cursor-pointer"
+                    aria-label="Scroll right"
+                >
+                    <ChevronRight className="w-5 h-5" />
+                </button>
+
+                {/* MARQUEE TRACK (Moving strictly towards the left) */}
                 <div 
                     ref={scrollContainerRef}
-                    dir="ltr"
-                    className="ratings-marquee-track flex gap-5 sm:gap-6 items-stretch select-none"
+                    className="ratings-marquee-inner flex gap-5 sm:gap-6 items-stretch"
                 >
                     {displayItems.map((item) => {
                         const isUploaded = !!item.image;
+                        const imageUrl = isUploaded ? `/storage/${item.image}` : null;
 
                         return (
                             <div
                                 key={item.uniqueKey}
-                                onClick={() => isUploaded && setPreviewImage(`/storage/${item.image}`)}
-                                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-xl transition-all duration-300 hover:border-amber-400/50 hover:shadow-[0_10px_30px_rgba(212,175,55,0.2)] flex flex-col justify-between group/card ${
-                                    isUploaded ? 'cursor-pointer hover:-translate-y-1' : ''
+                                onClick={() => isUploaded && setPreviewImage(imageUrl)}
+                                className={`flex-shrink-0 w-[290px] sm:w-[330px] md:w-[360px] bg-[#121216] border border-white/10 rounded-[1.75rem] overflow-hidden shadow-2xl transition-all duration-300 hover:border-amber-400/60 hover:shadow-[0_10px_30px_rgba(212,175,55,0.25)] flex flex-col justify-between group/card ${
+                                    isUploaded ? 'cursor-pointer hover:-translate-y-1.5' : ''
                                 }`}
                                 style={{ direction: isRTL ? 'rtl' : 'ltr' }}
                             >
                                 {isUploaded ? (
                                     /* Uploaded Rating Screenshot Card */
-                                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#18181d] overflow-hidden flex items-center justify-center">
+                                    <div className="relative w-full h-[320px] sm:h-[350px] bg-[#1a1a20] overflow-hidden flex items-center justify-center p-3">
                                         <img
-                                            src={`/storage/${item.image}`}
+                                            src={imageUrl}
                                             alt={item.title || 'Rating'}
                                             loading="lazy"
-                                            className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover/card:scale-105"
+                                            className="w-full h-full object-contain rounded-xl transition-transform duration-500 group-hover/card:scale-105"
+                                            onError={(e) => {
+                                                console.error('Failed to load rating image:', imageUrl);
+                                            }}
                                         />
 
                                         {/* Hover Zoom Overlay */}
-                                        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
+                                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-white">
                                             <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shadow-lg">
                                                 <ZoomIn className="w-6 h-6" />
                                             </div>
@@ -185,7 +234,7 @@ export default function RatingsCarousel({ ratings = [] }) {
                                         </div>
 
                                         {/* Top Star Badge */}
-                                        <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+                                        <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-amber-500/30 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
                                             <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                                             <span>{item.title || (isRTL ? 'تقييم معتمد' : 'Verified Rating')}</span>
                                         </div>
@@ -237,7 +286,7 @@ export default function RatingsCarousel({ ratings = [] }) {
                     <Sparkles className="w-3.5 h-3.5 text-amber-400/80" />
                     <span>
                         {isRTL
-                            ? 'يمر الشريط التلقائي نحو اليسار • حرّك المؤشر فوق أي تقييم لإيقاف الحركة أو تكبيره'
+                            ? 'يمر الشريط التلقائي نحو اليسار • ضع المؤشر فوق أي تقييم لإيقاف الحركة أو النقر للتكبير'
                             : 'Continuous carousel moving left • Hover to pause or click any card to zoom'}
                     </span>
                 </p>
